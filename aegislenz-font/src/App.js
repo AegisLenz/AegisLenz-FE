@@ -1,12 +1,17 @@
-import "./App.css";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Dashboard from "./page/Dashboard";
+import AI from "./page/AI";
+import Network from "./page/Network";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>AegisLenz</p>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/AI" element={<AI />} />
+        <Route path="/Network" element={<Network />} />
+      </Routes>
+    </Router>
   );
 }
 
