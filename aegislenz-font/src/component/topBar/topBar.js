@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import * as S from "./topBar_style";
+import * as S from "./TopBar_style";
 
 function Top() {
   return (

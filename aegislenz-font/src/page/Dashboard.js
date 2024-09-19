@@ -1,13 +1,13 @@
-import TopBar from "../component/topBar/topBar.js";
-import SideBar from "../component/sideBar/sideBar.js";
-import Content from "../component/content/content.js";
+import TopBar from "../component/topbar/TopBar";
+import SideBar from "../component/sidebar/SideBar";
+import Grid from "../component/grid/GridWrapper";
 
 function Main() {
   return (
     <div>
       <TopBar />
       <SideBar />
-      <Content />
+      <Grid />
     </div>
   );
 }
