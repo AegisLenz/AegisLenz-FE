@@ -5,20 +5,23 @@ export const Wrapper = styled.div`
   position: ${({ isOpen }) => (isOpen ? "fixed" : "absolute")};
   width: 46.3vw;
   height: auto;
-  top: ${({ isOpen }) => (isOpen ? "13vh" : "3vh")};
+  top: ${({ isOpen }) => (isOpen ? "10vh" : "0")};
   left: ${({ isOpen }) => (isOpen ? "5.8vw" : "0.8vw")};
+  background-color: black;
 `;
 
 export const ChatBox = styled.div`
   z-index: 201;
   background-color: #cccccc;
+  margin-top: ${({ isOpen }) => (isOpen ? "1vh" : "3vh")};
   border-radius: ${({ isOpen }) => (isOpen ? "2em" : "20em")};
-  height: ${({ isOpen }) => (isOpen ? "84vh" : "5vh")};
+  height: ${({ isOpen }) => (isOpen ? "88vh" : "5vh")};
   overflow: hidden;
-  transition: ${({ isOpen }) =>
-    isOpen
-      ? "height 0.6s ease" // Oppen
-      : "height 0.6s ease, border-radius 0.3s ease 0.6s"}; // Close
+  transition: margin-top 0.6s ease,
+    ${({ isOpen }) =>
+      isOpen
+        ? "height 0.6s ease" // Oppen
+        : "height 0.6s ease, border-radius 0.3s ease 0.6s"}; // Close
   display: flex;
   justify-content: center;
   box-shadow: 1px 1px 3px 1px #999999;

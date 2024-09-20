@@ -43,7 +43,8 @@ export const ChatAreaDiv = styled.div`
   align-items: center;
   width: 100%;
   height: ${({ chatToggleOpen }) => (chatToggleOpen ? "84vh" : "5vh")};
-  margin: 3vh 0 1% 0;
+  margin: ${({ chatToggleOpen }) =>
+    chatToggleOpen ? "1vh 0 1% 0" : "3vh 0 1% 0"};
   background-color: aqua;
 `;
 
