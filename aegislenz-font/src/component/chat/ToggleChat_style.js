@@ -7,7 +7,6 @@ export const Wrapper = styled.div`
   height: auto;
   top: ${({ isOpen }) => (isOpen ? "10vh" : "0")};
   left: ${({ isOpen }) => (isOpen ? "5.8vw" : "0.8vw")};
-  background-color: black;
 `;
 
 export const ChatBox = styled.div`

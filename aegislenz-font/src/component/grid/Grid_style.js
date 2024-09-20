@@ -42,10 +42,11 @@ export const ChatAreaDiv = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: ${({ chatToggleOpen }) => (chatToggleOpen ? "84vh" : "5vh")};
+  height: ${({ chatToggleOpen }) => (chatToggleOpen ? "88vh" : "5vh")};
   margin: ${({ chatToggleOpen }) =>
     chatToggleOpen ? "1vh 0 1% 0" : "3vh 0 1% 0"};
   background-color: aqua;
+  transition: all ease 0.6s;
 `;
 
 //(예정)왼쪽에서 아래로 밀리면 오른쪽 위에서 튀어나오고 밀어내기 효과

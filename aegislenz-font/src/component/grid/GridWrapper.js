@@ -29,6 +29,7 @@ function Grid() {
       // Remove the last added div when chat is closed
       setDivElements((prevElements) => prevElements.slice(0, -1));
     }
+    // eslint-disable-next-line
   }, [isChattoggleOpen]);
 
   return (
