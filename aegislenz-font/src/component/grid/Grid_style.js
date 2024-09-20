@@ -11,52 +11,49 @@ export const Wrapper = styled.div`
   min-height: 90vh;
   background-color: #e4e4e4;
   margin: 0;
-  justify-content: center;
-  align-items: center;
+  flex-direction: row;
 `;
 
-export const GridContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  grid-auto-flow: dense; /* 겹침 방지를 위한 속성 */
-  grid-gap: 10px;
-  width: 100%;
-  height: 100%;
-`;
-
-export const Figure = styled.figure`
+export const Ldiv = styled.div`
+  min-height: 90vh;
+  width: 46.3vw;
+  margin: 0 0 0 0.8vw;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: ${({ active }) => (active ? "#ffcc00" : "#f2f2f2")};
-  border: 2px solid #ccc;
-  padding: 20px;
-  transition: all 0.3s ease;
-  cursor: pointer;
-  grid-row: span 1;
-  grid-column: span 1; /* 기본 크기는 하나의 그리드 칸을 차지 */
-  &:hover {
-    background-color: #ffcc00;
-    grid-row: span 2; /* hover 시 크기 변경 */
-    grid-column: span 2; /* hover 시 가로 크기도 변경 */
-    padding: 40px;
-  }
 `;
-
-export const FrameImage = styled.div`
-  background-color: #f2f2f2;
-  border: 1px solid #ccc;
-  width: 100%;
-  height: 100px;
+export const Rdiv = styled.div`
+  min-height: 90vh;
+  width: 46.3vw;
+  margin: 0 0 0 0.8vw;
+  background-color: pink;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
 `;
 
-export const Figcaption = styled.figcaption`
-  margin-top: 10px;
-  font-size: 1rem;
-  text-align: center;
-  color: #333;
+export const Rdiv_scroll = styled.div`
+  height: 90vh;
+  width: 46.3vw;
+  margin: 0 0 0 0.8vw;
+  background-color: purple;
+  overflow-y: scroll;
+`;
+
+export const ChatAreaDiv = styled.div`
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: ${({ chatToggleOpen }) => (chatToggleOpen ? "84vh" : "5vh")};
+  margin: 3vh 0 1% 0;
+  background-color: aqua;
+`;
+
+//(예정)왼쪽에서 아래로 밀리면 오른쪽 위에서 튀어나오고 밀어내기 효과
+export const BasicItenDiv = styled.div`
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 500px;
+  margin: 1% 0 1% 0;
+  /* height: auto; */
+  background-color: skyblue;
 `;

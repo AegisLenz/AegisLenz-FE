@@ -1,11 +1,12 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-  position: absolute;
-  width: 45vw;
+  z-index: 200;
+  position: ${({ isOpen }) => (isOpen ? "fixed" : "absolute")};
+  width: 46.3vw;
   height: auto;
-  top: 3vh;
-  left: 1.25vw;
+  top: ${({ isOpen }) => (isOpen ? "13vh" : "3vh")};
+  left: ${({ isOpen }) => (isOpen ? "5.8vw" : "0.8vw")};
 `;
 
 export const ChatBox = styled.div`

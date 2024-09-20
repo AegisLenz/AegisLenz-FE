@@ -1,33 +1,51 @@
-import { useState } from "react";
 import * as S from "./Grid_style";
+import { useState, useEffect } from "react";
 import ToggleChat from "../chat/ToggleChat";
 
 function Grid() {
-  const [activeFrame, setActiveFrame] = useState(null);
+  const [isChattoggleOpen, setChatToggle] = useState(false);
+  const [divElements, setDivElements] = useState([
+    <S.BasicItenDiv key="1">text</S.BasicItenDiv>,
+    <S.BasicItenDiv key="2">text</S.BasicItenDiv>,
+    <S.BasicItenDiv key="3">text</S.BasicItenDiv>,
+    <S.BasicItenDiv key="4">text</S.BasicItenDiv>,
+  ]);
 
-  const handleClick = (index) => {
-    setActiveFrame(index);
+  const ChatToggleButton = () => {
+    setChatToggle((prev) => !prev);
   };
+
+  const setChatToggleOpen = () => {
+    setChatToggle(true);
+  };
+
+  useEffect(() => {
+    if (isChattoggleOpen) {
+      setDivElements((prevElements) => [
+        ...prevElements,
+        <S.BasicItenDiv key={prevElements.length + 1}>text</S.BasicItenDiv>,
+      ]);
+    } else if (!isChattoggleOpen && divElements.length > 4) {
+      // Remove the last added div when chat is closed
+      setDivElements((prevElements) => prevElements.slice(0, -1));
+    }
+  }, [isChattoggleOpen]);
 
   return (
     <S.Wrapper>
-      <S.GridContainer>
-        <ToggleChat></ToggleChat>
-        <S.Figure key="toggle-chat" onClick={() => handleClick("toggle-chat")}>
-          <S.FrameImage>Toggle Chat</S.FrameImage>
-          <S.Figcaption>Toggle Chat Box</S.Figcaption>
-        </S.Figure>
-        {Array.from({ length: 6 }, (_, index) => (
-          <S.Figure
-            key={index}
-            active={activeFrame === index}
-            onClick={() => handleClick(index)}
-          >
-            <S.FrameImage>Frame {index + 1}</S.FrameImage>
-            <S.Figcaption>Frame {index + 1} Caption</S.Figcaption>
-          </S.Figure>
-        ))}
-      </S.GridContainer>
+      <ToggleChat
+        ChatToggleButton={ChatToggleButton}
+        setChatToggleOpen={setChatToggleOpen}
+        isChattoggleOpen={isChattoggleOpen}
+      />
+      <S.Ldiv>
+        <S.ChatAreaDiv chatToggleOpen={isChattoggleOpen}></S.ChatAreaDiv>
+      </S.Ldiv>
+      {isChattoggleOpen ? (
+        <S.Rdiv_scroll>{divElements}</S.Rdiv_scroll>
+      ) : (
+        <S.Rdiv>{divElements}</S.Rdiv>
+      )}
     </S.Wrapper>
   );
 }
