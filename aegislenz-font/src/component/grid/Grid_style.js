@@ -54,8 +54,8 @@ export const BasicItenDiv = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 500px;
+  /* height: 500px; */
   margin: 1% 0 1% 0;
-  /* height: auto; */
+  height: auto;
   background-color: skyblue;
 `;
