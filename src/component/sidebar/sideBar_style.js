@@ -5,10 +5,10 @@ export const Wrapper = styled.div`
   position: fixed;
   display: flex;
   width: 5vw;
-  height: 90vh;
+  height: 92vh;
   background-color: #104f55;
   margin: 0;
-  top: 10vh;
+  top: 8vh;
   justify-content: center;
   align-items: center;
 `;

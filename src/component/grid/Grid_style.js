@@ -4,10 +4,10 @@ export const Wrapper = styled.div`
   z-index: 100;
   position: absolute;
   left: 5vw;
-  top: 10vh;
+  top: 8vh;
   width: 95vw;
   height: auto;
-  min-height: 90vh;
+  min-height: 92vh;
   background-color: #e4e4e4;
   margin: 0;
 `;
@@ -24,5 +24,6 @@ export const ChatArea = styled.div`
 
 export const GridElement = styled.div`
   transition: all ease 0.7s;
-  /* background-color: pink; */
+  border-radius: 1em;
+  background-color: white;
 `;

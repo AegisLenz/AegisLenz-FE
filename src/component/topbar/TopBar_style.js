@@ -4,7 +4,7 @@ export const Wrapper = styled.div`
   z-index: 200;
   position: fixed;
   width: 100vw;
-  height: 10vh;
+  height: 8vh;
   background-color: white;
   margin: 0;
   top: 0;
