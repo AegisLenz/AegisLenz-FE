@@ -2,19 +2,19 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
   z-index: 200;
-  position: ${({ isOpen }) => (isOpen ? "fixed" : "absolute")};
+  position: absolute;
   width: 46.3vw;
   height: auto;
-  top: ${({ isOpen }) => (isOpen ? "9vh" : "0")};
-  left: ${({ isOpen }) => (isOpen ? "5.8vw" : "0.8vw")};
+  top: ${({ isOpen }) => (isOpen ? "3vh" : "9vh")};
+  left: ${({ isOpen }) => (isOpen ? "47.9vw" : "0.8vw")};
+  transition: all ease 0.6s;
 `;
 
-export const ChatBox = styled.div`
+export const FilterBox = styled.div`
   z-index: 201;
   background-color: #cccccc;
-  margin-top: ${({ isOpen }) => (isOpen ? "1vh" : "3vh")};
-  border-radius: ${({ isOpen }) => (isOpen ? "2em" : "20em")};
-  height: ${({ isOpen }) => (isOpen ? "88vh" : "5vh")};
+  border-radius: 1em;
+  height: 15vh;
   overflow: hidden;
   transition: margin-top 0.6s ease,
     ${({ isOpen }) =>
@@ -26,10 +26,10 @@ export const ChatBox = styled.div`
   box-shadow: 1px 1px 3px 1px #999999;
 `;
 
-export const AI_Icon = styled.img`
+export const Icon = styled.img`
   z-index: 202;
   position: absolute;
-  bottom: 0.5vh;
+  top: 0.5vh;
   width: 7%;
   left: 2%;
   height: 4vh;
@@ -37,10 +37,10 @@ export const AI_Icon = styled.img`
   background-position: center;
 `;
 
-export const ChatInputWrapper = styled.div`
+export const FilterInputWrapper = styled.div`
   z-index: 202;
   position: absolute;
-  bottom: 0.5vh;
+  top: 0.5vh;
   width: 89%;
   height: 4vh;
   margin-left: 7%;
@@ -48,7 +48,7 @@ export const ChatInputWrapper = styled.div`
   justify-content: center;
 `;
 
-export const ChatInput = styled.input`
+export const FilterInput = styled.input`
   z-index: 203;
   font-size: 110%;
   border-radius: 10em;
@@ -57,10 +57,12 @@ export const ChatInput = styled.input`
   border: none;
   padding: 0 0 0 2%;
   transition: all ease 0.3s;
-  background-color: ${({ isOpen }) => (isOpen ? "#D9D9D9" : "transparent")};
-  box-shadow: ${({ isOpen }) => (isOpen ? "1px 1px 2px 1px #999999" : "none")};
+  background-color: transparent;
+  box-shadow: none;
+  outline: none;
   &:focus {
-    outline: none;
+    background-color: #d9d9d9;
+    box-shadow: 1px 1px 2px 1px #999999;
   }
   &::placeholder {
     font-weight: 700;
