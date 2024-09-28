@@ -1,4 +1,4 @@
-import * as S from "./sideBar_style";
+import * as S from "./SideBar_style";
 import { Link } from "react-router-dom";
 
 function SideBar() {
