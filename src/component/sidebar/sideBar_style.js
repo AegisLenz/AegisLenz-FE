@@ -11,6 +11,7 @@ export const Wrapper = styled.div`
   top: 8vh;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 `;
 export const IconWrapper = styled.div`
   display: flex;

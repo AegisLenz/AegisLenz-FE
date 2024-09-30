@@ -3,11 +3,11 @@ import { useState, useEffect } from "react";
 import GridLayout from "react-grid-layout";
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
-import ChatToggle from "../chat/ToggleChat";
-import FilterToggle from "../filter/Filter";
-import AccountCount from "../elements/account_count/AccountCount";
+import ChatToggle from "../toggle/chat/ToggleChat";
+import FilterToggle from "../toggle/filter/Filter";
+import AccountCount from "./elements/account_count/AccountCount";
 
-function Grid() {
+function Grid({ isEditOn }) {
   const [isChattoggleOpen, setChatToggle] = useState(false);
   const [isFilterOpen, setFilter] = useState(false);
 
@@ -111,7 +111,10 @@ function Grid() {
         <S.GridElement key="filter"></S.GridElement>
         <S.GridElement key="1">
           <AccountCount />
-          <S.ContentAreaInGrid className="grid-item" />
+          <S.MoveAreaInGrid
+            className={isEditOn ? "grid-item" : ""}
+            isEditOn={isEditOn}
+          />
         </S.GridElement>
         <S.GridElement
           key="2"

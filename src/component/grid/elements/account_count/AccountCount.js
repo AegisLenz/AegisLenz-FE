@@ -3,12 +3,13 @@ import { useState, useRef, useEffect } from "react";
 function SideBar() {
   const ColorList = [
     { key: "IAM", color: "#216261" },
-    { key: "Kubernetics", color: "#6A4FA3" },
+    { key: "Kubernetes", color: "#6A4FA3" },
     { key: "Network", color: "#CD62B0" },
   ];
+  // eslint-disable-next-line no-unused-vars
   const [AccountCountList, setAccountCountList] = useState({
-    IAM: 1024,
-    Kubernetics: 10,
+    IAM: 102312,
+    Kubernetes: 10,
     Network: 5,
   });
   const [fontSize, setFontSize] = useState(16);

@@ -22,22 +22,28 @@ export const ChatArea = styled.div`
   transition: all ease 0.6s;
 `;
 
-export const ContentAreaInGrid = styled.div`
+export const MoveAreaInGrid = styled.div`
   z-index: 101;
   width: 100%;
   height: 3%;
   margin-bottom: 1%;
-  transition: height ease 0.3s;
-  background-color: #cccccc;
-  &:hover {
-    cursor: pointer;
-    height: 20%;
-  }
-  &:active {
-    cursor: move;
-    height: 20%;
-    transform: translate(0, -50%);
-  }
+  background-color: ${({ isEditOn }) => (isEditOn ? "#cccccc" : "transparent")};
+  border-radius: 1em;
+  transition: background-color ease 0.3s, height ease 0.3s;
+  ${({ isEditOn }) =>
+    isEditOn &&
+    `
+      &:hover {
+        cursor: pointer;
+        height: 20%;
+      }
+
+      &:active {
+        cursor: move;
+        height: 20%;
+        transform: translate(0, -50%);
+      }
+    `}
 `;
 
 export const GridElement = styled.div`
@@ -45,7 +51,7 @@ export const GridElement = styled.div`
   transition: all ease 0.7s;
   border-radius: 1em;
   background-color: transparent;
-  ${ContentAreaInGrid}:active ~ &:hover {
+  ${MoveAreaInGrid}:active ~ &:hover {
     cursor: move;
     user-select: none;
   }
