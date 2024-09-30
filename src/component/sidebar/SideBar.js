@@ -1,7 +1,12 @@
-import * as S from "./sideBar_style";
+import * as S from "./SideBar_style";
 import { Link } from "react-router-dom";
+import ToggleEdit from "../toggle/edit/ToggleEdit";
 
-function SideBar() {
+function SideBar({ isEditOn, setEditOn }) {
+  const setEditOnOff = () => {
+    setEditOn((prev) => !prev);
+  };
+
   return (
     <S.Wrapper>
       <S.IconWrapper>
@@ -15,6 +20,7 @@ function SideBar() {
           <S.Icon src="/icon/Network_Icon.png"></S.Icon>
         </Link>
       </S.IconWrapper>
+      <ToggleEdit isEditOn={isEditOn} setEditOnOff={setEditOnOff} />
     </S.Wrapper>
   );
 }
