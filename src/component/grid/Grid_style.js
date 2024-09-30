@@ -50,7 +50,6 @@ export const GridElement = styled.div`
   z-index: 102;
   transition: all ease 0.7s;
   border-radius: 1em;
-  background-color: transparent;
   ${MoveAreaInGrid}:active ~ &:hover {
     cursor: move;
     user-select: none;

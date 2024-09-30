@@ -6,8 +6,10 @@ import "react-resizable/css/styles.css";
 import ChatToggle from "../toggle/chat/ToggleChat";
 import FilterToggle from "../toggle/filter/Filter";
 import AccountCount from "./elements/account_count/AccountCount";
+// import Detection from "./elements/detection/AccountCount";
+import DailyInsight from "./elements/daily_insight_report/DailyInsightReport";
 
-function Grid({ isEditOn }) {
+const Grid = ({ isEditOn }) => {
   const [isChattoggleOpen, setChatToggle] = useState(false);
   const [isFilterOpen, setFilter] = useState(false);
 
@@ -37,8 +39,8 @@ function Grid({ isEditOn }) {
       h: 16,
       isResizable: false,
     },
-    { i: "filter", x: 0, y: 0, w: 47, h: 9, isResizable: false },
-    { i: "1", x: 4, y: 0, w: 4, h: 2 },
+    { i: "filter", x: 0, y: 0, w: 47, h: 8, isResizable: false },
+    { i: "1", x: 4, y: 0, w: 4, h: 10 },
     { i: "2", x: 8, y: 1, w: 4, h: 2 },
     { i: "3", x: 0, y: 2, w: 4, h: 2 },
   ]);
@@ -61,8 +63,8 @@ function Grid({ isEditOn }) {
           h: 3,
           isResizable: false,
         },
-        { i: "filter", x: 0, y: 0, w: 47, h: 9, isResizable: false },
-        { i: "1", x: 47, y: 0, w: 47, h: 12 },
+        { i: "filter", x: 0, y: 0, w: 47, h: 8, isResizable: false },
+        { i: "1", x: 47, y: 0, w: 47, h: 10 },
         { i: "2", x: 0, y: 0, w: 20, h: 5 },
         { i: "3", x: 20, y: 0, w: 20, h: 5 },
       ]);
@@ -116,12 +118,12 @@ function Grid({ isEditOn }) {
             isEditOn={isEditOn}
           />
         </S.GridElement>
-        <S.GridElement
-          key="2"
-          className="grid-item"
-          style={{ backgroundColor: "white" }}
-        >
-          Box 3
+        <S.GridElement key="2">
+          <DailyInsight />
+          <S.MoveAreaInGrid
+            className={isEditOn ? "grid-item" : ""}
+            isEditOn={isEditOn}
+          />
         </S.GridElement>
         <S.GridElement
           key="3"
@@ -133,6 +135,6 @@ function Grid({ isEditOn }) {
       </GridLayout>
     </S.Wrapper>
   );
-}
+};
 
 export default Grid;

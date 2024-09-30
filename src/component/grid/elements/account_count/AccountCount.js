@@ -1,6 +1,6 @@
 import * as S from "./AccountCount_style";
 import { useState, useRef, useEffect } from "react";
-function SideBar() {
+const SideBar = () => {
   const ColorList = [
     { key: "IAM", color: "#216261" },
     { key: "Kubernetes", color: "#6A4FA3" },
@@ -40,6 +40,6 @@ function SideBar() {
       ))}
     </S.Wrapper>
   );
-}
+};
 
 export default SideBar;

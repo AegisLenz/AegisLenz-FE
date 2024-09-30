@@ -1,6 +1,10 @@
 import * as S from "./ToggleChat_style";
 
-function ToggleChat({ ChatToggleButton, isChattoggleOpen, setChatToggleOpen }) {
+const ToggleChat = ({
+  ChatToggleButton,
+  isChattoggleOpen,
+  setChatToggleOpen,
+}) => {
   return (
     <S.Wrapper isOpen={isChattoggleOpen}>
       <S.ChatBox isOpen={isChattoggleOpen}>
@@ -19,6 +23,6 @@ function ToggleChat({ ChatToggleButton, isChattoggleOpen, setChatToggleOpen }) {
       </S.ChatBox>
     </S.Wrapper>
   );
-}
+};
 
 export default ToggleChat;
