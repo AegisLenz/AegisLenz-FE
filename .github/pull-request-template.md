@@ -1,12 +1,3 @@
----
-name: Request template
-about: Suggest an idea for this project
-title: ''
-labels: ''
-assignees: ''
-
----
-
 ## 🔥 Related Issue
 - Close #이슈번호
 
