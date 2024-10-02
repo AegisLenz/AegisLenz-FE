@@ -5,14 +5,18 @@ import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
 import ChatToggle from "../toggle/chat/ToggleChat";
 import FilterToggle from "../toggle/filter/Filter";
-import AccountCount from "./elements/account_count/AccountCount";
-// import Detection from "./elements/detection/AccountCount";
-import DailyInsight from "./elements/daily_insight_report/DailyInsightReport";
+import {
+  AccountCount,
+  DailyInsight,
+  AccountByService,
+  Score,
+  NeedCheck,
+} from "./elements";
 
 const Grid = ({ isEditOn }) => {
   const [isChattoggleOpen, setChatToggle] = useState(false);
   const [isFilterOpen, setFilter] = useState(false);
-
+  const [NeedCheckStatus, setNeedCheckStatus] = useState(false);
   const ChatToggleButton = () => {
     setChatToggle((prev) => !prev);
   };
@@ -29,54 +33,154 @@ const Grid = ({ isEditOn }) => {
     setFilter(true);
   };
 
-  // 레이아웃 설정 (x, y, w, h: 각 박스의 초기 위치 및 크기)
+  const isNeedCheck = () => {
+    setNeedCheckStatus((prev) => !prev);
+  };
+
+  // 초기 레이아웃 설정
   const [gridLayout, setGridLayout] = useState([
+    { i: "chat", x: 0, y: 0, w: 47, h: 3, isResizable: false },
+    { i: "filter", x: 0, y: 0, w: 47, h: 8, isResizable: false },
     {
-      i: "chat",
-      x: 0,
+      i: "AccountCount",
+      x: 47,
       y: 0,
       w: 47,
-      h: 16,
-      isResizable: false,
+      h: 10,
+      content: <AccountCount />,
+      isResizable: true,
     },
-    { i: "filter", x: 0, y: 0, w: 47, h: 8, isResizable: false },
-    { i: "1", x: 4, y: 0, w: 4, h: 10 },
-    { i: "2", x: 8, y: 1, w: 4, h: 2 },
-    { i: "3", x: 0, y: 2, w: 4, h: 2 },
+    {
+      i: "Score",
+      x: 0,
+      y: 0,
+      w: 33,
+      h: 5,
+      content: <Score />,
+      isResizable: true,
+    },
+    {
+      i: "DailyInsight",
+      x: 0,
+      y: 0,
+      w: 33,
+      h: 11,
+      content: <DailyInsight />,
+      isResizable: true,
+    },
+    {
+      i: "AccountByService",
+      x: 33,
+      y: 0,
+      w: 14,
+      h: 16,
+      content: <AccountByService />,
+      isResizable: true,
+    },
+    {
+      i: "NeedCheck",
+      x: 0,
+      y: 0,
+      w: 20,
+      h: 17,
+      content: (
+        <NeedCheck
+          isNeedCheck={isNeedCheck}
+          NeedCheckStatus={NeedCheckStatus}
+        />
+      ),
+      isResizable: true,
+    },
   ]);
 
+  // 토글 오픈
   useEffect(() => {
     if (isChattoggleOpen) {
       setGridLayout((prevLayout) =>
         prevLayout.map((item) =>
-          item.i === "chat" ? item : { ...item, x: 48 }
+          item.i === "chat" ? item : { ...item, x: item.x + 47 }
         )
       );
+    }
+    if (NeedCheckStatus) {
+      setGridLayout((prevLayout) =>
+        prevLayout.map((item) => {
+          // "NeedCheck"인 경우
+          if (item.i === "NeedCheck") {
+            return { ...item, x: 47, y: 0, w: 47, h: 20 };
+          }
+          // y <= 20이면서 x >= 46인 경우
+          if (item.y <= 20 && item.x >= 47) {
+            return { ...item, y: item.y + 20 };
+          }
+          // 그 외의 항목은 수정하지 않음
+          return item;
+        })
+      );
     } else {
-      // 원래대로 복원
       setGridLayout([
+        { i: "chat", x: 0, y: 0, w: 47, h: 3, isResizable: false },
+        { i: "filter", x: 0, y: 0, w: 47, h: 8, isResizable: false },
         {
-          i: "chat",
-          x: 0,
+          i: "AccountCount",
+          x: 47,
           y: 0,
           w: 47,
-          h: 3,
-          isResizable: false,
+          h: 10,
+          content: <AccountCount />,
+          isResizable: true,
         },
-        { i: "filter", x: 0, y: 0, w: 47, h: 8, isResizable: false },
-        { i: "1", x: 47, y: 0, w: 47, h: 10 },
-        { i: "2", x: 0, y: 0, w: 20, h: 5 },
-        { i: "3", x: 20, y: 0, w: 20, h: 5 },
+        {
+          i: "Score",
+          x: 0,
+          y: 0,
+          w: 33,
+          h: 5,
+          content: <Score />,
+          isResizable: true,
+        },
+        {
+          i: "DailyInsight",
+          x: 0,
+          y: 0,
+          w: 33,
+          h: 11,
+          content: <DailyInsight />,
+          isResizable: true,
+        },
+        {
+          i: "AccountByService",
+          x: 33,
+          y: 0,
+          w: 14,
+          h: 16,
+          content: <AccountByService />,
+          isResizable: true,
+        },
+        {
+          i: "NeedCheck",
+          x: 0,
+          y: 0,
+          w: 20,
+          h: 17,
+          content: (
+            <NeedCheck
+              isNeedCheck={isNeedCheck}
+              NeedCheckStatus={NeedCheckStatus}
+            />
+          ),
+          isResizable: true,
+        },
       ]);
     }
-  }, [isChattoggleOpen]);
+  }, [isChattoggleOpen, NeedCheckStatus]);
 
   const [rowHeight, setrowHeight] = useState(window.innerHeight);
   const [width, setwidth] = useState(window.innerWidth);
 
   useEffect(() => {
     const handleResize = () => {
-      setrowHeight(window.innerHeight); // 창 크기가 변할 때 rowHeight 업데이트
+      setrowHeight(window.innerHeight);
       setwidth(window.innerWidth);
     };
 
@@ -102,36 +206,27 @@ const Grid = ({ isEditOn }) => {
         setFilterOpen={setFilterOpen}
       />
       <GridLayout
-        layout={gridLayout}
+        layout={gridLayout.map((item) => ({
+          ...item,
+          isResizable: isEditOn && item.isResizable,
+        }))}
         cols={94}
         rowHeight={rowHeight * 0.01}
         width={width * 0.95}
         draggableHandle=".grid-item"
         style={{ backgroundColor: "transparent", padding: "2vh 0 0 0" }}
       >
-        <S.GridElement key="chat"></S.GridElement>
-        <S.GridElement key="filter"></S.GridElement>
-        <S.GridElement key="1">
-          <AccountCount />
-          <S.MoveAreaInGrid
-            className={isEditOn ? "grid-item" : ""}
-            isEditOn={isEditOn}
-          />
-        </S.GridElement>
-        <S.GridElement key="2">
-          <DailyInsight />
-          <S.MoveAreaInGrid
-            className={isEditOn ? "grid-item" : ""}
-            isEditOn={isEditOn}
-          />
-        </S.GridElement>
-        <S.GridElement
-          key="3"
-          className="grid-item"
-          style={{ backgroundColor: "white" }}
-        >
-          Box 4
-        </S.GridElement>
+        {gridLayout.map((item) => (
+          <S.GridElement key={item.i}>
+            {item.content}
+            {item.i !== "chat" && item.i !== "filter" && (
+              <S.MoveAreaInGrid
+                className={isEditOn ? "grid-item" : ""}
+                isEditOn={isEditOn}
+              />
+            )}
+          </S.GridElement>
+        ))}
       </GridLayout>
     </S.Wrapper>
   );

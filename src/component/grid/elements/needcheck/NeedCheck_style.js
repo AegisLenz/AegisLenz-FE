@@ -11,56 +11,55 @@ export const Wrapper = styled.div`
   flex-direction: column;
   border-radius: 1em;
 `;
-
 export const Title = styled.h2`
   position: absolute;
   top: 0;
   color: #104f55;
   width: 100%;
-  height: 19%;
+  height: 20%;
   left: 0;
   font-size: 130%;
   padding: 0 3% 0 3%;
-  margin: 1% 0 1% 0;
+  margin: 0 0 1% 0;
   align-items: left;
   align-content: center;
 `;
-
 export const ContentArea = styled.div`
   position: absolute;
-  bottom: 0;
+  height: 80%;
   width: 100%;
-  height: 81%;
+  top: 20%;
+  overflow-y: scroll;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-`;
-export const SubContent = styled.div`
-  min-height: 94%;
-  width: 98%;
-  background: linear-gradient(to right, #2f878f, #2d3c7d);
-  border-radius: 1em;
-  justify-content: right;
+  justify-content: top;
 `;
 
 export const Content = styled.div`
-  width: 89%;
-  align-content: left;
+  margin: 2% 0 2% 20%;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  height: ${({ NeedCheckStatus }) => (NeedCheckStatus ? "auto" : "100%")};
+  width: 70%;
+  border-top-right-radius: 1em;
+  border-bottom-right-radius: 1em;
+  background-color: #104f55;
+  padding: 15% 2% 15% 2%;
   color: white;
-  font-size: 80%;
-  font-weight: 200;
-  margin: 2% 0 3% 10%;
+  font-size: 90%;
+  font-weight: 600;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
 
   &::before {
     content: "";
     display: block;
     position: absolute;
-    left: 9%;
-    width: 12%;
-    height: 12%;
-    background-image: url("/icon/Daily_Arrow.svg");
-    background-size: contain;
-    background-repeat: no-repeat;
-    transform: translateX(-50%);
+    width: 3vw;
+    height: 3vh;
+    background-color: #ff9900;
+    border-radius: 0.5em;
+    transform: translate(-130%, -150%);
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
   }
 `;

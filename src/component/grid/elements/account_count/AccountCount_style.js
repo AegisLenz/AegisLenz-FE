@@ -25,7 +25,7 @@ export const Index = styled.h2`
   white-space: pre-wrap;
   word-wrap: break-word;
   top: 5%;
-  left: 5%;
+  left: 10%;
   color: white;
   font-size: ${(props) => props.fontSize * 10}%;
 `;
@@ -35,5 +35,5 @@ export const Number = styled.h1`
   bottom: 5%;
   right: 10%;
   color: white;
-  font-size: ${(props) => props.fontSize * 20}%;
+  font-size: ${(props) => props.fontSize * 15}%;
 `;

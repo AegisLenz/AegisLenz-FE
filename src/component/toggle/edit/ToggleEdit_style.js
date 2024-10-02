@@ -9,17 +9,6 @@ export const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-
-  &::before {
-    content: "Edit Dashboard";
-    width: 5vw;
-    transform: translateY(-100%);
-    text-align: center;
-    position: absolute;
-    color: white;
-    font-weight: 600;
-    font-size: 80%;
-  }
 `;
 
 export const Toggle = styled.div`
@@ -42,5 +31,15 @@ export const Toggle = styled.div`
     transition: all ease 0.3s;
     transform: ${({ isEditOn }) =>
       isEditOn ? "translateX(1.1vw);" : "translateX(-1.1vw);"};
+  }
+  &::before {
+    content: "Edit Dashboard";
+    position: absolute;
+    width: 5vw;
+    transform: translateY(-150%);
+    text-align: center;
+    color: white;
+    font-weight: 600;
+    font-size: 80%;
   }
 `;
