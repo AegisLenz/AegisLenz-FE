@@ -8,7 +8,6 @@ export const Wrapper = styled.div`
   width: 95vw;
   height: auto;
   min-height: 92vh;
-  background-color: #e4e4e4;
   margin: 0;
 `;
 
@@ -50,7 +49,6 @@ export const GridElement = styled.div`
   z-index: 102;
   transition: all ease 0.7s;
   border-radius: 1em;
-  background-color: transparent;
   ${MoveAreaInGrid}:active ~ &:hover {
     cursor: move;
     user-select: none;

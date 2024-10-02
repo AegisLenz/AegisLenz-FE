@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import * as S from "./TopBar_style";
 
-function Top() {
+const Top = () => {
   return (
     <S.Wrapper>
       <Link to="/">
@@ -9,6 +9,6 @@ function Top() {
       </Link>
     </S.Wrapper>
   );
-}
+};
 
 export default Top;

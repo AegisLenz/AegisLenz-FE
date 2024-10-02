@@ -9,12 +9,9 @@ const useElasticSearch = (indexName, query) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.post(
-          `http://localhost:9200/${indexName}/_search`,
-          {
-            query: query,
-          }
-        );
+        const response = await axios.post(`/api/${indexName}/_search`, {
+          query: query,
+        });
         const hits = response.data.hits.hits.map((hit) => hit._source);
         setData(hits);
       } catch (err) {

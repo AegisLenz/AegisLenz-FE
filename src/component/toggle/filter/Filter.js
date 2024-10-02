@@ -1,11 +1,11 @@
 import * as S from "./Filter_style";
 
-function Filter({
+const Filter = ({
   FilterToggleButton,
   isFilterOpen,
   setFilterOpen,
   isChattoggleOpen,
-}) {
+}) => {
   return (
     <S.Wrapper isOpen={isChattoggleOpen}>
       <S.FilterBox isOpen={isFilterOpen}>
@@ -24,6 +24,6 @@ function Filter({
       </S.FilterBox>
     </S.Wrapper>
   );
-}
+};
 
 export default Filter;
