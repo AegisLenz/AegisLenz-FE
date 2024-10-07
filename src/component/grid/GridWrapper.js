@@ -11,6 +11,7 @@ import {
   AccountByService,
   Score,
   NeedCheck,
+  Detection,
 } from "./elements";
 
 const Grid = ({ isEditOn }) => {
@@ -91,6 +92,15 @@ const Grid = ({ isEditOn }) => {
       ),
       isResizable: true,
     },
+    {
+      i: "Detection",
+      x: 47,
+      y: 0,
+      w: 47,
+      h: 10,
+      content: <Detection />,
+      isResizable: true,
+    },
   ]);
 
   // 토글 오픈
@@ -101,8 +111,7 @@ const Grid = ({ isEditOn }) => {
           item.i === "chat" ? item : { ...item, x: item.x + 47 }
         )
       );
-    }
-    if (NeedCheckStatus) {
+    } else if (NeedCheckStatus) {
       setGridLayout((prevLayout) =>
         prevLayout.map((item) => {
           // "NeedCheck"인 경우
@@ -151,7 +160,7 @@ const Grid = ({ isEditOn }) => {
         {
           i: "AccountByService",
           x: 33,
-          y: 0,
+          y: 11,
           w: 14,
           h: 16,
           content: <AccountByService />,
@@ -160,7 +169,7 @@ const Grid = ({ isEditOn }) => {
         {
           i: "NeedCheck",
           x: 0,
-          y: 0,
+          y: 16,
           w: 20,
           h: 17,
           content: (
@@ -169,6 +178,15 @@ const Grid = ({ isEditOn }) => {
               NeedCheckStatus={NeedCheckStatus}
             />
           ),
+          isResizable: true,
+        },
+        {
+          i: "Detection",
+          x: 20,
+          y: 16,
+          w: 27,
+          h: 17,
+          content: <Detection />,
           isResizable: true,
         },
       ]);

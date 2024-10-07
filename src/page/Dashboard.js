@@ -3,7 +3,7 @@ import SideBar from "../component/sidebar/SideBar";
 import Grid from "../component/grid/GridWrapper";
 import { useState } from "react";
 
-function Main() {
+function Dashboard() {
   const [isEditOn, setEditOn] = useState(false);
 
   return (
@@ -15,4 +15,4 @@ function Main() {
   );
 }
 
-export default Main;
+export default Dashboard;

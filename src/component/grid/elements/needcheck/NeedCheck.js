@@ -1,3 +1,4 @@
+import { tree } from "d3";
 import * as S from "./NeedCheck_style";
 import { useState } from "react";
 
@@ -21,9 +22,9 @@ const NeedCheck = ({ isNeedCheck, NeedCheckStatus }) => {
   return (
     <S.Wrapper>
       <S.Title>Need Check</S.Title>
-      <S.ContentArea>
+      <S.ContentArea NeedCheckStatus={NeedCheckStatus}>
         {!NeedCheckStatus && selectedContentIndex !== null ? (
-          <S.Content NeedCheckStatus={Status} onClick={() => handleClick(null)}>
+          <S.Content NeedCheckStatus={true} onClick={() => handleClick(null)}>
             {innerContents[selectedContentIndex]}
           </S.Content>
         ) : (
@@ -31,7 +32,7 @@ const NeedCheck = ({ isNeedCheck, NeedCheckStatus }) => {
             <S.Content
               key={index}
               onClick={() => handleClick(index)}
-              NeedCheckStatus={Status}
+              NeedCheckStatus={false}
             >
               {content}
             </S.Content>
