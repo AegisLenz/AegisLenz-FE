@@ -76,7 +76,7 @@ export const ToggleButton = styled.button`
   position: absolute;
   background-image: url("/icon/BottomArrow.svg");
   background-repeat: no-repeat;
-  width: 3%;
+  width: 1.5vw;
   height: 100%;
   border: none;
   right: 5%;
