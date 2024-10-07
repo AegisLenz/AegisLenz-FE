@@ -216,6 +216,7 @@ const Grid = ({ isEditOn }) => {
         isChattoggleOpen={isChattoggleOpen}
         ChatToggleButton={ChatToggleButton}
         setChatToggleOpen={setChatToggleOpen}
+        sizeFull={false}
       />
       <FilterToggle
         isFilterOpen={isFilterOpen}

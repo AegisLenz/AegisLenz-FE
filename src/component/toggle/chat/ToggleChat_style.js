@@ -3,10 +3,11 @@ import styled from "styled-components";
 export const Wrapper = styled.div`
   z-index: 200;
   position: ${({ isOpen }) => (isOpen ? "fixed" : "absolute")};
-  width: 46.3vw;
+  width: ${({ sizeFull }) => (sizeFull ? "100%" : "46.3vw")};
   height: auto;
   top: ${({ isOpen }) => (isOpen ? "9vh" : "0")};
-  left: ${({ isOpen }) => (isOpen ? "5.8vw" : "0.8vw")};
+  left: ${({ isOpen, sizeFull }) =>
+    sizeFull ? "0" : isOpen ? "5.8vw" : "0.8vw"};
 `;
 
 export const ChatBox = styled.div`
@@ -30,7 +31,6 @@ export const AI_Icon = styled.img`
   z-index: 202;
   position: absolute;
   bottom: 0.5vh;
-  width: 7%;
   left: 2%;
   height: 4vh;
   background-size: contain;
@@ -69,12 +69,13 @@ export const ChatInput = styled.input`
 
 export const ToggleButton = styled.button`
   z-index: 204;
+  display: ${({ sizeFull }) => (sizeFull ? "none" : "block")};
   cursor: pointer;
   background-color: transparent;
   position: absolute;
   background-image: url("/icon/BottomArrow.svg");
   background-repeat: no-repeat;
-  width: 3%;
+  width: 1.5vw;
   height: 100%;
   border: none;
   right: 5%;
@@ -82,4 +83,22 @@ export const ToggleButton = styled.button`
   background-size: contain;
   background-position: center;
   transform: rotate(${({ isOpen }) => (isOpen ? "180deg" : "0")});
+`;
+
+export const SendButton = styled.button`
+  z-index: 204;
+  display: ${({ isOpen, sizeFull }) =>
+    sizeFull ? "block" : isOpen ? "block" : "none"};
+  cursor: pointer;
+  background-color: transparent;
+  position: absolute;
+  background-image: url("/icon/Send.svg");
+  background-repeat: no-repeat;
+  width: ${({ sizeFull }) => (sizeFull ? "2vw" : "1.5vw")};
+  height: 100%;
+  border: none;
+  right: ${({ sizeFull }) => (sizeFull ? "3%" : "10%")};
+  transition: all ease 0.3s;
+  background-size: contain;
+  background-position: center;
 `;
