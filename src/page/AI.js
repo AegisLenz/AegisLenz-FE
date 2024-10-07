@@ -2,7 +2,7 @@ import TopBar from "../component/topbar/TopBar";
 import SideBar from "../component/sidebar/SideBar";
 import Grid from "../component/grid/GridWrapper";
 
-function Main() {
+function Ai() {
   return (
     <div>
       <TopBar />
@@ -12,4 +12,4 @@ function Main() {
   );
 }
 
-export default Main;
+export default Ai;
