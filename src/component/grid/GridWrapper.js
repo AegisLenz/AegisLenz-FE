@@ -1,5 +1,5 @@
 import * as S from "./Grid_style";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import GridLayout from "react-grid-layout";
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
@@ -14,10 +14,19 @@ import {
   Detection,
 } from "./elements";
 
-const Grid = ({ isEditOn }) => {
+const Grid = ({
+  isEditOn,
+  MarkData,
+  isChatOFF,
+  isFillterOFF,
+  SideContent,
+  setMarkDataFunc,
+}) => {
   const [isChattoggleOpen, setChatToggle] = useState(false);
   const [isFilterOpen, setFilter] = useState(false);
   const [NeedCheckStatus, setNeedCheckStatus] = useState(false);
+  const [markData, setMarkData] = useState(MarkData || []);
+
   const ChatToggleButton = () => {
     setChatToggle((prev) => !prev);
   };
@@ -37,70 +46,126 @@ const Grid = ({ isEditOn }) => {
   const isNeedCheck = () => {
     setNeedCheckStatus((prev) => !prev);
   };
+  const InitLayout = useMemo(
+    () => [
+      { i: "chat", x: 0, y: 0, w: 47, h: 3, isResizable: false },
+      { i: "filter", x: 0, y: 0, w: 47, h: 8, isResizable: false },
+      {
+        i: "AccountCount",
+        x: 47,
+        y: 0,
+        w: 47,
+        h: 10,
+        content: <AccountCount />,
+        isResizable: true,
+      },
+      {
+        i: "Score",
+        x: 0,
+        y: 11,
+        w: 33,
+        h: 5,
+        content: <Score />,
+        isResizable: true,
+      },
+      {
+        i: "DailyInsight",
+        x: 0,
+        y: 16,
+        w: 33,
+        h: 11,
+        content: <DailyInsight />,
+        isResizable: true,
+      },
+      {
+        i: "AccountByService",
+        x: 33,
+        y: 12,
+        w: 14,
+        h: 16,
+        content: <AccountByService />,
+        isResizable: true,
+      },
+      {
+        i: "NeedCheck",
+        x: 0,
+        y: 25,
+        w: 20,
+        h: 17,
+        content: (
+          <NeedCheck
+            isNeedCheck={isNeedCheck}
+            NeedCheckStatus={NeedCheckStatus}
+          />
+        ),
+        isResizable: true,
+      },
+      {
+        i: "Detection",
+        x: 20,
+        y: 25,
+        w: 27,
+        h: 17,
+        content: <Detection />,
+        isResizable: true,
+      },
+    ],
+    [NeedCheckStatus]
+  );
 
   // 초기 레이아웃 설정
-  const [gridLayout, setGridLayout] = useState([
-    { i: "chat", x: 0, y: 0, w: 47, h: 3, isResizable: false },
-    { i: "filter", x: 0, y: 0, w: 47, h: 8, isResizable: false },
-    {
-      i: "AccountCount",
-      x: 47,
-      y: 0,
-      w: 47,
-      h: 10,
-      content: <AccountCount />,
-      isResizable: true,
-    },
-    {
-      i: "Score",
-      x: 0,
-      y: 0,
-      w: 33,
-      h: 5,
-      content: <Score />,
-      isResizable: true,
-    },
-    {
-      i: "DailyInsight",
-      x: 0,
-      y: 0,
-      w: 33,
-      h: 11,
-      content: <DailyInsight />,
-      isResizable: true,
-    },
-    {
-      i: "AccountByService",
-      x: 33,
-      y: 0,
-      w: 14,
-      h: 16,
-      content: <AccountByService />,
-      isResizable: true,
-    },
-    {
-      i: "NeedCheck",
-      x: 0,
-      y: 0,
-      w: 20,
-      h: 17,
-      content: (
-        <NeedCheck
-          isNeedCheck={isNeedCheck}
-          NeedCheckStatus={NeedCheckStatus}
-        />
-      ),
-      isResizable: true,
-    },
-    {
-      i: "Detection",
-      x: 47,
-      y: 0,
-      w: 47,
-      h: 10,
-      content: <Detection />,
-      isResizable: true,
-    },
+  const [gridLayout, setGridLayout] = useState(InitLayout);
+
+  useEffect(() => {
+    // MarkData가 업데이트될 때 markData를 업데이트
+    if (MarkData.length > 0) {
+      setMarkData(MarkData);
+    }
+  }, [MarkData]);
+
+  useEffect(() => {
+    if (markData && markData.length > 0) {
+      let currentX = 0;
+      let currentY = 0;
+      let maxRowHeight = 0; // 현재 행에서 가장 큰 높이
+
+      // 필터링하면서 x값과 y값을 계산
+      const filteredLayout = InitLayout.filter((item) =>
+        markData.includes(item.i)
+      ).map((item) => {
+        // 다음 줄로 넘기기 조건: w값의 합이 50을 초과하면 줄을 바꿈
+        if (currentX + item.w > 50) {
+          currentX = 0; // x를 0으로 초기화
+          currentY += maxRowHeight; // y를 가장 큰 높이만큼 증가
+          maxRowHeight = 0; // 새로운 행에서 가장 큰 높이를 다시 0으로 초기화
+        }
+
+        const layoutItem = {
+          ...item,
+          x: currentX, // x 값을 설정
+          y: currentY, // y 값을 설정
+        };
+
+        currentX += item.w; // 현재 x 값을 w만큼 증가
+        maxRowHeight = Math.max(maxRowHeight, item.h); // 행에서 가장 큰 높이를 저장
+
+        return layoutItem;
+      });
+
+      setGridLayout(filteredLayout);
+    } else {
+      setGridLayout(InitLayout);
+    }
+    if (!isChatOFF && isFillterOFF && !isChattoggleOpen) {
+      setGridLayout(InitLayout);
+    }
+  }, [
+    InitLayout,
+    markData,
+    MarkData,
+    isChattoggleOpen,
+    isFillterOFF,
+    isChatOFF,
   ]);
 
   // 토글 오픈
@@ -127,71 +192,11 @@ const Grid = ({ isEditOn }) => {
         })
       );
     } else {
-      setGridLayout([
-        { i: "chat", x: 0, y: 0, w: 47, h: 3, isResizable: false },
-        { i: "filter", x: 0, y: 0, w: 47, h: 8, isResizable: false },
-        {
-          i: "AccountCount",
-          x: 47,
-          y: 0,
-          w: 47,
-          h: 10,
-          content: <AccountCount />,
-          isResizable: true,
-        },
-        {
-          i: "Score",
-          x: 0,
-          y: 0,
-          w: 33,
-          h: 5,
-          content: <Score />,
-          isResizable: true,
-        },
-        {
-          i: "DailyInsight",
-          x: 0,
-          y: 0,
-          w: 33,
-          h: 11,
-          content: <DailyInsight />,
-          isResizable: true,
-        },
-        {
-          i: "AccountByService",
-          x: 33,
-          y: 11,
-          w: 14,
-          h: 16,
-          content: <AccountByService />,
-          isResizable: true,
-        },
-        {
-          i: "NeedCheck",
-          x: 0,
-          y: 16,
-          w: 20,
-          h: 17,
-          content: (
-            <NeedCheck
-              isNeedCheck={isNeedCheck}
-              NeedCheckStatus={NeedCheckStatus}
-            />
-          ),
-          isResizable: true,
-        },
-        {
-          i: "Detection",
-          x: 20,
-          y: 16,
-          w: 27,
-          h: 17,
-          content: <Detection />,
-          isResizable: true,
-        },
-      ]);
+      if (markData.length < 0) {
+        setGridLayout(InitLayout);
+      }
     }
-  }, [isChattoggleOpen, NeedCheckStatus]);
+  }, [isChattoggleOpen, NeedCheckStatus, InitLayout, markData]);
 
   const [rowHeight, setrowHeight] = useState(window.innerHeight);
   const [width, setwidth] = useState(window.innerWidth);
@@ -212,18 +217,28 @@ const Grid = ({ isEditOn }) => {
 
   return (
     <S.Wrapper>
-      <ChatToggle
-        isChattoggleOpen={isChattoggleOpen}
-        ChatToggleButton={ChatToggleButton}
-        setChatToggleOpen={setChatToggleOpen}
-        sizeFull={false}
-      />
-      <FilterToggle
-        isFilterOpen={isFilterOpen}
-        isChattoggleOpen={isChattoggleOpen}
-        FilterToggleButton={FilterToggleButton}
-        setFilterOpen={setFilterOpen}
-      />
+      {!isChatOFF && isFillterOFF ? (
+        <>
+          <ChatToggle
+            isChattoggleOpen={isChattoggleOpen}
+            ChatToggleButton={ChatToggleButton}
+            setChatToggleOpen={setChatToggleOpen}
+            sizeFull={false}
+            SideContent={SideContent} //오른쪽 On/Off
+            markData={setMarkDataFunc} //오른쪽에 띄울 데이터
+          />
+          <FilterToggle
+            isFilterOpen={isFilterOpen}
+            isChattoggleOpen={isChattoggleOpen}
+            FilterToggleButton={FilterToggleButton}
+            setFilterOpen={setFilterOpen}
+            ismarkData={markData.length > 0}
+          />
+        </>
+      ) : (
+        ""
+      )}
+
       <GridLayout
         layout={gridLayout.map((item) => ({
           ...item,

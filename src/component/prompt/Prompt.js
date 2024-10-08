@@ -7,14 +7,19 @@ import PromptContent from "./prompt_content/PromptContent";
 const Prompt = () => {
   const [isSideIndex, setSideIndex] = useState(true);
   const [isSideContent, setSideContent] = useState(false);
-  const [ChatWidth, setChatWidth] = useState(15);
+  const [ChatWidth, setChatWidth] = useState(16);
   const [Chatleft, setChatleft] = useState(20);
+  const [MarkData, setMarkData] = useState([]);
+  const setMarkDataFunc = (value) => {
+    setMarkData(value);
+  };
   const SideIndex = (value) => {
     setSideIndex(value);
   };
-  const SideContent = (value) => {
-    setSideContent(value);
+  const SideContent = () => {
+    setSideContent(true);
   };
+
   useEffect(() => {
     if (isSideIndex) {
       setChatWidth((props) => props - 20);
@@ -27,9 +32,9 @@ const Prompt = () => {
 
   useEffect(() => {
     if (isSideContent) {
-      setChatWidth((props) => props - 50);
+      setChatWidth((props) => props - 49);
     } else {
-      setChatWidth((props) => props + 50);
+      setChatWidth((props) => props + 49);
     }
   }, [isSideContent]);
 
@@ -40,13 +45,17 @@ const Prompt = () => {
         ChatWidth={ChatWidth + "vw"}
         Chatleft={Chatleft + "vw"}
       >
-        <S.ChatArea isSideOpen={isSideIndex}>
-          <Chat isChattoggleOpen={false} sizeFull={true} />
+        <S.ChatArea isSideOpen={isSideIndex} isSideContent={isSideContent}>
+          <Chat
+            isChattoggleOpen={false}
+            sizeFull={true}
+            SideContent={SideContent} //오른쪽 On/Off
+            markData={setMarkDataFunc} //오른쪽에 띄울 데이터
+          />
         </S.ChatArea>
-        {/* <button onClick={() => setSideContent((props) => !props)}>test</button> */}
       </S.ChatAreaWrapper>
 
-      <PromptContent SideContent={SideContent} isSideContent={isSideContent} />
+      <PromptContent isSideContent={isSideContent} MarkData={MarkData} />
     </S.Wrapper>
   );
 };

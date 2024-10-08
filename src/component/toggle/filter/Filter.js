@@ -5,12 +5,13 @@ const Filter = ({
   isFilterOpen,
   setFilterOpen,
   isChattoggleOpen,
+  ismarkData,
 }) => {
   return (
     <S.Wrapper isOpen={isChattoggleOpen}>
-      <S.FilterBox isOpen={isFilterOpen}>
-        <S.Icon src="/icon/Search.svg"></S.Icon>
-        <S.FilterInputWrapper>
+      <S.FilterBox isOpen={isFilterOpen} ismarkData={ismarkData}>
+        <S.Icon src="/icon/Search.svg" ismarkData={ismarkData}></S.Icon>
+        <S.FilterInputWrapper ismarkData={ismarkData}>
           <S.FilterInput
             onFocus={setFilterOpen}
             isOpen={isFilterOpen}

@@ -48,7 +48,7 @@ export const Content = styled.div`
   align-content: left;
   color: white;
   font-size: 80%;
-  font-weight: 200;
+  font-weight: 400;
   margin: 2% 0 3% 10%;
 
   &::before {

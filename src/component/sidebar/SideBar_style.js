@@ -33,4 +33,8 @@ export const IconWrapper = styled.div`
 export const Icon = styled.img`
   margin: 15%;
   width: 40%;
+  transition: all ease 0.3s;
+  &:hover {
+    transform: scale(1.3);
+  }
 `;

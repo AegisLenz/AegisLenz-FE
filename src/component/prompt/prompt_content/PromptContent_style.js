@@ -5,7 +5,9 @@ export const Wrapper = styled.div`
   position: fixed;
   right: 0;
   width: ${({ isSideToggle }) => (isSideToggle ? "50vw" : 0)};
-  background-color: pink;
   min-height: 92vh;
   transition: all ease 0.3s;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: #cccccc;
 `;
