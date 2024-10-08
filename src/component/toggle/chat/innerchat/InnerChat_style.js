@@ -6,5 +6,5 @@ export const Wrapper = styled.div`
   position: absolute;
   height: ${({ isOpen, isFull }) => (isFull ? "85vh" : isOpen ? "83vh" : "0")};
   transition: all ease 0.6s;
-  overflow: hidden;
+  overflow-y: auto;
 `;
