@@ -25,7 +25,8 @@ export const ChatAreaWrapper = styled.div`
 export const ChatArea = styled.div`
   position: relative;
   z-index: 200;
-  width: ${({ isSideOpen }) => (isSideOpen ? "90%" : "50%")};
+  width: ${({ isSideOpen, isSideContent }) =>
+    isSideOpen ? "90%" : isSideContent ? "80%" : "50%"};
   bottom: 10%;
   transition: all ease 0.3s;
 `;

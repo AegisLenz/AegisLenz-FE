@@ -14,9 +14,10 @@ export const FilterBox = styled.div`
   z-index: 201;
   background-color: #cccccc;
   border-radius: 1em;
+  opacity: ${({ ismarkData }) => (ismarkData ? 0 : 1)};
   height: 15vh;
   overflow: hidden;
-  transition: margin-top 0.6s ease,
+  transition: margin-top 0.6s ease, opacity 0.6s ease,
     ${({ isOpen }) =>
       isOpen
         ? "height 0.6s ease" // Oppen
