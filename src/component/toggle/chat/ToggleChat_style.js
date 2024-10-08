@@ -14,7 +14,7 @@ export const ChatBox = styled.div`
   z-index: 201;
   position: relative;
   background-color: #cccccc;
-  margin-top: ${({ isOpen }) => (isOpen ? "1vh" : "3vh")};
+  margin-top: ${({ isOpen }) => (isOpen ? "1vh" : "1.5vh")};
   border-radius: ${({ isOpen }) => (isOpen ? "2em" : "20em")};
   height: ${({ isOpen }) => (isOpen ? "88vh" : "5vh")};
   overflow: hidden;

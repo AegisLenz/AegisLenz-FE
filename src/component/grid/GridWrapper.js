@@ -248,7 +248,7 @@ const Grid = ({
         rowHeight={rowHeight * 0.01}
         width={width * 0.95}
         draggableHandle=".grid-item"
-        style={{ backgroundColor: "transparent", padding: "2vh 0 0 0" }}
+        style={{ backgroundColor: "transparent" }}
       >
         {gridLayout.map((item) => (
           <S.GridElement key={item.i}>

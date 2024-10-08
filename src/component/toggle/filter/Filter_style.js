@@ -5,7 +5,7 @@ export const Wrapper = styled.div`
   position: absolute;
   width: 46.3vw;
   height: auto;
-  top: ${({ isOpen }) => (isOpen ? "3vh" : "9vh")};
+  top: ${({ isOpen }) => (isOpen ? "2vh" : "7.5vh")};
   left: ${({ isOpen }) => (isOpen ? "47.9vw" : "0.8vw")};
   transition: all ease 0.6s;
 `;
