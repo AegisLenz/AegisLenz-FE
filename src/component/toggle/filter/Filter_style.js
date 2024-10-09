@@ -15,7 +15,7 @@ export const FilterBox = styled.div`
   background-color: #cccccc;
   border-radius: 1em;
   opacity: ${({ ismarkData }) => (ismarkData ? 0 : 1)};
-  height: 15vh;
+  height: 14vh;
   overflow: hidden;
   transition: margin-top 0.6s ease, opacity 0.6s ease,
     ${({ isOpen }) =>
