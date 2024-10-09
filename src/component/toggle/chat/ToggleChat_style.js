@@ -31,7 +31,8 @@ export const ChatInputWrapper = styled.div`
   position: absolute;
   bottom: 0.5vh;
   width: 96%;
-  height: 4vh;
+  height: 100%;
+  max-height: 4vh;
   margin-left: 2%;
   display: flex;
   justify-content: space-between;
@@ -54,14 +55,14 @@ export const AiIcon = styled.button`
 export const ChatInput = styled.input`
   z-index: 203;
   font-size: 110%;
-  border-radius: 10em;
+  border-radius: ${({ isFull }) => (isFull ? "0" : "10em")};
   height: 100%;
   width: ${({ isFull }) => (isFull ? "90%" : "86%")};
   max-width: 88%;
   border: none;
   overflow: hidden;
-  padding: ${({ isFull }) => (isFull ? "0" : "0 0 0 2%")};
   transition: all ease 0.3s;
+  padding: ${({ isFull }) => (isFull ? "0" : "0 0 0 2%")};
   background-color: ${({ isOpen }) => (isOpen ? "#D9D9D9" : "transparent")};
   box-shadow: ${({ isOpen }) => (isOpen ? "1px 1px 2px 1px #999999" : "none")};
 

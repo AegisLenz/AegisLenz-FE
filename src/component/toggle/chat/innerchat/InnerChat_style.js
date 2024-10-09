@@ -14,7 +14,11 @@ const slideUp = keyframes`
 export const Wrapper = styled.div`
   z-index: 203;
   width: 90%;
+<<<<<<< Updated upstream
   top: ${({ isFull }) => (isFull ? "-84vh" : "0")};
+=======
+  top: ${({ isFull }) => (isFull ? "-85vh" : "0")};
+>>>>>>> Stashed changes
   position: absolute;
   height: ${({ isOpen, isFull }) => (isFull ? "85vh" : isOpen ? "83vh" : "0")};
   padding: 0 5% 2vh 5%;
@@ -43,6 +47,7 @@ export const MessageBubble = styled.div`
 
   transition: ${({ isOpen }) =>
     isOpen ? "opacity ease 0.6s 0.6s" : "opacity ease 0.6s"};
+
   ${({ isUser }) =>
     isUser
       ? `  &::after {
@@ -54,8 +59,8 @@ export const MessageBubble = styled.div`
 
     position: absolute;
     display: block;
-    right:-1vw;
-    top:-4vh;
+    right: -1vw;
+    top: -4vh;
     width: 2vw;
     height: 2vw;
   }`
@@ -68,8 +73,8 @@ export const MessageBubble = styled.div`
 
     position: absolute;
     display: block;
-    left:-1vw;
-    top:-4vh;
+    left: -1vw;
+    top: -4vh;
     width: 2vw;
     height: 2vw;
   }`};

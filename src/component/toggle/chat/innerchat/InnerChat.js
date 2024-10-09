@@ -1,7 +1,8 @@
 import * as S from "./InnerChat_style";
 import React, { useEffect, useRef } from "react";
+import { Loading } from "../../loading/loading";
 
-const InnerChat = ({ isOpen, isFull, chatData }) => {
+const InnerChat = ({ isOpen, isFull, chatData, loading }) => {
   const chatEndRef = useRef(null);
 
   // 데이터가 업데이트될 때마다 스크롤을 아래로 이동
@@ -20,6 +21,7 @@ const InnerChat = ({ isOpen, isFull, chatData }) => {
           isOpen={isOpen}
           isFull={isFull}
         >
+          {message.isStreem ? <Loading /> : ""}
           {message.text}
         </S.MessageBubble>
       ))}

@@ -1,14 +1,15 @@
 import * as S from "./ToggleChat_style";
 import { useState } from "react";
 import InnerChat from "./innerchat/InnerChat";
+import Prompthook from "../../hook/Hook";
 
 const ToggleChat = ({
   ChatToggleButton,
   isChattoggleOpen,
   setChatToggleOpen,
   sizeFull,
-  SideContent,
   markData,
+  SideContent,
 }) => {
   const [inputValue, setInputValue] = useState("");
   const [ChatData, setChatData] = useState([
@@ -18,31 +19,69 @@ const ToggleChat = ({
     },
   ]);
 
-  const SendMessage = () => {
-    //api 호출
-    const APIanswer = {
-      text: "현재 개발중입니다!",
-      Data: ["Detection", "NeedCheck"],
-    };
+  // 로딩 상태관리
+  const [loading, setLoading] = useState(false);
+
+  const handleStreamData = (currentText, index) => {
+    // 특정 인덱스의 메시지를 업데이트
+    setChatData((prevChatData) => {
+      const updatedChatData = [...prevChatData];
+      updatedChatData[index].text = currentText; // 실시간으로 데이터 업데이트
+      return updatedChatData;
+    });
+  };
+
+  // 스트림이 완료되었을 때 호출되는 함수
+  const handleStreamComplete = (finalText, index) => {
+    setLoading(false); // 로딩 상태 종료
+    setChatData((prev) => {
+      const updatedChatData = [...prev];
+      updatedChatData[index].text = finalText; // 최종 데이터를 해당 인덱스에 설정
+      markData(["Detection", "NeedCheck"]); //markData 임의 설정
+      updatedChatData[index].isUser = false;
+      updatedChatData[index].isStreem = false;
+      return updatedChatData;
+    });
+  };
+
+  // API 호출 및 데이터 처리
+  const SendMessage = async (inputValue) => {
+    setLoading(true); // API 호출 시작 전에 로딩 상태 설정
 
     setChatData((prev) => [
       ...prev,
-      {
-        text: APIanswer["text"],
-        isUser: false,
-      },
+      { text: "", isUser: false, isStreem: true },
     ]);
-
-    //오른쪽에 인터랙티브하게 데이터 ON/OFF
-    SideContent();
-
-    //띄울 데이터
-    markData(APIanswer["Data"]);
+    const messageIndex = ChatData.length + 1; // 새로 추가할 요소의 인덱스
+    try {
+      // Prompthook 호출 시 스트림 데이터 처리 콜백 전달
+      await Prompthook(
+        inputValue,
+        (currentText) => handleStreamData(currentText, messageIndex),
+        (finalText) => handleStreamComplete(finalText, messageIndex)
+      );
+      //오른쪽에 인터랙티브하게 데이터 ON/OFF
+      SideContent();
+    } catch (error) {
+      setChatData((prev) => prev.filter((msg) => !msg.isLoading));
+      // 에러 발생 시 로딩 메시지를 오류 메시지로 변경
+      setChatData((prev) =>
+        prev.map((msg, idx) =>
+          idx === messageIndex
+            ? { ...msg, text: "Server Connect Error", isUser: false }
+            : msg
+        )
+      );
+    } finally {
+      setLoading(false); // API 호출 완료 후 로딩 상태 종료
+    }
   };
 
+  // 토글에 데이터 입력
   const handleSendMessage = () => {
     if (inputValue.trim() === "") return; // 빈 입력 방지
 
+    // 현재 입력값 추가
     setChatData((prevChatData) => [
       ...prevChatData,
       {
@@ -51,7 +90,7 @@ const ToggleChat = ({
       },
     ]);
 
-    SendMessage();
+    SendMessage(inputValue);
 
     // 입력 초기화
     setInputValue("");
@@ -70,6 +109,7 @@ const ToggleChat = ({
         isOpen={isChattoggleOpen}
         isFull={sizeFull}
         chatData={ChatData}
+        loading={loading}
       />
       <S.ChatBox isOpen={isChattoggleOpen}>
         <S.ChatInputWrapper>

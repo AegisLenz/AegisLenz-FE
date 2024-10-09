@@ -9,5 +9,6 @@ export const Wrapper = styled.div`
   transition: all ease 0.3s;
   overflow-x: hidden;
   overflow-y: auto;
+  box-shadow: inset 1px 0 2px 0 #888888;
   background-color: #cccccc;
 `;
