@@ -13,7 +13,7 @@ export const SideIndex = styled.div`
   overflow-x: hidden;
   overflow-y: inherit;
   background-color: #c7c7c7;
-  box-shadow: 1px 0 1px 0 #999999;
+  box-shadow: inset -1px 0 2px 0 #888888;
 `;
 export const TopArea = styled.div`
   width: 100%;

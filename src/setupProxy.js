@@ -4,7 +4,7 @@ module.exports = function (app) {
   app.use(
     "/api",
     createProxyMiddleware({
-      target: "http://localhost:9200", // ElasticSearch 서버 주소
+      target: "http://203.252.213.209:80", // ElasticSearch 서버 주소
       changeOrigin: true,
       onProxyRes: (proxyRes) => {
         // 응답 시간 로깅 (선택 사항)
