@@ -12,6 +12,7 @@ import {
   Score,
   NeedCheck,
   Detection,
+  AccountStatus,
 } from "./elements";
 
 const Grid = ({
@@ -107,6 +108,15 @@ const Grid = ({
         w: 27,
         h: 17,
         content: <Detection />,
+        isResizable: true,
+      },
+      {
+        i: "AccountStatus",
+        x: 47,
+        y: 10,
+        w: 47,
+        h: 20,
+        content: <AccountStatus />,
         isResizable: true,
       },
     ],
