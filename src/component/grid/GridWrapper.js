@@ -29,11 +29,6 @@ const Grid = ({
   const [markData, setMarkData] = useState(MarkData || []);
 
   const ChatToggleButton = () => {
-    if (isChattoggleOpen) {
-      setMarkData([]);
-    } else {
-      setMarkData(MarkData);
-    }
     setChatToggle((prev) => !prev);
   };
 
@@ -232,29 +227,28 @@ const Grid = ({
 
   return (
     <S.Wrapper>
-      {!isChatOFF ? (
-        <ChatToggle
-          isChattoggleOpen={isChattoggleOpen}
-          ChatToggleButton={ChatToggleButton}
-          setChatToggleOpen={setChatToggleOpen}
-          sizeFull={false}
-          SideContent={SideContent} //오른쪽 On/Off
-          markData={setMarkDataFunc} //오른쪽에 띄울 데이터
-        />
+      {!isChatOFF && isFillterOFF ? (
+        <>
+          <ChatToggle
+            isChattoggleOpen={isChattoggleOpen}
+            ChatToggleButton={ChatToggleButton}
+            setChatToggleOpen={setChatToggleOpen}
+            sizeFull={false}
+            SideContent={SideContent} //오른쪽 On/Off
+            markData={setMarkDataFunc} //오른쪽에 띄울 데이터
+          />
+          <FilterToggle
+            isFilterOpen={isFilterOpen}
+            isChattoggleOpen={isChattoggleOpen}
+            FilterToggleButton={FilterToggleButton}
+            setFilterOpen={setFilterOpen}
+            ismarkData={markData.length > 0}
+          />
+        </>
       ) : (
         ""
       )}
-      {isFillterOFF ? (
-        ""
-      ) : (
-        <FilterToggle
-          isFilterOpen={isFilterOpen}
-          isChattoggleOpen={isChattoggleOpen}
-          FilterToggleButton={FilterToggleButton}
-          setFilterOpen={setFilterOpen}
-          ismarkData={markData.length > 0}
-        />
-      )}
+
       <GridLayout
         layout={gridLayout.map((item) => ({
           ...item,
