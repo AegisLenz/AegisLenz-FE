@@ -37,7 +37,7 @@ const ToggleChat = ({
     setChatData((prev) => {
       const updatedChatData = [...prev];
       updatedChatData[index].text = finalText; // 최종 데이터를 해당 인덱스에 설정
-      markData(["Detection", "NeedCheck"]); //markData 임의 설정
+      markData(["Detection", "NeedCheck", "DailyInsight"]); //markData 임의 설정
       updatedChatData[index].isUser = false;
       updatedChatData[index].isStreem = false;
       return updatedChatData;
@@ -61,7 +61,7 @@ const ToggleChat = ({
         (finalText) => handleStreamComplete(finalText, messageIndex)
       );
       //오른쪽에 인터랙티브하게 데이터 ON/OFF
-      SideContent();
+      SideContent(true);
     } catch (error) {
       setChatData((prev) => prev.filter((msg) => !msg.isLoading));
       // 에러 발생 시 로딩 메시지를 오류 메시지로 변경
