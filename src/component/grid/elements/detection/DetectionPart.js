@@ -1,5 +1,5 @@
 import * as S from "./DetectionPart_style";
-import Linear from "./D3_BrokenLine/BrokenLine";
+import Linear from "../../../graph/D3_BrokenLine/BrokenLine";
 
 const Detection = () => {
   const data = [

@@ -1,6 +1,6 @@
 import * as S from "./AccountByService_style";
 import { useState } from "react";
-import PieChart from "./D3_Pie/D3_Pie";
+import PieChart from "../../../graph/D3_Pie/D3_Pie";
 
 const Account = () => {
   // eslint-disable-next-line no-unused-vars
