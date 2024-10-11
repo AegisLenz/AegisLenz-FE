@@ -7,17 +7,17 @@ import PromptContent from "./prompt_content/PromptContent";
 const Prompt = () => {
   const [isSideIndex, setSideIndex] = useState(true);
   const [isSideContent, setSideContent] = useState(false);
-  const [ChatWidth, setChatWidth] = useState(16);
+  const [ChatWidth, setChatWidth] = useState(19);
   const [Chatleft, setChatleft] = useState(20);
-  const [MarkData, setMarkData] = useState([]);
+  const [MarkData, setMarkData] = useState([""]);
   const setMarkDataFunc = (value) => {
     setMarkData(value);
   };
   const SideIndex = (value) => {
     setSideIndex(value);
   };
-  const SideContent = () => {
-    setSideContent(true);
+  const SideContent = (value) => {
+    setSideContent(value);
   };
 
   useEffect(() => {
@@ -32,9 +32,9 @@ const Prompt = () => {
 
   useEffect(() => {
     if (isSideContent) {
-      setChatWidth((props) => props - 49);
+      setChatWidth((props) => props - 48);
     } else {
-      setChatWidth((props) => props + 49);
+      setChatWidth((props) => props + 48);
     }
   }, [isSideContent]);
 
@@ -54,8 +54,11 @@ const Prompt = () => {
           />
         </S.ChatArea>
       </S.ChatAreaWrapper>
-
-      <PromptContent isSideContent={isSideContent} MarkData={MarkData} />
+      <PromptContent
+        isSideContent={isSideContent}
+        SideContent={SideContent}
+        MarkData={MarkData}
+      />
     </S.Wrapper>
   );
 };

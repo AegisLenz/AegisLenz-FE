@@ -24,7 +24,7 @@ const Dashboard = () => {
           isEditOn={isEditOn}
           MarkData={MarkData}
           isChatOFF={false}
-          isFillterOFF={true}
+          isFillterOFF={false}
           SideContent={SideContent}
           setMarkDataFunc={setMarkDataFunc}
         />
