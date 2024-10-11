@@ -4,3 +4,4 @@ export { default as AccountByService } from "./account_by_service/AccountByServi
 export { default as Score } from "./score/Score";
 export { default as NeedCheck } from "./needcheck/NeedCheck";
 export { default as Detection } from "./detection/DetectionPart";
+export { default as AccountStatus } from "./account_status_overview/AccountStatus";
