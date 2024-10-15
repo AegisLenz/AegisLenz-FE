@@ -26,11 +26,13 @@ export const Wrapper = styled.div`
 
 export const MessageBubble = styled.div`
   opacity: ${({ isOpen, isFull }) => (isOpen || isFull ? "1" : "0")};
-  position: relative;
   background-color: ${({ isUser }) => (isUser ? "#f0f0f0" : "#104F55")};
   color: ${({ isUser }) => (isUser ? "#121212" : "#ffffff")};
+
+  position: relative;
+
   font-weight: 500;
-  padding: 10px;
+  padding: ${({ isFirst }) => (isFirst ? "10px 10px 2% 10px" : "10px")};
   border-radius: ${({ isUser }) =>
     isUser ? "0.5em 0 0.5em 0.5em" : "0 0.5em 0.5em 0.5em"};
   margin-bottom: 1%;
@@ -74,4 +76,34 @@ export const MessageBubble = styled.div`
     width: 2vw;
     height: 2vw;
   }`};
+`;
+
+export const ExampleArea = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+`;
+export const Example = styled.div`
+  width: 90%;
+  height: 20%;
+  display: flex;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  justify-content: center;
+  align-items: center;
+
+  margin: 1% 0 0 0;
+  padding: 2%;
+
+  box-shadow: 1px 1px 1px 0 #333333;
+  background-color: #32746d;
+
+  transition: all ease 0.2s;
+
+  &:hover {
+    cursor: pointer;
+    background-color: #9ec5ab;
+  }
 `;

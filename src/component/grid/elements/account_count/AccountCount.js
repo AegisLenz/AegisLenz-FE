@@ -2,15 +2,15 @@ import * as S from "./AccountCount_style";
 import { useState, useRef, useEffect } from "react";
 const Account = () => {
   const ColorList = [
-    { key: "IAM", color: "#216261" },
-    { key: "Kubernetes", color: "#6A4FA3" },
-    { key: "Network", color: "#CD62B0" },
+    { key: "Users", info: "Users", color: "#216261" },
+    { key: "CSA", info: "Cloud Service Account", color: "#6A4FA3" },
+    { key: "Groups", info: "Groups", color: "#CD62B0" },
   ];
   // eslint-disable-next-line no-unused-vars
   const [AccountCountList, setAccountCountList] = useState({
-    IAM: 102312,
-    Kubernetes: 10,
-    Network: 5,
+    Users: 102312,
+    CSA: 100,
+    Groups: 50,
   });
   const [fontSize, setFontSize] = useState(16);
   const innerWrapperRef = useRef(null);
@@ -32,9 +32,9 @@ const Account = () => {
 
   return (
     <S.Wrapper>
-      {ColorList.map(({ key, color }) => (
+      {ColorList.map(({ key, info, color }) => (
         <S.InnerWrapper key={key} color={color} ref={innerWrapperRef}>
-          <S.Index fontSize={fontSize}>{`${key}\nResources`}</S.Index>
+          <S.Index fontSize={fontSize}>{`${info}`}</S.Index>
           <S.Number fontSize={fontSize}>{AccountCountList[key]}</S.Number>
         </S.InnerWrapper>
       ))}

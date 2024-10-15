@@ -8,12 +8,12 @@ const Detection = () => {
     { month: "Mar", traffic: 39, attack: 10 },
     { month: "Apr", traffic: 60, attack: 35 },
     { month: "May", traffic: 80, attack: 55 },
-    { month: "Jun", traffic: 100, attack: 50 },
+    { month: "Jun", traffic: 90, attack: 50 },
   ];
 
   return (
     <S.Wrapper>
-      <S.Title>Account by service</S.Title>
+      <S.Title>Detection</S.Title>
       <S.Content>
         <Linear data={data} />
       </S.Content>

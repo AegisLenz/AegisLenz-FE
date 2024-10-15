@@ -22,7 +22,7 @@ const Score = () => {
 
   return (
     <S.Wrapper>
-      <S.Title>Score</S.Title>
+      <S.Title>Synthesis Score</S.Title>
       <S.BarContainer>
         <S.ScoreBar>
           {colors.map((color, index) => (
@@ -30,7 +30,7 @@ const Score = () => {
           ))}
         </S.ScoreBar>
       </S.BarContainer>
-      <S.Score>{Score}/100</S.Score>
+      <S.Score>{Score}% Safe</S.Score>
       <S.MarkBar
         MarkPosition={String(MarkPosition + 15)}
         background_color={

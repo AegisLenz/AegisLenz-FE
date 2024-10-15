@@ -70,7 +70,7 @@ const Grid = ({
         x: 0,
         y: 11,
         w: 33,
-        h: 5,
+        h: 6,
         content: <Score />,
         isResizable: true,
       },
@@ -88,7 +88,7 @@ const Grid = ({
         x: 33,
         y: 12,
         w: 14,
-        h: 16,
+        h: 17,
         content: <AccountByService />,
         isResizable: true,
       },
@@ -120,7 +120,7 @@ const Grid = ({
         x: 47,
         y: 10,
         w: 47,
-        h: 20,
+        h: 35,
         content: <AccountStatus />,
         isResizable: true,
       },
@@ -188,7 +188,11 @@ const Grid = ({
     if (isChattoggleOpen) {
       setGridLayout((prevLayout) =>
         prevLayout.map((item) =>
-          item.i === "chat" ? item : { ...item, x: item.x + 47 }
+          item.i === "chat"
+            ? item
+            : item.x >= 47
+            ? { ...item, w: item.w - 1 }
+            : { ...item, x: item.x + 47, w: item.w - 1 }
         )
       );
     } else if (NeedCheckStatus) {
