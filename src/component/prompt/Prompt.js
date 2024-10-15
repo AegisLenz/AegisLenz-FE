@@ -7,7 +7,7 @@ import PromptContent from "./prompt_content/PromptContent";
 const Prompt = () => {
   const [isSideIndex, setSideIndex] = useState(true);
   const [isSideContent, setSideContent] = useState(false);
-  const [ChatWidth, setChatWidth] = useState(19);
+  const [ChatWidth, setChatWidth] = useState(47);
   const [Chatleft, setChatleft] = useState(20);
   const [MarkData, setMarkData] = useState([""]);
   const setMarkDataFunc = (value) => {
@@ -54,6 +54,12 @@ const Prompt = () => {
           />
         </S.ChatArea>
       </S.ChatAreaWrapper>
+      <S.OuterToggleArea isSideToggle={isSideContent}>
+        <S.SideOuterToggle
+          onClick={() => SideContent(true)}
+          path={"/icon/double_arrow.svg"}
+        />
+      </S.OuterToggleArea>
       <PromptContent
         isSideContent={isSideContent}
         SideContent={SideContent}

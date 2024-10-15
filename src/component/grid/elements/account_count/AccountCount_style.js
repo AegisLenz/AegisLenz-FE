@@ -25,7 +25,8 @@ export const Index = styled.h2`
   white-space: pre-wrap;
   word-wrap: break-word;
   top: 5%;
-  left: 10%;
+  margin-left: 10%;
+  margin-right: 10%;
   color: white;
   font-size: ${(props) => props.fontSize * 10}%;
 `;

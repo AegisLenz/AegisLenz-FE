@@ -108,7 +108,7 @@ const LineChart = ({ data }) => {
       .attr("class", "traffic")
       .attr("cx", (d) => x(d.month))
       .attr("cy", (d) => y(d.traffic))
-      .attr("r", 5)
+      .attr("r", 4)
       .attr("fill", "white") // 내부를 비우는 설정
       .attr("stroke", "#104F55") // 외곽선 색상 설정
       .attr("stroke-width", 2); // 외곽선 두께 설정
@@ -121,7 +121,7 @@ const LineChart = ({ data }) => {
       .attr("class", "attack")
       .attr("cx", (d) => x(d.month))
       .attr("cy", (d) => y(d.attack))
-      .attr("r", 5)
+      .attr("r", 4)
       .attr("fill", "white") // 내부를 비우는 설정
       .attr("stroke", "#689D8C") // 외곽선 색상 설정
       .attr("stroke-width", 2); // 외곽선 두께 설정
@@ -133,11 +133,11 @@ const LineChart = ({ data }) => {
       <S.Legend>
         <S.LegentBox>
           <S.LegentBox style={{ backgroundColor: "#104F55" }} />
-          <S.LegendTitle>traffic example</S.LegendTitle>
+          <S.LegendTitle>Traffic</S.LegendTitle>
         </S.LegentBox>
         <S.LegentBox>
           <S.LegentBox style={{ backgroundColor: "#689D8C" }} />
-          <S.LegendTitle>attack example</S.LegendTitle>
+          <S.LegendTitle>Attack</S.LegendTitle>
         </S.LegentBox>
       </S.Legend>
     </S.ChartWrapper>

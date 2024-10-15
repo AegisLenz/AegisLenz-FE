@@ -3,7 +3,12 @@ import styled from "styled-components";
 export const Wrapper = styled.div`
   z-index: 100;
   margin: 0;
+  height: 92vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
 `;
+
 export const ChatArea = styled.div`
   z-index: 101;
   width: 46.3vw;

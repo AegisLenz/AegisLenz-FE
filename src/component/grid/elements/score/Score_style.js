@@ -17,7 +17,7 @@ export const Title = styled.h2`
   top: 0;
   color: #104f55;
   width: 100%;
-  height: 19%;
+  height: 20%;
   left: 0;
   font-size: 130%;
   padding: 0 3% 0 3%;
@@ -27,7 +27,7 @@ export const Title = styled.h2`
 `;
 export const BarContainer = styled.div`
   width: 100%;
-  height: 81%;
+  height: 70%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -37,7 +37,7 @@ export const BarContainer = styled.div`
 export const ScoreBar = styled.div`
   position: absolute;
   right: 5%;
-  top: 10%;
+  top: 20%;
   display: flex;
   width: 75%;
   height: 30%;
@@ -68,8 +68,8 @@ export const ColorBlock = styled.div`
 export const Score = styled.div`
   position: absolute;
   left: 5%;
-  bottom: 20%;
-  font-size: 110%;
+  bottom: 15%;
+  font-size: 100%;
 `;
 export const MarkBar = styled.div`
   position: absolute;
@@ -83,7 +83,7 @@ export const MarkBar = styled.div`
 export const Mark = styled.div`
   position: absolute;
   width: 1%;
-  height: 20%;
+  height: 15%;
   background-color: ${(props) => `${props.background_color}`};
   border-top-right-radius: 100%;
   bottom: 10%;
