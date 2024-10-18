@@ -9,12 +9,11 @@ const ToggleChat = ({
   setChatToggleOpen,
   sizeFull,
   markData,
-  SideContent,
 }) => {
   const [inputValue, setInputValue] = useState("");
   const [ChatData, setChatData] = useState([
     {
-      text: "안녕하세요! AegisLenz의 사용자 도우미 Aegis입니다!\n무엇을 도와드릴까요?\n\n저는 이런 질문 들을 도와드릴수 있어요!\n\n",
+      text: "안녕하세요! AegisLenz의 사용자 도우미 Aegis입니다!\n무엇을 도와드릴까요?\n\n저는 이런 질문들을 도와드릴 수 있어요!\n\n",
       isUser: false,
       isFirst: true,
     },
@@ -52,10 +51,8 @@ const ToggleChat = ({
 
     // 2. 첫 번째와 마지막 따옴표를 제거하여 배열로 변환할 수 있는 형태로 만듭니다
     const jsonString = cleanedString.slice(1, -1);
-    console.log(jsonString);
     // 2. 문자열을 실제 배열로 파싱
     const parsedArray = JSON.parse(jsonString);
-    console.log(parsedArray);
     markData(parsedArray);
   };
   // API 호출 및 데이터 처리
@@ -75,8 +72,6 @@ const ToggleChat = ({
         (finalText) => handleStreamComplete(finalText, messageIndex),
         handleLastChunk
       );
-      //오른쪽에 인터랙티브하게 데이터 ON/OFF
-      SideContent(true);
     } catch (error) {
       setChatData((prev) => prev.filter((msg) => !msg.isLoading));
       // 에러 발생 시 로딩 메시지를 오류 메시지로 변경

@@ -10,7 +10,12 @@ const PromptContent = ({ isSideContent, MarkData, SideContent }) => {
           path={"/icon/double_arrow.svg"}
         />
         {isSideContent ? (
-          <GridArea MarkData={MarkData} isChatOFF={true} isFillterOFF={true} />
+          <GridArea
+            MarkData={MarkData}
+            isChatOFF={true}
+            isFillterOFF={true}
+            isEditOn={false}
+          />
         ) : (
           ""
         )}

@@ -19,31 +19,33 @@ const InnerChat = ({ isOpen, isFull, chatData, addExample }) => {
 
   return (
     <S.Wrapper isOpen={isOpen} isFull={isFull}>
-      {chatData.map((message, index) => (
-        <S.MessageBubble
-          key={index}
-          isUser={message.isUser}
-          isOpen={isOpen}
-          isFull={isFull}
-          isFirst={message.isFirst}
-        >
-          {message.isStreem ? <Loading /> : ""}
-          {message.text}
+      <S.InnerWrapper>
+        {chatData.map((message, index) => (
+          <S.MessageBubble
+            key={index}
+            isUser={message.isUser}
+            isOpen={isOpen}
+            isFull={isFull}
+            isFirst={message.isFirst}
+          >
+            {message.isStreem ? <Loading /> : ""}
+            {message.text}
 
-          {message.isFirst
-            ? ExampleQ.map((item) => (
-                <S.ExampleArea>
-                  <S.Example
-                    onClick={(item) => addExample(item.target.textContent)}
-                  >
-                    {item}
-                  </S.Example>
-                </S.ExampleArea>
-              ))
-            : ""}
-        </S.MessageBubble>
-      ))}
-      <div ref={chatEndRef} />
+            {message.isFirst
+              ? ExampleQ.map((item) => (
+                  <S.ExampleArea>
+                    <S.Example
+                      onClick={(item) => addExample(item.target.textContent)}
+                    >
+                      {item}
+                    </S.Example>
+                  </S.ExampleArea>
+                ))
+              : ""}
+          </S.MessageBubble>
+        ))}
+        <div ref={chatEndRef} />
+      </S.InnerWrapper>
     </S.Wrapper>
   );
 };

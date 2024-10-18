@@ -13,15 +13,29 @@ const slideUp = keyframes`
 
 export const Wrapper = styled.div`
   z-index: 203;
-  width: 90%;
-  top: ${({ isFull }) => (isFull ? "-85vh" : "0")};
+  width: 100%;
+  top: ${({ isFull }) => (isFull ? "-78vh" : "1vh")};
   position: absolute;
-  height: ${({ isOpen, isFull }) => (isFull ? "85vh" : isOpen ? "83vh" : "0")};
-  padding: 0 5% 2vh 5%;
+  height: ${({ isOpen, isFull }) => (isFull ? "80vh" : isOpen ? "83vh" : "0")};
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    background-color: transparent;
+    width: 0.5vw;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 30em;
+    background-color: #104f55;
+  }
+`;
+
+export const InnerWrapper = styled.div`
+  width: 90%;
+  min-height: 100%;
   display: flex;
+  padding: 0 5% 0 5%;
   justify-content: flex-end;
   flex-direction: column;
-  overflow-y: ${({ isFull, isOpen }) => (isOpen || isFull ? "auto" : "hidden")};
 `;
 
 export const MessageBubble = styled.div`
@@ -35,7 +49,8 @@ export const MessageBubble = styled.div`
   padding: ${({ isFirst }) => (isFirst ? "10px 10px 2% 10px" : "10px")};
   border-radius: ${({ isUser }) =>
     isUser ? "0.5em 0 0.5em 0.5em" : "0 0.5em 0.5em 0.5em"};
-  margin-bottom: 1%;
+  margin-bottom: 2%;
+  margin-top: ${({ isFirst }) => (isFirst ? "2.5vw" : "0")};
   align-self: ${({ isUser }) => (isUser ? "flex-end" : "flex-start")};
   max-width: 60%;
   white-space: pre-wrap;
