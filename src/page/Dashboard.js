@@ -1,7 +1,7 @@
 import TopBar from "../component/topbar/TopBar";
 import SideBar from "../component/sidebar/SideBar";
 import Grid from "../component/grid/GridWrapper";
-import * as S from "./Dashboard_style";
+import * as S from "./pagestyle/Dashboard_style";
 import { useState } from "react";
 
 const Dashboard = () => {

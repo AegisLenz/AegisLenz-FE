@@ -1,5 +1,10 @@
 // API 요청을 처리하는 함수 (fetch 사용)
-const Prompthook = async (userInput, onDataReceived, onComplete) => {
+const Prompthook = async (
+  userInput,
+  onDataReceived,
+  onComplete,
+  handleLastChunk
+) => {
   try {
     const response = await fetch(`/api/prompt/1/chat`, {
       method: "POST",
@@ -16,7 +21,6 @@ const Prompthook = async (userInput, onDataReceived, onComplete) => {
 
     const reader = response.body.getReader(); // 스트리밍 데이터를 읽기 위한 리더 생성
     const decoder = new TextDecoder("utf-8");
-
     let accumulatedText = ""; // 데이터를 누적할 변수
 
     function read() {
@@ -34,6 +38,12 @@ const Prompthook = async (userInput, onDataReceived, onComplete) => {
           if (line.trim()) {
             try {
               const parsedLine = JSON.parse(line); // JSON 데이터로 파싱
+
+              // "type"이 "dashboard"인 데이터만 콘솔에 출력
+              if (parsedLine.type === "dashboard") {
+                handleLastChunk(parsedLine.data);
+              }
+
               accumulatedText += parsedLine.data; // 각 조각을 누적
               onDataReceived(accumulatedText); // 현재까지의 누적 텍스트를 전달
             } catch (error) {

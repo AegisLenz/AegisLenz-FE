@@ -11,6 +11,7 @@ export const Wrapper = styled.div`
   margin: 0;
   display: flex;
   flex-direction: row;
+  align-items:center;
 `;
 export const ChatAreaWrapper = styled.div`
   position: absolute;
@@ -29,4 +30,29 @@ export const ChatArea = styled.div`
     isSideOpen ? "90%" : isSideContent ? "80%" : "50%"};
   bottom: 10%;
   transition: all ease 0.3s;
+`;
+
+export const OuterToggleArea = styled.div`
+  position:absolute;
+  right: ${({ isSideToggle }) => (isSideToggle ? "0" : "1vw")};
+  transition: all ease 0.3s;
+`;
+
+export const SideOuterToggle = styled.div`
+  width: 2vw;
+  height: 2vw;
+  background-color: transparent;
+  border-radius: 0.5em;
+
+  cursor: pointer;
+
+  background-image: url(${(props) => props.path});
+  background-repeat: no-repeat;
+  background-size: 70%;
+  background-position: center;
+
+  &:hover {
+    background-color: #bbbbbb;
+    box-shadow: -1px -1px 1px 0 #777777;
+  }
 `;

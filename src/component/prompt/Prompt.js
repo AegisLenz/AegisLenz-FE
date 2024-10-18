@@ -7,17 +7,22 @@ import PromptContent from "./prompt_content/PromptContent";
 const Prompt = () => {
   const [isSideIndex, setSideIndex] = useState(true);
   const [isSideContent, setSideContent] = useState(false);
-  const [ChatWidth, setChatWidth] = useState(19);
+  const [ChatWidth, setChatWidth] = useState(47);
   const [Chatleft, setChatleft] = useState(20);
-  const [MarkData, setMarkData] = useState([""]);
+  const [MarkData, setMarkData] = useState([]);
   const setMarkDataFunc = (value) => {
     setMarkData(value);
+    //오른쪽에 인터랙티브하게 데이터 ON/OFF
+    setSideContent(true);
+    SideIndex(false);
   };
   const SideIndex = (value) => {
     setSideIndex(value);
   };
   const SideContent = (value) => {
-    setSideContent(value);
+    if (MarkData.length !== 0) {
+      setSideContent(value);
+    }
   };
 
   useEffect(() => {
@@ -40,7 +45,7 @@ const Prompt = () => {
 
   return (
     <S.Wrapper>
-      <PromptIndex SideIndex={SideIndex} />
+      <PromptIndex SideIndex={SideIndex} isSideIndex={isSideIndex} />
       <S.ChatAreaWrapper
         ChatWidth={ChatWidth + "vw"}
         Chatleft={Chatleft + "vw"}
@@ -49,11 +54,18 @@ const Prompt = () => {
           <Chat
             isChattoggleOpen={false}
             sizeFull={true}
+            SideIndex={SideIndex}
             SideContent={SideContent} //오른쪽 On/Off
             markData={setMarkDataFunc} //오른쪽에 띄울 데이터
           />
         </S.ChatArea>
       </S.ChatAreaWrapper>
+      <S.OuterToggleArea isSideToggle={isSideContent}>
+        <S.SideOuterToggle
+          onClick={() => SideContent(true)}
+          path={"/icon/double_arrow.svg"}
+        />
+      </S.OuterToggleArea>
       <PromptContent
         isSideContent={isSideContent}
         SideContent={SideContent}

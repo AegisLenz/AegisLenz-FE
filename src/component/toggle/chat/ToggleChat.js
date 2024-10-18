@@ -9,17 +9,18 @@ const ToggleChat = ({
   setChatToggleOpen,
   sizeFull,
   markData,
-  SideContent,
 }) => {
   const [inputValue, setInputValue] = useState("");
   const [ChatData, setChatData] = useState([
     {
-      text: "안녕하세요! AegisLenz의 사용자 도우미 Aegis입니다!\n무엇을 도와드릴까요?",
+      text: "안녕하세요! AegisLenz의 사용자 도우미 Aegis입니다!\n무엇을 도와드릴까요?\n\n저는 이런 질문들을 도와드릴 수 있어요!\n\n",
       isUser: false,
+      isFirst: true,
     },
   ]);
 
   // 로딩 상태관리
+  // eslint-disable-next-line no-unused-vars
   const [loading, setLoading] = useState(false);
 
   const handleStreamData = (currentText, index) => {
@@ -37,13 +38,23 @@ const ToggleChat = ({
     setChatData((prev) => {
       const updatedChatData = [...prev];
       updatedChatData[index].text = finalText; // 최종 데이터를 해당 인덱스에 설정
-      markData(["Detection", "NeedCheck", "DailyInsight"]); //markData 임의 설정
       updatedChatData[index].isUser = false;
       updatedChatData[index].isStreem = false;
       return updatedChatData;
     });
   };
+  const handleLastChunk = (lastChunk) => {
+    const originalString = lastChunk;
 
+    // 1. 먼저 외부의 이중 따옴표를 제거하기 위해 다시 한번 replace 적용
+    const cleanedString = originalString.replace(/\\"/g, '"');
+
+    // 2. 첫 번째와 마지막 따옴표를 제거하여 배열로 변환할 수 있는 형태로 만듭니다
+    const jsonString = cleanedString.slice(1, -1);
+    // 2. 문자열을 실제 배열로 파싱
+    const parsedArray = JSON.parse(jsonString);
+    markData(parsedArray);
+  };
   // API 호출 및 데이터 처리
   const SendMessage = async (inputValue) => {
     setLoading(true); // API 호출 시작 전에 로딩 상태 설정
@@ -58,10 +69,9 @@ const ToggleChat = ({
       await Prompthook(
         inputValue,
         (currentText) => handleStreamData(currentText, messageIndex),
-        (finalText) => handleStreamComplete(finalText, messageIndex)
+        (finalText) => handleStreamComplete(finalText, messageIndex),
+        handleLastChunk
       );
-      //오른쪽에 인터랙티브하게 데이터 ON/OFF
-      SideContent(true);
     } catch (error) {
       setChatData((prev) => prev.filter((msg) => !msg.isLoading));
       // 에러 발생 시 로딩 메시지를 오류 메시지로 변경
@@ -95,12 +105,29 @@ const ToggleChat = ({
     // 입력 초기화
     setInputValue("");
   };
-
   // 엔터로 값 집어넣기
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       handleSendMessage();
     }
+  };
+
+  const addExample = (value) => {
+    if (value.trim() === "") return; // 빈 입력 방지
+
+    // 현재 입력값 추가
+    setChatData((prevChatData) => [
+      ...prevChatData,
+      {
+        text: value,
+        isUser: true,
+      },
+    ]);
+
+    SendMessage(value);
+
+    // 입력 초기화
+    setInputValue("");
   };
 
   return (
@@ -109,7 +136,7 @@ const ToggleChat = ({
         isOpen={isChattoggleOpen}
         isFull={sizeFull}
         chatData={ChatData}
-        loading={loading}
+        addExample={addExample}
       />
       <S.ChatBox isOpen={isChattoggleOpen}>
         <S.ChatInputWrapper>

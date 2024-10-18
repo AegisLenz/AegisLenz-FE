@@ -4,6 +4,7 @@ export const Wrapper = styled.div`
   z-index: 200;
   width: 100%;
   height: 100%;
+  position:relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -16,31 +17,35 @@ export const Title = styled.h2`
   position: absolute;
   top: 0;
   color: #104f55;
-  width: 100%;
+  width: 97%;
   height: 19%;
   left: 0;
   font-size: 130%;
-  padding: 0 3% 0 3%;
-  margin: 1% 0 1% 0;
+  padding-left:3%;
+  margin:0%;
   align-items: left;
   align-content: center;
 `;
 
 export const ContentArea = styled.div`
   position: absolute;
-  bottom: 0;
+  top: 18%;
   width: 100%;
   height: 81%;
   display: flex;
   justify-content: center;
   align-items: center;
 `;
+
 export const SubContent = styled.div`
-  min-height: 94%;
+  height: 100%;
   width: 98%;
   background: linear-gradient(to right, #2f878f, #2d3c7d);
   border-radius: 1em;
   justify-content: right;
+  position:relative;
+  overflow-y:auto;
+  overflow-x:hidden;
 `;
 
 export const Content = styled.div`
@@ -50,7 +55,7 @@ export const Content = styled.div`
   font-size: 80%;
   font-weight: 400;
   margin: 2% 0 3% 10%;
-
+  
   &::before {
     content: "";
     display: block;

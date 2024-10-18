@@ -24,8 +24,8 @@ export const TopArea = styled.div`
   box-shadow: 0 1px 1px 0 #999999;
 `;
 export const SideInnerToggle = styled.div`
-  width: 2vw;
-  height: 2vw;
+  width: 3vh;
+  height: 3vh;
   margin-left: 2%;
   border-radius: 0.5em;
   transition: all ease 0.3s;
@@ -51,8 +51,8 @@ export const OuterToggleArea = styled.div`
 `;
 
 export const SideOuterToggle = styled.div`
-  width: 2vw;
-  height: 2vw;
+  width: 3vh;
+  height: 3vh;
   background-color: transparent;
   border-radius: 0.5em;
 
@@ -66,4 +66,27 @@ export const SideOuterToggle = styled.div`
     background-color: #bbbbbb;
     box-shadow: -1px -1px 1px 0 #777777;
   }
+`;
+
+export const ContentsArea = styled.div`
+  width: 100%;
+  height: 85vh;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
+`;
+export const Content = styled.div`
+  width: 100%;
+  padding: 1% 1% 0 1%;
+  border-bottom: solid 1px #121212;
+`;
+export const ContetnsDate = styled.h5`
+  padding: 0;
+  margin: 0;
+  font-weight: 300;
+`;
+export const ContentsTitle = styled.h3`
+  padding: 0.5%;
+  font-weight: 600;
 `;
