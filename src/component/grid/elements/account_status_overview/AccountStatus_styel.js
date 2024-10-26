@@ -32,7 +32,7 @@ export const TableWrapper = styled.div`
   width: 90%;
   height: 80%;
   overflow-y: auto;
-  overflow-x: auto;
+  overflow-x: hidden;
 `;
 export const Table = styled.table`
   border-collapse: collapse;
@@ -68,24 +68,30 @@ export const Td = styled.td`
   text-align: center;
 `;
 export const StatusIcon = styled.div`
-  width: 1.5em;
+  width: 100%;
   height: 1.5em;
   background-image: url(${({ type }) => type ? "/icon/check.svg" : "/icon/alert.svg"});
   background-size: contain;
+  background-position:center;
   background-repeat: no-repeat;
-  transform: translateX(75%);
+`;
+export const TypeIconWrapper = styled.div`
+  display: flex;
+  justify-content:center;
+  align-items:center;
+  width:100%;
+  height: 100%;
 `;
 export const TypeIcon = styled.div`
   width: 5em;
   height: 1.5em;
-  background-color:${({color})=>color};
+  background-color: ${({ color }) => color};
   border-radius: 40em;
   box-shadow: 1px 1px 2px #666666;
-  color:white;
-  display:flex;
-  justify-content:center;
-  align-items:center;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-weight: 600;
   font-size: 95%;
-  transform:translateX(25%);
 `;

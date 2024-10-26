@@ -16,7 +16,7 @@ export const InnerWrapper = styled.div`
   width: 32%;
   background-color: ${(props) => props.color};
   height: 99%;
-  border-radius: 3em;
+  border-radius: 2em;
   box-shadow: 1px 1px 2px 1px #999999;
 `;
 
