@@ -51,15 +51,19 @@ const InnerChat = ({ isOpen, isFull, chatData, addExample }) => {
                   </S.ExampleArea>
                 ))
               : ""}
-            {!message.isUser ? (
+            {message.isQuery ? (
               <>
-                <S.Query Open={OpenQueries[index]}>
-                  <S.QueryToggle
-                    Open={OpenQueries[index]}
-                    onClick={() => toggleQuery(index)}
-                  />
-                  {message.isQuery}
-                </S.Query>
+                <S.QueryWrapper Open={OpenQueries[index]}>
+                  <S.QueryToggleWrapper>
+                    <p>Query</p>
+                    <S.QueryToggle
+                      Open={OpenQueries[index]}
+                      onClick={() => toggleQuery(index)}
+                    />
+                  </S.QueryToggleWrapper>
+
+                  <S.Query Open={OpenQueries[index]}>{message.isQuery}</S.Query>
+                </S.QueryWrapper>
               </>
             ) : (
               ""

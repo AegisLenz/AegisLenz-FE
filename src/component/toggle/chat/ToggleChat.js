@@ -16,6 +16,27 @@ const ToggleChat = ({
       text: "안녕하세요! AegisLenz의 사용자 도우미 Aegis입니다!\n무엇을 도와드릴까요?\n\n저는 이런 질문들을 도와드릴 수 있어요!\n\n",
       isUser: false,
       isFirst: true,
+      isQuery: `{
+      "query": {
+        "bool": {
+          "must": [
+            {
+              "term": {
+                "eventName": "CreateUser"
+              }
+            },
+            {
+              "range": {
+                "eventTime": {
+                  "gte": "now-7d/d",
+                  "lt": "now/d"
+                }
+              }
+            }
+          ]
+        }
+      }
+    }`,
     },
   ]);
 
@@ -53,6 +74,7 @@ const ToggleChat = ({
     const jsonString = cleanedString.slice(1, -1);
     // 2. 문자열을 실제 배열로 파싱
     const parsedArray = JSON.parse(jsonString);
+    console.log(parsedArray);
     markData(parsedArray);
   };
   // API 호출 및 데이터 처리
