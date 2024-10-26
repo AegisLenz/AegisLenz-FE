@@ -14,7 +14,7 @@ const slideUp = keyframes`
 export const Wrapper = styled.div`
   z-index: 203;
   width: 100%;
-  top: ${({ isFull }) => (isFull ? "-78vh" : "1vh")};
+  top: ${({ isFull }) => (isFull ? "-79vh" : "1vh")};
   position: absolute;
   height: ${({ isOpen, isFull }) => (isFull ? "80vh" : isOpen ? "83vh" : "0")};
   overflow-y: auto;
@@ -40,23 +40,27 @@ export const InnerWrapper = styled.div`
 
 export const MessageBubble = styled.div`
   z-index: 204;
+
   opacity: ${({ isOpen, isFull }) => (isOpen || isFull ? "1" : "0")};
   background-color: ${({ isUser }) => (isUser ? "#f0f0f0" : "#104F55")};
-  color: ${({ isUser }) => (isUser ? "#121212" : "#ffffff")};
-
-  position: relative;
-
-  font-weight: 500;
-  padding: ${({ isFirst }) => (isFirst ? "10px 10px 2% 10px" : "10px")};
   border-radius: ${({ isUser }) =>
     isUser ? "0.5em 0 0.5em 0.5em" : "0 0.5em 0.5em 0.5em"};
-  margin-bottom: 2%;
+  position: relative;
+
+  margin-bottom: 3%;
   margin-top: ${({ isFirst }) => (isFirst ? "2.5vw" : "0")};
+  padding: 0.5%;
+
   align-self: ${({ isUser }) => (isUser ? "flex-end" : "flex-start")};
+
   max-width: 60%;
+
+  font-weight: 500;
+  color: ${({ isUser }) => (isUser ? "#121212" : "#ffffff")};
   white-space: pre-wrap;
   word-wrap: break-word;
   box-shadow: 1px 1px 1px 0 #aaaaaa;
+
   animation: ${slideUp} 0.3s ease;
 
   transition: ${({ isOpen }) =>
@@ -104,6 +108,7 @@ export const ExampleArea = styled.div`
 export const Example = styled.div`
   width: 90%;
   height: 20%;
+
   display: flex;
   white-space: pre-wrap;
   word-wrap: break-word;
@@ -123,45 +128,58 @@ export const Example = styled.div`
     background-color: #9ec5ab;
   }
 `;
-export const Query = styled.div`
-  position: absolute;
+export const QueryWrapper = styled.div`
   z-index: 205;
-  left: 100%;
-  top: 0;
-  width: ${({ Open }) => (Open ? "auto" : "0")};
-  min-width: ${({ Open }) => (Open ? "50%" : "0")};
-  max-width: 100%;
-  height: 100%;
+  width: 92%;
+  height: auto;
 
   transition: all ease 0.3s;
 
   white-space: pre-wrap;
   word-wrap: break-word;
-  box-shadow: 1px 1px 1px 0 #aaaaaa;
-  border-radius: 0 0.5em 0.5em 0;
-  background-color: pink;
+
+  padding: 2%;
+  margin: 1%;
+  margin-bottom: 0;
+  color: white;
 `;
+
+export const Query = styled.div`
+  width: 100%;
+  height: ${({ Open }) => (Open ? "auto" : "0")};
+  margin-top: 2%;
+  padding: ${({ Open }) => (Open ? "2% 1% 2% 1%" : "0")};
+  font-size: ${({ Open }) => (Open ? "100%" : "0")};
+
+  transition: all ease 0.3s;
+  background-color: #186168;
+`;
+
+export const QueryToggleWrapper = styled.div`
+  width: 102%;
+  height: 2vh;
+
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+`;
+
 export const QueryToggle = styled.svg`
-  position: absolute;
-  z-index: 206;
-  left: 100%;
-  top: 45%;
-  width: 2vw;
-  height: 10%;
+  z-index: 207;
 
-  background-image: url("/icon/double_arrow.svg");
+  width: 7%;
+  height: 50%;
+
+  background-image: url("/icon/Arrow_fill_in_down.svg");
   background-repeat: no-repeat;
-  background-size: 70%;
+  background-size: 100%;
   background-position: center;
-  transform: ${({ Open }) => (Open ? "" : "rotate(180deg)")};
-
-  border-radius: 0.5em;
+  transform: ${({ Open }) => (Open ? "rotate(180deg)" : "")};
 
   transition: all ease 0.3s;
 
   &:hover {
     cursor: pointer;
-    background-color: #a9a9a9;
-    box-shadow: 1px 1px 1px 0 #777777;
   }
 `;
