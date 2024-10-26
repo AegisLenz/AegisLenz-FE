@@ -2,8 +2,8 @@ import * as S from "./AccountStatus_styel";
 
 const testData = [
   [true, "AWS-User1", "2024-10-15", 2, "SE", 1],
-  [false, "AWS-User2", "2024-10-15", 1, "PM BE", 0],
-  [true, "AWS-User3", "2024-10-17", 4, "FE", 1],
+  [true, "AWS-User2", "2024-10-15", 1, "PM BE", 0],
+  [false, "AWS-User3", "2024-10-17", 4, "FE", 1],
   [true, "AWS-User4", "2024-10-15", 4, "BE", 1],
   [true, "AWS-User5", "2024-10-19", 3, "Admin", 2],
   [true, "AWS-User6", "2024-10-15", 3, "FE", 1],
@@ -43,9 +43,11 @@ const AccountStatus = () => {
                 <S.Td>{row[3]}</S.Td>
                 <S.Td>{row[4]}</S.Td>
                 <S.Td>
-                  <S.TypeIcon color={type[row[5]][1]}>
-                    {type[row[5]][0]}
-                  </S.TypeIcon>
+                  <S.TypeIconWrapper>
+                    <S.TypeIcon color={type[row[5]][1]}>
+                      {type[row[5]][0]}
+                    </S.TypeIcon>
+                  </S.TypeIconWrapper>
                 </S.Td>
               </S.Tr>
             ))}

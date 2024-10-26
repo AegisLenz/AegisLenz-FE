@@ -16,7 +16,7 @@ const SideBar = ({ isEditOn, setEditOn }) => {
         <Link to="/AI">
           <S.Icon src="/icon/AI_Icon.png"></S.Icon>
         </Link>
-        <Link to="/Network">
+        <Link to="/IAM">
           <S.Icon src="/icon/Network_Icon.png"></S.Icon>
         </Link>
       </S.IconWrapper>

@@ -39,6 +39,7 @@ export const InnerWrapper = styled.div`
 `;
 
 export const MessageBubble = styled.div`
+  z-index: 204;
   opacity: ${({ isOpen, isFull }) => (isOpen || isFull ? "1" : "0")};
   background-color: ${({ isUser }) => (isUser ? "#f0f0f0" : "#104F55")};
   color: ${({ isUser }) => (isUser ? "#121212" : "#ffffff")};
@@ -120,5 +121,47 @@ export const Example = styled.div`
   &:hover {
     cursor: pointer;
     background-color: #9ec5ab;
+  }
+`;
+export const Query = styled.div`
+  position: absolute;
+  z-index: 205;
+  left: 100%;
+  top: 0;
+  width: ${({ Open }) => (Open ? "auto" : "0")};
+  min-width: ${({ Open }) => (Open ? "50%" : "0")};
+  max-width: 100%;
+  height: 100%;
+
+  transition: all ease 0.3s;
+
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  box-shadow: 1px 1px 1px 0 #aaaaaa;
+  border-radius: 0 0.5em 0.5em 0;
+  background-color: pink;
+`;
+export const QueryToggle = styled.svg`
+  position: absolute;
+  z-index: 206;
+  left: 100%;
+  top: 45%;
+  width: 2vw;
+  height: 10%;
+
+  background-image: url("/icon/double_arrow.svg");
+  background-repeat: no-repeat;
+  background-size: 70%;
+  background-position: center;
+  transform: ${({ Open }) => (Open ? "" : "rotate(180deg)")};
+
+  border-radius: 0.5em;
+
+  transition: all ease 0.3s;
+
+  &:hover {
+    cursor: pointer;
+    background-color: #a9a9a9;
+    box-shadow: 1px 1px 1px 0 #777777;
   }
 `;

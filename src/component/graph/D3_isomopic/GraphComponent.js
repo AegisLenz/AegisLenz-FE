@@ -5,15 +5,17 @@ import * as d3 from "d3";
 const GridWithDraggableNode = ({ openIsometric }) => {
   const svgRef = useRef(null);
 
-  function MouseTransformCenter(x, y, gridSize){
-    const _x = x-(gridSize/2);
-    const _y = y-(gridSize/2);
+  function MouseTransformCenter(x, y, gridSize) {
+    const _x = x - gridSize / 2;
+    const _y = y - gridSize / 2;
     return { x: _x, y: _y };
   }
   function Rotate(x, y, angleInDegrees) {
     const angleInRadians = angleInDegrees * (Math.PI / 180);
-    const xRotated = x * Math.cos(angleInRadians) - y * Math.sin(angleInRadians);
-    const yRotated = x * Math.sin(angleInRadians) + y * Math.cos(angleInRadians);
+    const xRotated =
+      x * Math.cos(angleInRadians) - y * Math.sin(angleInRadians);
+    const yRotated =
+      x * Math.sin(angleInRadians) + y * Math.cos(angleInRadians);
     return { x: xRotated, y: yRotated };
   }
   // 이소메트릭 좌표를 평면 좌표로 변환하는 함수
@@ -27,9 +29,8 @@ const GridWithDraggableNode = ({ openIsometric }) => {
     const ySkewed = y + x * Math.tan(skewYInRadians);
 
     return { x: xSkewed, y: ySkewed };
-}
+  }
   useEffect(() => {
-
     const WidthSell = 600;
     const HeightSell = 300;
 
@@ -80,29 +81,6 @@ const GridWithDraggableNode = ({ openIsometric }) => {
       .attr("height", gridSize)
       .attr("fill", "green");
 
-    // 꺾이는 직각 간선 생성
-    const lineGroup = g.append("g");
-
-    // 수평선 (x축)
-    const horizontalLine = lineGroup
-      .append("line")
-      .attr("x1", gridSize * 4 + gridSize / 2) // 첫 번째 노드 중심
-      .attr("y1", gridSize * 3 + gridSize / 2)
-      .attr("x2", gridSize * 8 + gridSize / 2) // 두 번째 노드의 x 좌표까지만
-      .attr("y2", gridSize * 3 + gridSize / 2) // y 좌표는 고정 (수평선)
-      .attr("stroke", "black")
-      .attr("stroke-width", 2);
-
-    // 수직선 (y축)
-    const verticalLine = lineGroup
-      .append("line")
-      .attr("x1", gridSize * 8 + gridSize / 2) // 수평선 끝점
-      .attr("y1", gridSize * 3 + gridSize / 2) // 수평선과 동일한 y 좌표에서 시작
-      .attr("x2", gridSize * 8 + gridSize / 2) // x 좌표는 고정
-      .attr("y2", gridSize * 5 + gridSize / 2) // 두 번째 노드 중심
-      .attr("stroke", "black")
-      .attr("stroke-width", 2);
-
     // 파란색 사각형 안에 따라다니는 이미지 생성
     const imageInRect = g
       .append("image")
@@ -139,39 +117,15 @@ const GridWithDraggableNode = ({ openIsometric }) => {
       })
       .on("drag", function (event) {
         const [x, y] = d3.pointer(event, svg.node());
-        const {x: C_x, y: C_y} = MouseTransformCenter(x,y, gridSize);
+        const { x: C_x, y: C_y } = MouseTransformCenter(x, y, gridSize);
         const { x: roX, y: roY } = Rotate(C_x, C_y, 30);
-        const {x:isoX, y:isoY}=skewPoint(roX, roY, -30, 0);
+        const { x: isoX, y: isoY } = skewPoint(roX, roY, -30, 0);
         // 마우스의 좌표를 평면 좌표로 계산
         const snappedX = Math.round(isoX / gridSize) * gridSize;
         const snappedY = Math.round(isoY / gridSize) * gridSize;
 
         // 사각형 위치 업데이트
         d3.select(this).attr("x", snappedX).attr("y", snappedY);
-
-        // 사각형을 드래그할 때 이미지도 함께 이동
-        if (this === rectNode1.node()) {
-          imageInRect.attr("x", snappedX + 5).attr("y", snappedY + 5);
-
-          // 수평선 업데이트
-          horizontalLine
-            .attr("x1", snappedX + gridSize / 2)
-            .attr("y1", snappedY + gridSize / 2)
-            .attr("y2", snappedY + gridSize / 2); // 수평선 y 좌표는 같게 유지
-
-          // 수직선 업데이트 (x 좌표는 고정)
-          verticalLine
-            .attr("x1", gridSize * 8 + gridSize / 2)
-            .attr("x2", gridSize * 8 + gridSize / 2)
-            .attr("y1", snappedY + gridSize / 2);
-        } else if (this === rectNode2.node()) {
-          horizontalLine.attr("x2", snappedX + gridSize / 2);
-
-          verticalLine
-            .attr("x1", snappedX + gridSize / 2)
-            .attr("x2", snappedX + gridSize / 2)
-            .attr("y2", snappedY + gridSize / 2);
-        }
       })
       .on("end", function () {
         d3.select(this).attr("stroke", null);
