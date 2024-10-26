@@ -1,15 +1,15 @@
 import TopBar from "../component/topbar/TopBar";
 import SideBar from "../component/sidebar/SideBar";
-import Grid from "../component/grid/GridWrapper";
+import Prompt from "../component/prompt/Prompt";
 
-function Main() {
+function Ai() {
   return (
     <div>
       <TopBar />
       <SideBar />
-      <Grid />
+      <Prompt />
     </div>
   );
 }
 
-export default Main;
+export default Ai;

@@ -1,7 +1,12 @@
 import * as S from "./SideBar_style";
 import { Link } from "react-router-dom";
+import ToggleEdit from "../toggle/edit/ToggleEdit";
 
-function SideBar() {
+const SideBar = ({ isEditOn, setEditOn }) => {
+  const setEditOnOff = () => {
+    setEditOn((prev) => !prev);
+  };
+
   return (
     <S.Wrapper>
       <S.IconWrapper>
@@ -11,12 +16,13 @@ function SideBar() {
         <Link to="/AI">
           <S.Icon src="/icon/AI_Icon.png"></S.Icon>
         </Link>
-        <Link to="/Network">
+        <Link to="/IAM">
           <S.Icon src="/icon/Network_Icon.png"></S.Icon>
         </Link>
       </S.IconWrapper>
+      <ToggleEdit isEditOn={isEditOn} setEditOnOff={setEditOnOff} />
     </S.Wrapper>
   );
-}
+};
 
 export default SideBar;
