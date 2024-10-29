@@ -22,7 +22,7 @@ const Inneriam = () => {
     <S.Wrapper>
       <S.InnerTop>
         <S.InnerTitleArea>
-          <S.InnerTitleIcon src="/icon/AI_Icon.png" />
+          <img src="/icon/AI_Icon.png" alt="Icon" />
           <S.InnerTitle UserId={"UserId: " + Data.UserId}>
             {Data.UserName}
           </S.InnerTitle>
@@ -32,7 +32,13 @@ const Inneriam = () => {
           <S.InfoLink to="#">{Data.CreateDate}</S.InfoLink>
         </S.InnerTopInfo>
       </S.InnerTop>
-      <S.InnerCategorWrapper></S.InnerCategorWrapper>
+      <S.InnerCategorWrapper>
+        <S.InnerCategory>info</S.InnerCategory>
+        <S.InnerCategory>Checklist</S.InnerCategory>
+        <S.InnerCategory>Configuration Log</S.InnerCategory>
+        <S.InnerCategory>Policies</S.InnerCategory>
+        <S.InnerCategory>Resource Permissions</S.InnerCategory>
+      </S.InnerCategorWrapper>
     </S.Wrapper>
   );
 };

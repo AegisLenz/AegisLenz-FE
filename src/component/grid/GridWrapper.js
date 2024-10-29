@@ -52,6 +52,7 @@ const Grid = ({
   const isNeedCheck = () => {
     setNeedCheckStatus((prev) => !prev);
   };
+
   const InitLayout = useMemo(
     () => [
       { i: "chat", x: 0, y: 0, w: 47, h: 3, isResizable: false },
@@ -131,6 +132,7 @@ const Grid = ({
   // 초기 레이아웃 설정
   const [gridLayout, setGridLayout] = useState(InitLayout);
 
+  // markData 없데이트 시에
   useEffect(() => {
     // MarkData가 업데이트될 때 markData를 업데이트
     if (MarkData.length > 0) {
@@ -138,6 +140,7 @@ const Grid = ({
     }
   }, [MarkData]);
 
+  // markData가 존재할 때
   useEffect(() => {
     if (markData && markData.length > 0) {
       let currentX = 0;
@@ -217,6 +220,7 @@ const Grid = ({
     }
   }, [isChattoggleOpen, NeedCheckStatus, InitLayout, markData]);
 
+  // 윈도우 사이즈가 바뀌었을때의 작용
   const [rowHeight, setrowHeight] = useState(window.innerHeight);
   const [width, setwidth] = useState(window.innerWidth);
 

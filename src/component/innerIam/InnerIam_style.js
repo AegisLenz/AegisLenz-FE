@@ -66,10 +66,26 @@ export const InfoLink = styled(Link)`
     text-decoration: underline;
   }
 `;
-export const InnerTitleIcon = styled.img``;
 
 export const InnerCategorWrapper = styled.div`
-  width: 90%;
-  height: 7%;
+  width: 76%;
+  height: 5%;
   border-bottom: solid 1px #aaa;
+  padding: 0 7% 0 7%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  overflow-y: hidden;
+  overflow-x: auto;
+`;
+
+export const InnerCategory = styled.div`
+  transition: all ease 0.3s;
+
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+    transform: scale(1.1);
+  }
 `;
