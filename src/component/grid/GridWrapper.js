@@ -52,6 +52,7 @@ const Grid = ({
   const isNeedCheck = () => {
     setNeedCheckStatus((prev) => !prev);
   };
+
   const InitLayout = useMemo(
     () => [
       { i: "chat", x: 0, y: 0, w: 47, h: 3, isResizable: false },
@@ -217,12 +218,21 @@ const Grid = ({
     }
   }, [isChattoggleOpen, NeedCheckStatus, InitLayout, markData]);
 
-  const [rowHeight, setrowHeight] = useState(window.innerHeight);
+  const [rowHeight, setrowHeight] = useState(
+    window.innerHeight * getZoomLevel()
+  );
   const [width, setwidth] = useState(window.innerWidth);
+  const [zoomLevel, setZoomLevel] = useState(window.devicePixelRatio);
+
+  function getZoomLevel() {
+    return window.innerWidth / window.screen.width;
+  }
 
   useEffect(() => {
     const handleResize = () => {
-      setrowHeight(window.innerHeight);
+      const newZoomLevel = getZoomLevel();
+      setZoomLevel(newZoomLevel);
+      setrowHeight(window.innerHeight * newZoomLevel);
       setwidth(window.innerWidth);
     };
 
@@ -232,8 +242,10 @@ const Grid = ({
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
-
+  }, [zoomLevel]);
+  useEffect(() => {
+    console.log("Zoom level changed:", getZoomLevel());
+  }, [zoomLevel]); // zoomLevel이 변경될 때마다 실행
   return (
     <S.Wrapper>
       {!isChatOFF ? (
