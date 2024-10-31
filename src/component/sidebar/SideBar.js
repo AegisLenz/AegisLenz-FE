@@ -18,9 +18,9 @@ const SideBar = ({ isEditOn, setEditOn }) => {
           <S.Icon src="/icon/AI_Icon.png" />
           <S.IconP>Question History</S.IconP>
         </Link>
-        <Link to="/IAM">
+        <Link to="/Asset">
           <S.Icon src="/icon/Network_Icon.png" />
-          <S.IconP>IAM Data</S.IconP>
+          <S.IconP>Asset Data</S.IconP>
         </Link>
       </S.IconWrapper>
       <ToggleEdit isEditOn={isEditOn} setEditOnOff={setEditOnOff} />

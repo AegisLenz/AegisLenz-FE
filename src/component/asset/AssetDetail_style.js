@@ -89,3 +89,14 @@ export const InnerCategory = styled.div`
     transform: scale(1.1);
   }
 `;
+
+export const InnerContentArea = styled.div`
+  position: relative;
+
+  margin-top: 1%;
+
+  height: 87%;
+  width: 90%;
+
+  overflow: auto;
+`;
