@@ -2,30 +2,13 @@ import * as S from "./AssetDetail_style";
 import { useState } from "react";
 import { IamInfo } from "./contents/index";
 
-let Data = {
-  UserName: "Wonje_Cha",
-  UserId: "AIDA2MNVLVQT5TARLHOZP",
-  CreateDate: "2024-10-01T04:11:48+00:00",
-  UserPolicies: [],
-  AttachedPolicies: ["AmazonEC2FullAccess", "AdministratorAccess"],
-  Groups: [],
-  AccessKeysLastUsed: [
-    {
-      AccessKeyId: "AKIA2MNVLVQT53CDZV4V",
-      Status: "Active",
-      LastUsedDate: "2024-10-26T09:24:00+00:00",
-    },
-  ],
-  LastUpdated: "2024-10-26T20:11:27.101264",
-};
-
-const Inneriam = () => {
+const Inneriam = ({data}) => {
   const [selectedCategory, setSelectedCategory] = useState("info");
 
   const renderContent = () => {
     switch (selectedCategory) {
       case "info":
-        return <IamInfo data={Data} />;
+        return <IamInfo data={data} />;
       case "Checklist":
         return <div>Checklist</div>;
       case "Configuration Log":
@@ -44,13 +27,13 @@ const Inneriam = () => {
       <S.InnerTop>
         <S.InnerTitleArea>
           <img src="/icon/AI_Icon.png" alt="Icon" />
-          <S.InnerTitle UserId={"UserId: " + Data.UserId}>
-            {Data.UserName}
+          <S.InnerTitle UserId={"UserId: " + data.UserId}>
+            {data.UserName}
           </S.InnerTitle>
         </S.InnerTitleArea>
         <S.InnerTopInfo>
           <S.InfoLink to="#">{"AWS"}</S.InfoLink>
-          <S.InfoLink to="#">{Data.CreateDate}</S.InfoLink>
+          <S.InfoLink to="#">{data.CreateDate}</S.InfoLink>
         </S.InnerTopInfo>
       </S.InnerTop>
       <S.InnerCategorWrapper>

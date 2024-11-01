@@ -93,10 +93,8 @@ export const InnerCategory = styled.div`
 export const InnerContentArea = styled.div`
   position: relative;
 
-  margin-top: 1%;
+  margin: 1% 0 1% 0;
 
-  height: 87%;
+  height: 77%;
   width: 90%;
-
-  overflow: auto;
 `;

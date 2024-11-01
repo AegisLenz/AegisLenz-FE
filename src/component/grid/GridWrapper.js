@@ -13,6 +13,7 @@ import {
   NeedCheck,
   Detection,
   AccountStatus,
+  EC2Status
 } from "./elements";
 
 const Grid = ({
@@ -121,10 +122,19 @@ const Grid = ({
         x: 47,
         y: 10,
         w: 47,
-        h: 35,
-        content: <AccountStatus />,
+        h: 15,
+        content: <AccountStatus GenDetailData={()=>{}}/>,
         isResizable: true,
       },
+      {
+        i: "EC2Status",
+        x: 47,
+        y: 10,
+        w: 47,
+        h: 15,
+        content: <EC2Status GenDetailData={()=>{}}/>,
+        isResizable: true,
+      }
     ],
     [NeedCheckStatus]
   );
