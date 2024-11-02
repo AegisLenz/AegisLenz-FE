@@ -27,17 +27,24 @@ export const Title = styled.h2`
   margin: 1% 0 1% 0;
 
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
+  align-items: center;
+`;
+export const FilterWrapper = styled.div`
+  width: 50%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-end;
   align-items: center;
 `;
 export const SearchInput = styled.input`
   box-shadow: none;
   border: none;
 
-  font-size: 0.8em;
+  font-size: 0.6em;
 
   height: 50%;
-  width: 20%;
+  width: 50%;
 
   margin-left: 1%;
 
@@ -54,7 +61,7 @@ export const SearchInput = styled.input`
 `;
 export const InitButton = styled.button`
   height: 50%;
-  width: 8%;
+  width: 20%;
   margin-left: 2%;
 
   font-size: 0.6em;

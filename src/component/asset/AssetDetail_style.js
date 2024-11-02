@@ -44,6 +44,14 @@ export const InnerTitle = styled.h1`
     opacity: 0.5;
   }
 `;
+export const Icon = styled.svg`
+  width: 10%;
+
+  background-image: url(${(props) => props.url});
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+`;
 export const InnerTopInfo = styled.div`
   position: absolute;
 

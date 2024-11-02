@@ -10,9 +10,11 @@ import Asset from "../component/asset/AssetDetail";
 function Main() {
   const [openDetail, setDetail] = useState(false);
   const [isDetailData, setDetailData] = useState({});
-
-  const GenDetailData = (data) => {
+  const [DataType, setDataType] = useState("");
+  
+  const GenDetailData = (data, type) => {
     setDetailData(data);
+    setDataType(type);
     setDetail(true);
   };
 
@@ -44,7 +46,7 @@ function Main() {
             }}
           />
           <S.SideWrapper openDetail={openDetail}>
-            {openDetail ? <Asset data={isDetailData} /> : ""}
+            {openDetail ? <Asset data={isDetailData} DataType={DataType}/> : ""}
           </S.SideWrapper>
         </S.DetailWrapper>
       </S.Wrapper>

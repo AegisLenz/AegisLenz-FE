@@ -3,28 +3,7 @@ import { useState } from "react";
 import Dropdown from "../../../toggle/dropdown/DropDown";
 
 const testData = [
-  {
-    InstanceId: "i-0414709f97c9f57dd",
-    InstanceType: "m4.xlarge",
-    LaunchTime: "2024-10-28 05:18:07+00:00",
-    State: "running",
-    PublicIpAddress: "23.23.93.131",
-    PrivateIpAddress: "172.31.31.6",
-    VpcId: "vpc-0dbe0a6580324b276",
-    SubnetId: "subnet-07fd226de3eb38cff",
-    SecurityGroups: [
-      {
-        GroupId: "sg-003e38535e03835b8",
-        GroupName: "default",
-      },
-    ],
-    Tags: [
-      {
-        Key: "Name",
-        Value: "AegisLenz-ELK test",
-      },
-    ],
-  },
+ 
   {
     InstanceId: "i-0414709f97c9f57ab",
     InstanceType: "m4.xlarge",
@@ -117,19 +96,21 @@ const EC2Status = ({ GenDetailData }) => {
     <S.Wrapper>
       <S.Title>
         <p>EC2 Status Overview</p>
-        <S.FilterDropdown>
-          <Dropdown
-            options={filterOptions}
-            selectedOption={filterCategory}
-            onSelect={(value) => setFilterCategory(value)}
+        <S.FilterWrapper>
+          <S.FilterDropdown>
+            <Dropdown
+              options={filterOptions}
+              selectedOption={filterCategory}
+              onSelect={(value) => setFilterCategory(value)}
+            />
+          </S.FilterDropdown>
+          <S.SearchInput
+            placeholder="Search"
+            value={searchTerm}
+            onChange={handleSearch}
           />
-        </S.FilterDropdown>
-        <S.SearchInput
-          placeholder="Search"
-          value={searchTerm}
-          onChange={handleSearch}
-        />
-        <S.InitButton onClick={resetSearch}>Reset</S.InitButton>
+          <S.InitButton onClick={resetSearch}>Reset</S.InitButton>
+        </S.FilterWrapper>
       </S.Title>
       <S.TableWrapper>
         <S.Table>
@@ -143,7 +124,7 @@ const EC2Status = ({ GenDetailData }) => {
           </S.Thead>
           <S.Tbody>
             {filteredData.map((item) => (
-              <S.Tr key={item.InstanceId} onClick={() => GenDetailData(item)}>
+              <S.Tr key={item.InstanceId} onClick={() => GenDetailData(item, "ec2")}>
                 <S.Td>
                   <S.StatusIcon color={StateColorTable[item.State]} />
                 </S.Td>

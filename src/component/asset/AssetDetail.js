@@ -1,14 +1,18 @@
 import * as S from "./AssetDetail_style";
 import { useState } from "react";
-import { IamInfo } from "./contents/index";
+import { IamInfo, Ec2Info } from "./contents/index";
 
-const Inneriam = ({data}) => {
+const Inneriam = ({ data, DataType }) => {
   const [selectedCategory, setSelectedCategory] = useState("info");
 
   const renderContent = () => {
     switch (selectedCategory) {
       case "info":
-        return <IamInfo data={data} />;
+        return DataType === "iam" ? (
+          <IamInfo data={data} />
+        ) : (
+          <Ec2Info data={data} />
+        );
       case "Checklist":
         return <div>Checklist</div>;
       case "Configuration Log":
@@ -26,9 +30,17 @@ const Inneriam = ({data}) => {
     <S.Wrapper>
       <S.InnerTop>
         <S.InnerTitleArea>
-          <img src="/icon/AI_Icon.png" alt="Icon" />
-          <S.InnerTitle UserId={"UserId: " + data.UserId}>
-            {data.UserName}
+          <S.Icon
+            url={DataType === "iam" ? "/icon/user_Icon.svg" : "/icon/EC2.svg"}
+          />
+          <S.InnerTitle
+            UserId={
+              DataType === "iam"
+                ? "UserId: " + data.UserId
+                : "EC2Id: " + data.InstanceId
+            }
+          >
+            {DataType === "iam" ? data.UserName : data.Tags[0].Value}
           </S.InnerTitle>
         </S.InnerTitleArea>
         <S.InnerTopInfo>
