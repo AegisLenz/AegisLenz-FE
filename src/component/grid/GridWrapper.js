@@ -13,6 +13,7 @@ import {
   NeedCheck,
   Detection,
   AccountStatus,
+  EC2Status
 } from "./elements";
 
 const Grid = ({
@@ -121,10 +122,19 @@ const Grid = ({
         x: 47,
         y: 10,
         w: 47,
-        h: 35,
-        content: <AccountStatus />,
+        h: 18,
+        content: <AccountStatus GenDetailData={()=>{}}/>,
         isResizable: true,
       },
+      {
+        i: "EC2Status",
+        x: 47,
+        y: 28,
+        w: 47,
+        h: 18,
+        content: <EC2Status GenDetailData={()=>{}}/>,
+        isResizable: true,
+      }
     ],
     [NeedCheckStatus]
   );
@@ -132,6 +142,7 @@ const Grid = ({
   // 초기 레이아웃 설정
   const [gridLayout, setGridLayout] = useState(InitLayout);
 
+  // markData 없데이트 시에
   useEffect(() => {
     // MarkData가 업데이트될 때 markData를 업데이트
     if (MarkData.length > 0) {
@@ -139,6 +150,7 @@ const Grid = ({
     }
   }, [MarkData]);
 
+  // markData가 존재할 때
   useEffect(() => {
     if (markData && markData.length > 0) {
       let currentX = 0;
@@ -218,9 +230,8 @@ const Grid = ({
     }
   }, [isChattoggleOpen, NeedCheckStatus, InitLayout, markData]);
 
-  const [rowHeight, setrowHeight] = useState(
-    window.innerHeight * getZoomLevel()
-  );
+
+  const [rowHeight, setrowHeight] = useState(window.innerHeight);
   const [width, setwidth] = useState(window.innerWidth);
   const [zoomLevel, setZoomLevel] = useState(window.devicePixelRatio);
 

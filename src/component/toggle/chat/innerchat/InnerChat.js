@@ -2,12 +2,13 @@ import * as S from "./InnerChat_style";
 import React, { useEffect, useRef, useState } from "react";
 import { Loading } from "../../loading/loading";
 
-const ExampleQ = [
-  "Dashboard에서 오늘 하루 봐야 될 것들 모두 보여줘",
-  "최근 일주일 동안 새로 생성된 IAM 계정의 이름 가져와줘",
-  "example 질문",
-  "Bookmark 된 질문",
-];
+// const ExampleQ = [
+//   "Dashboard에서 오늘 하루 봐야 될 것들 모두 보여줘",
+//   "최근 일주일 동안 새로 생성된 IAM 계정의 이름 가져와줘",
+//   "example 질문",
+//   "Bookmark 된 질문",
+// ];
+const ExampleQ = ["예시 질문1", "예시 질문2", "Bookmark 된 질문"];
 
 const InnerChat = ({ isOpen, isFull, chatData, addExample }) => {
   const chatEndRef = useRef(null);

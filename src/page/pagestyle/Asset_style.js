@@ -6,8 +6,7 @@ export const Wrapper = styled.div`
   left: 5vw;
   top: 8vh;
   width: 95vw;
-  height: auto;
-  min-height: 92vh;
+  height: 92vh;
   margin: 0;
 
   display: flex;
@@ -18,24 +17,33 @@ export const InnerWrapper = styled.div`
   height: 92vh;
 `;
 export const CountWrapper = styled.div`
-  margin: 2%;
+  margin: 1%;
   width: 50%;
   height: 10%;
 `;
 export const IndexWrapper = styled.div`
-  margin: 2%;
-  width: 96%;
-  height: 80%;
+  width: 100%;
+  height: 86%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;
-export const GraphWrapper = styled.div``;
+export const Indexdiv = styled.div`
+  height: 48%;
+  width: 98%;
+  padding: 0.3% 1%;
+`;
+export const DetailWrapper = styled.div``;
 export const IsometricToggle = styled.div`
   position: absolute;
   z-index: 300;
-  width: ${({ isIsometric }) => (isIsometric ? "2vw" : "0")};
+  width: ${({ isDetailData }) => (isDetailData ? "2vw" : "0")};
   height: 2vw;
 
-  right: ${({ openIsometric }) => (openIsometric ? "50vw" : "0")};
-  top: ${({ openIsometric }) => (openIsometric ? "1vh" : "46vh")};
+  right: ${({ openDetail }) => (openDetail ? "50vw" : "1vw")};
+  top: ${({ openDetail }) => (openDetail ? "1vh" : "46vh")};
   border-radius: 0.5em;
   transition: all ease 0.6s;
 
@@ -43,7 +51,7 @@ export const IsometricToggle = styled.div`
   background-repeat: no-repeat;
   background-size: 70%;
   background-position: center;
-  transform: rotate(${({ openIsometric }) => (openIsometric ? "180deg" : "0")});
+  transform: rotate(${({ openDetail }) => (openDetail ? "180deg" : "0")});
 
   cursor: pointer;
 
@@ -54,7 +62,7 @@ export const IsometricToggle = styled.div`
 `;
 export const SideWrapper = styled.div`
   position: relative;
-  width: ${({ openIsometric }) => (openIsometric ? "50vw" : 0)};
+  width: ${({ openDetail }) => (openDetail ? "50vw" : 0)};
   min-height: 92vh;
   transition: all ease 0.6s;
   box-shadow: 2px 0px 10px #bbb;

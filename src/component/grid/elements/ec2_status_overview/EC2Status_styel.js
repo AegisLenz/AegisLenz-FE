@@ -5,6 +5,7 @@ export const Wrapper = styled.div`
   width: 100%;
   height: 100%;
   background-color: white;
+
   position: relative;
   display: flex;
   justify-content: flex-end;
@@ -90,16 +91,17 @@ export const FilterDropdown = styled.div`
   width: 20%;
 `;
 export const TableWrapper = styled.div`
-  z-index: 201;
   position: absolute;
   top: 19%;
   width: 96%;
   height: 80%;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: auto;
 `;
 export const Table = styled.table`
   border-collapse: collapse;
   width: 100%;
+  table-layout: auto;
 `;
 export const Thead = styled.thead`
   z-index: 201;
@@ -117,12 +119,11 @@ export const Tbody = styled.tbody`
 export const Tr = styled.tr`
   border-bottom: solid 1px #104f55;
   transition: all ease 0.3s;
-  background-color: ${({ type }) => (type ? "transparent" : "#F38A87")};
-  font-weight: ${({ type }) => (type ? "" : "600")};
+  background-color: "transparent";
 
   &:hover {
     cursor: pointer;
-    background-color: ${({ type }) => (type ? "#eeeeee" : "#F38A87")};
+    background-color: #eeeeee;
   }
 `;
 export const Td = styled.td`
@@ -130,18 +131,14 @@ export const Td = styled.td`
   text-align: center;
   white-space: nowrap;
   overflow-x: visible;
-
-  p{
-    white-space: pre-wrap;
-  }
 `;
 export const StatusIcon = styled.div`
-  width: 100%;
-  height: 1.5em;
-  background-image: url(${({ type }) => type ? "/icon/check.svg" : "/icon/alert.svg"});
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  background-color: ${(props) => props.color};
+
+  transform: translateX(100%);
 `;
 export const TypeIconWrapper = styled.div`
   display: flex;
