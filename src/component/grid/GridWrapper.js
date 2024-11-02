@@ -230,13 +230,20 @@ const Grid = ({
     }
   }, [isChattoggleOpen, NeedCheckStatus, InitLayout, markData]);
 
-  // 윈도우 사이즈가 바뀌었을때의 작용
+
   const [rowHeight, setrowHeight] = useState(window.innerHeight);
   const [width, setwidth] = useState(window.innerWidth);
+  const [zoomLevel, setZoomLevel] = useState(window.devicePixelRatio);
+
+  function getZoomLevel() {
+    return window.innerWidth / window.screen.width;
+  }
 
   useEffect(() => {
     const handleResize = () => {
-      setrowHeight(window.innerHeight);
+      const newZoomLevel = getZoomLevel();
+      setZoomLevel(newZoomLevel);
+      setrowHeight(window.innerHeight * newZoomLevel);
       setwidth(window.innerWidth);
     };
 
@@ -246,8 +253,10 @@ const Grid = ({
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
-
+  }, [zoomLevel]);
+  useEffect(() => {
+    console.log("Zoom level changed:", getZoomLevel());
+  }, [zoomLevel]); // zoomLevel이 변경될 때마다 실행
   return (
     <S.Wrapper>
       {!isChatOFF ? (
