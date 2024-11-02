@@ -9,23 +9,22 @@ export const Wrapper = styled.div`
   margin: 0;
   top: 0;
   padding-left: 1vw;
-  div {
-    display: inline-block;
-  }
+  overflow: hidden;
+
   a {
     text-decoration: none;
   }
 `;
 
-export const Title = styled.h1`
-  display: inline-block;
+export const Title = styled.div`
   color: #104f55;
-  /* &::after {
-    content: "";
-    position: relative;
-    left: 0;
-    background-color: #104f55;
-    width: 100vh;
-    height: 10px;
-  } */
+
+  height: 100%;
+  width: 10%;
+
+  font-size: 2rem;
+  font-weight: 800;
+
+  display: flex;
+  align-items: center;
 `;

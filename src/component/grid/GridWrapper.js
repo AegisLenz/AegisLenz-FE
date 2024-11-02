@@ -13,7 +13,7 @@ import {
   NeedCheck,
   Detection,
   AccountStatus,
-  EC2Status
+  EC2Status,
 } from "./elements";
 
 const Grid = ({
@@ -28,6 +28,9 @@ const Grid = ({
   const [isFilterOpen, setFilter] = useState(false);
   const [NeedCheckStatus, setNeedCheckStatus] = useState(false);
   const [markData, setMarkData] = useState(MarkData || []);
+  const [rowHeight, setrowHeight] = useState(window.screen.height);
+  const [width, setwidth] = useState(window.innerWidth);
+  const [zoomLevel, setZoomLevel] = useState(getZoomLevel());
 
   const ChatToggleButton = () => {
     if (isChattoggleOpen) {
@@ -53,11 +56,44 @@ const Grid = ({
   const isNeedCheck = () => {
     setNeedCheckStatus((prev) => !prev);
   };
+  function getZoomLevel() {
+    return window.innerWidth / window.screen.width;
+  }
+
+  useEffect(() => {
+    const handleResize = () => {
+      const newZoomLevel = getZoomLevel();
+      if (newZoomLevel !== zoomLevel) {
+        setZoomLevel(newZoomLevel);
+      }
+      setrowHeight(window.screen.height);
+      setwidth(window.innerWidth);
+      setGridLayout((prevLayout) =>
+        prevLayout.map((item) =>
+          item.i === "chat" ? item.y * zoomLevel : item
+        )
+      );
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    // 컴포넌트가 언마운트될 때 이벤트 리스너 제거
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [zoomLevel]);
 
   const InitLayout = useMemo(
     () => [
-      { i: "chat", x: 0, y: 0, w: 47, h: 3, isResizable: false },
-      { i: "filter", x: 0, y: 0, w: 47, h: 8, isResizable: false },
+      {
+        i: "chat",
+        x: 0,
+        y: 0,
+        w: 47,
+        h: 11 * zoomLevel,
+        isResizable: false,
+      },
+      { i: "filter", x: 0, y: 0, w: 47, h: 0, isResizable: false },
       {
         i: "AccountCount",
         x: 47,
@@ -123,7 +159,7 @@ const Grid = ({
         y: 10,
         w: 47,
         h: 18,
-        content: <AccountStatus GenDetailData={()=>{}}/>,
+        content: <AccountStatus GenDetailData={() => {}} />,
         isResizable: true,
       },
       {
@@ -132,11 +168,11 @@ const Grid = ({
         y: 28,
         w: 47,
         h: 18,
-        content: <EC2Status GenDetailData={()=>{}}/>,
+        content: <EC2Status GenDetailData={() => {}} />,
         isResizable: true,
-      }
+      },
     ],
-    [NeedCheckStatus]
+    [NeedCheckStatus, zoomLevel]
   );
 
   // 초기 레이아웃 설정
@@ -230,33 +266,6 @@ const Grid = ({
     }
   }, [isChattoggleOpen, NeedCheckStatus, InitLayout, markData]);
 
-
-  const [rowHeight, setrowHeight] = useState(window.innerHeight);
-  const [width, setwidth] = useState(window.innerWidth);
-  const [zoomLevel, setZoomLevel] = useState(window.devicePixelRatio);
-
-  function getZoomLevel() {
-    return window.innerWidth / window.screen.width;
-  }
-
-  useEffect(() => {
-    const handleResize = () => {
-      const newZoomLevel = getZoomLevel();
-      setZoomLevel(newZoomLevel);
-      setrowHeight(window.innerHeight * newZoomLevel);
-      setwidth(window.innerWidth);
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    // 컴포넌트가 언마운트될 때 이벤트 리스너 제거
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, [zoomLevel]);
-  useEffect(() => {
-    console.log("Zoom level changed:", getZoomLevel());
-  }, [zoomLevel]); // zoomLevel이 변경될 때마다 실행
   return (
     <S.Wrapper>
       {!isChatOFF ? (
