@@ -5,6 +5,7 @@ import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
 import ChatToggle from "../toggle/chat/ToggleChat";
 import FilterToggle from "../toggle/filter/Filter";
+import Alert from "../alert/Alert";
 import {
   AccountCount,
   DailyInsight,
@@ -26,7 +27,6 @@ const Grid = ({
 }) => {
   const [isChattoggleOpen, setChatToggle] = useState(false);
   const [isFilterOpen, setFilter] = useState(false);
-  const [NeedCheckStatus, setNeedCheckStatus] = useState(false);
   const [markData, setMarkData] = useState(MarkData || []);
   const [rowHeight, setrowHeight] = useState(window.screen.height);
   const [width, setwidth] = useState(window.innerWidth);
@@ -53,13 +53,11 @@ const Grid = ({
     setFilter(true);
   };
 
-  const isNeedCheck = () => {
-    setNeedCheckStatus((prev) => !prev);
-  };
   function getZoomLevel() {
     return window.innerWidth / window.screen.width;
   }
 
+  //줌레벨 변화감지
   useEffect(() => {
     const handleResize = () => {
       const newZoomLevel = getZoomLevel();
@@ -70,7 +68,12 @@ const Grid = ({
       setwidth(window.innerWidth);
       setGridLayout((prevLayout) =>
         prevLayout.map((item) =>
-          item.i === "chat" ? item.y * zoomLevel : item
+          item.i === "chat" ? item.h * zoomLevel : item
+        )
+      );
+      setGridLayout((prevLayout) =>
+        prevLayout.map((item) =>
+          item.i === "filter" ? item.h * zoomLevel : item
         )
       );
     };
@@ -136,12 +139,7 @@ const Grid = ({
         y: 25,
         w: 20,
         h: 17,
-        content: (
-          <NeedCheck
-            isNeedCheck={isNeedCheck}
-            NeedCheckStatus={NeedCheckStatus}
-          />
-        ),
+        content: <NeedCheck />,
         isResizable: true,
       },
       {
@@ -172,7 +170,7 @@ const Grid = ({
         isResizable: true,
       },
     ],
-    [NeedCheckStatus, zoomLevel]
+    [zoomLevel]
   );
 
   // 초기 레이아웃 설정
@@ -244,30 +242,21 @@ const Grid = ({
             : { ...item, x: item.x + 47, w: item.w - 1 }
         )
       );
-    } else if (NeedCheckStatus) {
       setGridLayout((prevLayout) =>
-        prevLayout.map((item) => {
-          // "NeedCheck"인 경우
-          if (item.i === "NeedCheck") {
-            return { ...item, x: 47, y: 0, w: 47, h: 20 };
-          }
-          // y <= 20이면서 x >= 46인 경우
-          if (item.y <= 20 && item.x >= 47) {
-            return { ...item, y: item.y + 20 };
-          }
-          // 그 외의 항목은 수정하지 않음
-          return item;
-        })
+        prevLayout.map((item) =>
+          item.i === "filter" ? { ...item, h: 8 * zoomLevel } : item
+        )
       );
     } else {
       if (markData.length < 0) {
         setGridLayout(InitLayout);
       }
     }
-  }, [isChattoggleOpen, NeedCheckStatus, InitLayout, markData]);
+  }, [isChattoggleOpen, InitLayout, markData, zoomLevel]);
 
   return (
     <S.Wrapper>
+      <Alert setChatToggleOpen={setChatToggleOpen} />
       {!isChatOFF ? (
         <ChatToggle
           isChattoggleOpen={isChattoggleOpen}

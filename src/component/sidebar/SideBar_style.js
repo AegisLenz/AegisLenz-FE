@@ -13,6 +13,8 @@ export const Wrapper = styled.div`
   align-items: center;
   flex-direction: column;
 
+  overflow: hidden;
+
   transition: all ease 0.3s;
 
   &:hover {

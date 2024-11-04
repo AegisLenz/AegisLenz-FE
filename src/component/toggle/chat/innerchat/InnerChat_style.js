@@ -14,7 +14,7 @@ const slideUp = keyframes`
 export const Wrapper = styled.div`
   z-index: 203;
   width: 100%;
-  top: ${({ isFull }) => (isFull ? "-79vh" : "1vh")};
+  top: ${({ isFull }) => (isFull ? "-79vh" : "0")};
   position: absolute;
   height: ${({ isOpen, isFull }) => (isFull ? "80vh" : isOpen ? "83vh" : "0")};
   overflow-y: auto;
