@@ -23,7 +23,7 @@ const SideBar = ({ isEditOn, setEditOn }) => {
           <S.IconP>Asset Data</S.IconP>
         </Link>
       </S.IconWrapper>
-      <ToggleEdit isEditOn={isEditOn} setEditOnOff={setEditOnOff} />
+      {/* <ToggleEdit isEditOn={isEditOn} setEditOnOff={setEditOnOff} /> */}
     </S.Wrapper>
   );
 };
