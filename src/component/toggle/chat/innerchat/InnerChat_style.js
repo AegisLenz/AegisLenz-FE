@@ -37,7 +37,52 @@ export const InnerWrapper = styled.div`
   justify-content: flex-end;
   flex-direction: column;
 `;
+export const Bookmark = styled.svg`
+  background-image: url("/icon/bookmark.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 60%;
 
+  top: 0;
+  right: 100%;
+
+  width: 2vw;
+  height: 100%;
+  position: absolute;
+
+  transition: all ease 0.3s;
+  opacity: ${(props) => (props.isBookmarked ? "1" : "0.2")};
+  border-radius: 1em;
+  background-color: ${(props) => (props.isBookmarked ? "#ccc" : "")};
+  box-shadow: ${(props) => (props.isBookmarked ? "0px 1px 1px #aaa" : "")};
+
+  &:hover {
+    cursor: pointer;
+    opacity: ${(props) => (props.isBookmarked ? "1" : "0.5")};
+  }
+`;
+export const CancleBookMark = styled.svg`
+  background-image: url("/icon/cancle.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 60%;
+
+  position: absolute;
+
+  right: 0;
+
+  width: 2vw;
+  height: 2vh;
+
+  opacity: 0.5;
+
+  transition: all ease 0.3s;
+
+  &:hover {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+`;
 export const MessageBubble = styled.div`
   z-index: 204;
 
@@ -53,7 +98,7 @@ export const MessageBubble = styled.div`
 
   align-self: ${({ isUser }) => (isUser ? "flex-end" : "flex-start")};
 
-  max-width: 60%;
+  max-width: 40%;
 
   font-weight: 500;
   color: ${({ isUser }) => (isUser ? "#121212" : "#ffffff")};
@@ -109,9 +154,14 @@ export const Example = styled.div`
   width: 90%;
   height: 20%;
 
+  position: relative;
+
   display: flex;
   white-space: pre-wrap;
   word-wrap: break-word;
+  word-break: break-word; // 긴 단어 줄바꿈
+  overflow-wrap: break-word; // 긴 단어 줄바꿈
+  text-align: center;
   justify-content: center;
   align-items: center;
 
