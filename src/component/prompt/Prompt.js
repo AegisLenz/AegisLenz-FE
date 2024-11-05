@@ -10,6 +10,17 @@ const Prompt = () => {
   const [ChatWidth, setChatWidth] = useState(47);
   const [Chatleft, setChatleft] = useState(20);
   const [MarkData, setMarkData] = useState([]);
+  const [promptSession, setPromptSession] = useState();
+  const [promptIndex, setPromptIndex] = useState([]);
+
+  const getPromptIndex = (value) => {
+    setPromptIndex(value);
+  };
+
+  const getPromptSession = (value) => {
+    setPromptSession(value);
+  };
+
   const setMarkDataFunc = (value) => {
     setMarkData(value);
     //오른쪽에 인터랙티브하게 데이터 ON/OFF
@@ -45,13 +56,20 @@ const Prompt = () => {
 
   return (
     <S.Wrapper>
-      <PromptIndex SideIndex={SideIndex} isSideIndex={isSideIndex} />
+      <PromptIndex
+        SideIndex={SideIndex}
+        isSideIndex={isSideIndex}
+        getPromptSession={getPromptSession}
+        getPromptIndex={getPromptIndex}
+      />
       <S.ChatAreaWrapper
         ChatWidth={ChatWidth + "vw"}
         Chatleft={Chatleft + "vw"}
       >
         <S.ChatArea isSideOpen={isSideIndex} isSideContent={isSideContent}>
           <Chat
+            promptSession={promptSession}
+            promptIndex={promptIndex}
             isChattoggleOpen={false}
             sizeFull={true}
             SideIndex={SideIndex}

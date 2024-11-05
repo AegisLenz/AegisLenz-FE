@@ -1,7 +1,8 @@
 import * as S from "./ToggleChat_style";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import InnerChat from "./innerchat/InnerChat";
-import Prompthook from "../../hook/Hook";
+import GetPromptContents from "../../hook/Prompt/GetPromptContents";
+import Prompthook from "../../hook/Prompt/Prompthook";
 
 const ToggleChat = ({
   ChatToggleButton,
@@ -9,36 +10,68 @@ const ToggleChat = ({
   setChatToggleOpen,
   sizeFull,
   markData,
+  promptSession,
+  promptIndex,
 }) => {
   const [inputValue, setInputValue] = useState("");
-  const [ChatData, setChatData] = useState([
-    {
-      text: "안녕하세요! AegisLenz의 사용자 도우미 Aegis입니다!\n무엇을 도와드릴까요?\n\n저는 이런 질문들을 도와드릴 수 있어요!\n\n",
-      isUser: false,
-      isFirst: true,
-      isQuery: `{
-      "query": {
-        "bool": {
-          "must": [
-            {
-              "term": {
-                "eventName": "CreateUser"
-              }
-            },
-            {
-              "range": {
-                "eventTime": {
-                  "gte": "now-7d/d",
-                  "lt": "now/d"
-                }
-              }
-            }
-          ]
+  const [ChatData, setChatData] = useState([]);
+
+  //이전 대화 기록 불러오기
+  useEffect(() => {
+    const fetchPromptsContents = async () => {
+      try {
+        let session =
+          promptIndex && promptIndex.length > 0 ? promptIndex[0] : null;
+        if (promptSession) {
+          session = promptSession;
         }
+        if (session) {
+          const data = await GetPromptContents(session);
+          setChatData(data);
+          console.log(data);
+        } else {
+          console.log("No valid session available");
+        }
+      } catch (e) {
+        console.log(e.message);
       }
-    }`,
-    },
-  ]);
+    };
+    fetchPromptsContents();
+  }, [promptIndex, promptSession]);
+
+  useEffect(() => {
+    if (ChatData.length === 0) {
+      setChatData((prev) => [
+        ...prev,
+        {
+          text: "안녕하세요! AegisLenz의 사용자 도우미 Aegis입니다!\n무엇을 도와드릴까요?\n\n저는 이런 질문들을 도와드릴 수 있어요!\n\n",
+          isUser: false,
+          isFirst: true,
+          isQuery: `{
+          "query": {
+            "bool": {
+              "must": [
+                {
+                  "term": {
+                    "eventName": "CreateUser"
+                  }
+                },
+                {
+                  "range": {
+                    "eventTime": {
+                      "gte": "now-7d/d",
+                      "lt": "now/d"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }`,
+        },
+      ]);
+    }
+  }, [ChatData]);
 
   // 로딩 상태관리
   // eslint-disable-next-line no-unused-vars
@@ -86,13 +119,19 @@ const ToggleChat = ({
       { text: "", isUser: false, isStreem: true },
     ]);
     const messageIndex = ChatData.length + 1; // 새로 추가할 요소의 인덱스
+    const session = promptSession
+      ? promptSession
+      : promptIndex && promptIndex.length > 0
+      ? promptIndex[0]
+      : null;
     try {
       // Prompthook 호출 시 스트림 데이터 처리 콜백 전달
       await Prompthook(
         inputValue,
         (currentText) => handleStreamData(currentText, messageIndex),
         (finalText) => handleStreamComplete(finalText, messageIndex),
-        handleLastChunk
+        handleLastChunk,
+        session
       );
     } catch (error) {
       setChatData((prev) => prev.filter((msg) => !msg.isLoading));

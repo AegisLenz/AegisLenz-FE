@@ -1,11 +1,11 @@
 import * as S from "./SideBar_style";
 import { Link } from "react-router-dom";
-import ToggleEdit from "../toggle/edit/ToggleEdit";
+// import ToggleEdit from "../toggle/edit/ToggleEdit";
 
 const SideBar = ({ isEditOn, setEditOn }) => {
-  const setEditOnOff = () => {
-    setEditOn((prev) => !prev);
-  };
+  // const setEditOnOff = () => {
+  //   setEditOn((prev) => !prev);
+  // };
 
   return (
     <S.Wrapper>

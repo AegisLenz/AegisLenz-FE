@@ -33,13 +33,13 @@ const InnerChat = ({ isOpen, isFull, chatData, addExample }) => {
         {chatData.map((message, index) => (
           <S.MessageBubble
             key={index}
-            isUser={message.isUser}
+            isUser={message.isUser ? message.isUser : message.role === "user"}
             isOpen={isOpen}
             isFull={isFull}
             isFirst={message.isFirst}
           >
             {message.isStreem ? <Loading /> : ""}
-            {message.text}
+            {message.text ? message.text : message.content}
 
             {message.isFirst
               ? ExampleQ.map((item) => (

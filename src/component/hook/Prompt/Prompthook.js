@@ -3,13 +3,15 @@ const Prompthook = async (
   userInput,
   onDataReceived,
   onComplete,
-  handleLastChunk
+  handleLastChunk,
+  session
 ) => {
   try {
-    const response = await fetch(`/api/prompt/1/chat`, {
+    console.log(session);
+    const response = await fetch(`/server/api/v1/prompt/${session}/chat`, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json", // Content-Type 헤더 추가
       },
       body: JSON.stringify({ user_input: userInput }),
     });
