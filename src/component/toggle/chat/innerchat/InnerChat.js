@@ -8,17 +8,31 @@ import { Loading } from "../../loading/loading";
 //   "example 질문",
 //   "Bookmark 된 질문",
 // ];
-const ExampleQ = ["예시 질문1", "예시 질문2", "Bookmark 된 질문"];
+const ExampleQ = [
+  "Bookmark 된 질문1",
+  "Bookmark 된 질문2",
+  "Bookmark 된 질문3",
+];
 
 const InnerChat = ({ isOpen, isFull, chatData, addExample }) => {
   const chatEndRef = useRef(null);
   const [OpenQueries, setOpenQueries] = useState({});
+  const [bookmarkedMessages, setBookmarkedMessages] = useState({});
+
   // 데이터가 업데이트될 때마다 스크롤을 아래로 이동
   useEffect(() => {
     if (chatEndRef.current) {
       chatEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [chatData]);
+
+  //북마크
+  const AddBookmark = (text, index) => {
+    setBookmarkedMessages((prev) => ({
+      ...prev,
+      [index]: !prev[index], // 현재 상태의 반대로 토글
+    }));
+  };
 
   const toggleQuery = (index) => {
     setOpenQueries((prevState) => ({
@@ -38,6 +52,19 @@ const InnerChat = ({ isOpen, isFull, chatData, addExample }) => {
             isFull={isFull}
             isFirst={message.isFirst}
           >
+            {message.isUser || message.role === "user" ? (
+              <S.Bookmark
+                isBookmarked={bookmarkedMessages[index]}
+                onClick={() => {
+                  AddBookmark(
+                    message.text ? message.text : message.content,
+                    index
+                  );
+                }}
+              />
+            ) : (
+              ""
+            )}
             {message.isStreem ? <Loading /> : ""}
             {message.text}
 
@@ -47,6 +74,7 @@ const InnerChat = ({ isOpen, isFull, chatData, addExample }) => {
                     <S.Example
                       onClick={(item) => addExample(item.target.textContent)}
                     >
+                      <S.CancleBookMark />
                       {item}
                     </S.Example>
                   </S.ExampleArea>
