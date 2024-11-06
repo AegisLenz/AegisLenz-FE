@@ -10,7 +10,9 @@ const Prompt = ({
   getPromptIndex,
 }) => {
   const [prompts, setPrompts] = useState([]);
+  // eslint-disable-next-line no-unused-vars
   const [loading, setLoading] = useState(true);
+  // eslint-disable-next-line no-unused-vars
   const [error, setError] = useState(null);
 
   const fetchPrompts = async () => {
@@ -28,6 +30,7 @@ const Prompt = ({
 
   useEffect(() => {
     fetchPrompts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const CreateNewPrompt = async () => {

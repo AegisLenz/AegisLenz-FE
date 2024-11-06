@@ -3,12 +3,12 @@ import { useState } from "react";
 import Dropdown from "../../../toggle/dropdown/DropDown";
 
 const testData = [
- 
   {
     InstanceId: "i-0414709f97c9f57ab",
     InstanceType: "m4.xlarge",
     LaunchTime: "2024-10-28 05:18:07+00:00",
     State: "stopped",
+    Arn: "arn:aws:ec2:us-east-1:713881791527:instance/i-0414709f97c9f57ab",
     PublicIpAddress: "23.23.93.131",
     PrivateIpAddress: "172.31.31.6",
     VpcId: "vpc-0dbe0a6580324b276",
@@ -117,6 +117,7 @@ const EC2Status = ({ GenDetailData }) => {
           <S.Thead>
             <S.Td>Status</S.Td>
             <S.Td>Name</S.Td>
+            <S.Td>arn</S.Td>
             <S.Td>Instance ID</S.Td>
             <S.Td>Security Groups</S.Td>
             <S.Td>Public IP Address</S.Td>
@@ -124,11 +125,15 @@ const EC2Status = ({ GenDetailData }) => {
           </S.Thead>
           <S.Tbody>
             {filteredData.map((item) => (
-              <S.Tr key={item.InstanceId} onClick={() => GenDetailData(item, "ec2")}>
+              <S.Tr
+                key={item.InstanceId}
+                onClick={() => GenDetailData(item, "ec2")}
+              >
                 <S.Td>
                   <S.StatusIcon color={StateColorTable[item.State]} />
                 </S.Td>
                 <S.Td>{item.Tags[0]?.Value}</S.Td>
+                <S.Td>{item.Arn}</S.Td>
                 <S.Td>{item.InstanceId}</S.Td>
                 <S.Td>
                   {item.SecurityGroups.map((obj, idx) => (

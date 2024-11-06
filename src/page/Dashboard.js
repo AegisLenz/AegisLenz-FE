@@ -9,6 +9,7 @@ const Dashboard = () => {
   const [MarkData, setMarkData] = useState([]);
   // eslint-disable-next-line no-unused-vars
   const [isSideContent, setSideContent] = useState(false);
+
   const setMarkDataFunc = (value) => {
     setMarkData(value);
   };

@@ -75,6 +75,7 @@ const Prompt = () => {
             SideIndex={SideIndex}
             SideContent={SideContent} //오른쪽 On/Off
             markData={setMarkDataFunc} //오른쪽에 띄울 데이터
+            getPromptSession={getPromptSession}
           />
         </S.ChatArea>
       </S.ChatAreaWrapper>

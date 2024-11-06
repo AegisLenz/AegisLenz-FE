@@ -31,7 +31,11 @@ const Grid = ({
   const [rowHeight, setrowHeight] = useState(window.screen.height);
   const [width, setwidth] = useState(window.innerWidth);
   const [zoomLevel, setZoomLevel] = useState(getZoomLevel());
+  const [promptSession, setPromptSession] = useState();
 
+  const getPromptSession = (value) => {
+    setPromptSession(value);
+  };
   const ChatToggleButton = () => {
     if (isChattoggleOpen) {
       setMarkData([]);
@@ -93,10 +97,10 @@ const Grid = ({
         x: 0,
         y: 0,
         w: 47,
-        h: 11 * zoomLevel,
+        h: 8 * zoomLevel,
         isResizable: false,
       },
-      { i: "filter", x: 0, y: 0, w: 47, h: 0, isResizable: false },
+      { i: "filter", x: 0, y: 0, w: 47, h: 3 * zoomLevel, isResizable: false },
       {
         i: "AccountCount",
         x: 47,
@@ -265,6 +269,9 @@ const Grid = ({
           sizeFull={false}
           SideContent={SideContent} //오른쪽 On/Off
           markData={setMarkDataFunc} //오른쪽에 띄울 데이터
+          promptIndex={false}
+          promptSession={promptSession}
+          getPromptSession={getPromptSession}
         />
       ) : (
         ""

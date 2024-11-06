@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import InnerChat from "./innerchat/InnerChat";
 import GetPromptContents from "../../hook/Prompt/GetPromptContents";
 import Prompthook from "../../hook/Prompt/Prompthook";
+import CreateSession from "../../hook/Prompt/CreateNewPrompt";
 
 const ToggleChat = ({
   ChatToggleButton,
@@ -12,23 +13,32 @@ const ToggleChat = ({
   markData,
   promptSession,
   promptIndex,
+  getPromptSession,
 }) => {
   const [inputValue, setInputValue] = useState("");
-  const [ChatData, setChatData] = useState([]);
+  const [ChatData, setChatData] = useState([{}]);
 
   //이전 대화 기록 불러오기
   useEffect(() => {
     const fetchPromptsContents = async () => {
       try {
-        let session =
-          promptIndex && promptIndex.length > 0 ? promptIndex[0] : null;
+        let session = "";
+
         if (promptSession) {
           session = promptSession;
+        } else {
+          if (promptIndex) {
+            session = promptIndex[0];
+          } else {
+            const NewSession = await CreateSession();
+            session = NewSession.prompt_session_id;
+            getPromptSession(NewSession.prompt_session_id);
+          }
         }
-        if (session) {
+
+        if (session !== "") {
           const data = await GetPromptContents(session);
           setChatData(data);
-          console.log(data);
         } else {
           console.log("No valid session available");
         }
@@ -37,7 +47,8 @@ const ToggleChat = ({
       }
     };
     fetchPromptsContents();
-  }, [promptIndex, promptSession]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [promptSession]);
 
   useEffect(() => {
     if (ChatData.length === 0) {

@@ -14,6 +14,11 @@ const InstanceInfo = ({ data }) => {
       </S.SubTitle>
 
       <S.SubTitle>
+        arn:
+        <p>{data.Arn}</p>
+      </S.SubTitle>
+
+      <S.SubTitle>
         LaunchTime:
         <p>{data.LaunchTime}</p>
       </S.SubTitle>

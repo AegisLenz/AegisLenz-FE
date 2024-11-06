@@ -18,6 +18,10 @@ const SideBar = ({ isEditOn, setEditOn }) => {
           <S.Icon src="/icon/AI_Icon.png" />
           <S.IconP>Question History</S.IconP>
         </Link>
+        <Link to="/Policy">
+          <S.Icon src="/icon/policy.png" scale="1.3" />
+          <S.IconP>Policy</S.IconP>
+        </Link>
         <Link to="/Asset">
           <S.Icon src="/icon/Network_Icon.png" />
           <S.IconP>Asset Data</S.IconP>
