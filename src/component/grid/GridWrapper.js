@@ -15,6 +15,7 @@ import {
   Detection,
   AccountStatus,
   EC2Status,
+  Report,
 } from "./elements";
 
 const Grid = ({
@@ -173,6 +174,15 @@ const Grid = ({
         content: <EC2Status GenDetailData={() => {}} />,
         isResizable: true,
       },
+      {
+        i: "Report",
+        x: 47,
+        y: 0,
+        w: 47,
+        h: 15,
+        content: <Report />,
+        isResizable: true,
+      },
     ],
     [zoomLevel]
   );
@@ -242,8 +252,8 @@ const Grid = ({
           item.i === "chat"
             ? item
             : item.x >= 47
-            ? { ...item, w: item.w - 1 }
-            : { ...item, x: item.x + 47, w: item.w - 1 }
+            ? { ...item, w: item.w }
+            : { ...item, x: item.x + 47, w: item.w }
         )
       );
       setGridLayout((prevLayout) =>
@@ -294,7 +304,7 @@ const Grid = ({
         }))}
         cols={94}
         rowHeight={rowHeight * 0.01}
-        width={width * 0.95}
+        width={width * 0.945}
         draggableHandle=".grid-item"
         style={{ backgroundColor: "transparent" }}
       >
