@@ -5,4 +5,5 @@ export { default as Score } from "./score/Score";
 export { default as NeedCheck } from "./needcheck/NeedCheck";
 export { default as Detection } from "./detection/DetectionPart";
 export { default as AccountStatus } from "./account_status_overview/AccountStatus";
-export {default as EC2Status} from "./ec2_status_overview/EC2Status";
+export { default as EC2Status } from "./ec2_status_overview/EC2Status";
+export { default as Report } from "./report/Report";
