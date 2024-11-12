@@ -35,6 +35,10 @@ const Prompt = ({
 
   const CreateNewPrompt = async () => {
     const promptIndex = await CreatePrompt();
+<<<<<<< Updated upstream
+=======
+    console.log(promptIndex.prompt_session_id);
+>>>>>>> Stashed changes
     getPromptSession(promptIndex.prompt_session_id);
     fetchPrompts();
   };

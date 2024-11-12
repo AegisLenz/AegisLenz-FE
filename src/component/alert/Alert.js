@@ -43,6 +43,7 @@ const Alert = ({ setChatToggleOpen }) => {
           isRemoving={alert.isRemoving}
           onClick={() => {
             setChatToggleOpen(true);
+            handleDeleteAlert(alert.id);
           }}
         >
           <S.CancleToggle onClick={() => handleDeleteAlert(alert.id)} />

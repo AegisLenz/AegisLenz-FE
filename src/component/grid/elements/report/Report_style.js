@@ -39,7 +39,7 @@ export const ContentArea = styled.div`
   height: 79%;
   width: 92%;
 
-  margin: 1% 0;
+  margin-bottom: 1%;
 
   background-color: #eee;
   border-radius: 1em;
@@ -53,7 +53,7 @@ export const DownloadButton = styled.button`
 
   background-image: url("/icon/download.svg");
   background-position: center;
-  background-size: 90%;
+  background-size: 70%;
   background-repeat: no-repeat;
   background-color: transparent;
   border: none;
