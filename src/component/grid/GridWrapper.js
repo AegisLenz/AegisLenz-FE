@@ -101,11 +101,7 @@ const Grid = ({
         h: 8 * zoomLevel,
         isResizable: false,
       },
-<<<<<<< Updated upstream
-      { i: "filter", x: 0, y: 0, w: 47, h: 3 * zoomLevel, isResizable: false },
-=======
       { i: "filter", x: 0, y: 0, w: 47, h: 4 * zoomLevel, isResizable: false },
->>>>>>> Stashed changes
       {
         i: "AccountCount",
         x: 47,

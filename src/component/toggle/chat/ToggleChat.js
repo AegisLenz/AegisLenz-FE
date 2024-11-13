@@ -16,11 +16,8 @@ const ToggleChat = ({
   getPromptSession,
 }) => {
   const [inputValue, setInputValue] = useState("");
-<<<<<<< Updated upstream
-  const [ChatData, setChatData] = useState([{}]);
-=======
+
   const [ChatData, setChatData] = useState([]);
->>>>>>> Stashed changes
 
   //이전 대화 기록 불러오기
   useEffect(() => {
