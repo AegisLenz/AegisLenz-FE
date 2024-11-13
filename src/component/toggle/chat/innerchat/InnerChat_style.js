@@ -17,7 +17,23 @@ export const Wrapper = styled.div`
   top: ${({ isFull }) => (isFull ? "-79vh" : "0")};
   position: absolute;
   height: ${({ isOpen, isFull }) => (isFull ? "80vh" : isOpen ? "83vh" : "0")};
+`;
+
+export const InnerWrapper = styled.div`
+  position: absolute;
+
+  width: 90%;
+  height: 97%;
+
+  bottom: 0vh;
+
   overflow-y: auto;
+
+  border-radius: 1em;
+  display: flex;
+  padding: 0 5% 0 5%;
+  justify-content: flex-end;
+  flex-direction: column;
 
   &::-webkit-scrollbar {
     background-color: transparent;
@@ -27,15 +43,6 @@ export const Wrapper = styled.div`
     border-radius: 30em;
     background-color: #104f55;
   }
-`;
-
-export const InnerWrapper = styled.div`
-  width: 90%;
-  min-height: 100%;
-  display: flex;
-  padding: 0 5% 0 5%;
-  justify-content: flex-end;
-  flex-direction: column;
 `;
 export const Bookmark = styled.svg`
   background-image: url("/icon/bookmark.svg");
@@ -94,11 +101,12 @@ export const MessageBubble = styled.div`
 
   margin-bottom: 3%;
   margin-top: ${({ isFirst }) => (isFirst ? "2.5vw" : "0")};
-  padding: 0.5%;
+  padding: 1%;
 
   align-self: ${({ isUser }) => (isUser ? "flex-end" : "flex-start")};
 
   max-width: 40%;
+  min-width: ${({ isStart }) => (isStart ? "40%" : "")};
 
   font-weight: 500;
   color: ${({ isUser }) => (isUser ? "#121212" : "#ffffff")};
@@ -146,9 +154,16 @@ export const MessageBubble = styled.div`
 export const ExampleArea = styled.div`
   width: 100%;
   display: flex;
+  margin: 3% 0;
   justify-content: center;
   flex-direction: column;
   align-items: center;
+
+  p {
+    margin: 3% 0 0 0;
+    font-weight: 600;
+    padding: 1%;
+  }
 `;
 export const Example = styled.div`
   width: 90%;

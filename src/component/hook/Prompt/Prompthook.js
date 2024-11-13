@@ -1,16 +1,21 @@
 // API 요청을 처리하는 함수 (fetch 사용)
 const Prompthook = async (
   userInput,
-  onDataReceived,
-  onComplete,
-  handleLastChunk,
-  session
+  session,
+  handleStreamData,
+  handleStreamComplete,
+  handleRecommendQuestionsChunk,
+  hadnleESQuery,
+  handleESResult,
+  handleDBQuery,
+  handleDBResult
 ) => {
   try {
     console.log(session);
     const response = await fetch(`/server/api/v1/prompt/${session}/chat`, {
       method: "POST",
       headers: {
+        accept: "application/json",
         "Content-Type": "application/json", // Content-Type 헤더 추가
       },
       body: JSON.stringify({ user_input: userInput }),
@@ -28,7 +33,7 @@ const Prompthook = async (
     function read() {
       reader.read().then(({ done, value }) => {
         if (done) {
-          onComplete(accumulatedText); // 스트림 완료 시 누적된 텍스트 전달
+          handleStreamComplete(accumulatedText); // 스트림 완료 시 누적된 텍스트 전달
           return; // 스트림이 완료되면 종료
         }
 
@@ -41,13 +46,44 @@ const Prompthook = async (
             try {
               const parsedLine = JSON.parse(line); // JSON 데이터로 파싱
 
-              // "type"이 "dashboard"인 데이터만 콘솔에 출력
-              if (parsedLine.type === "dashboard") {
-                handleLastChunk(parsedLine.data);
-              }
+              switch (parsedLine.type) {
+                case "ESQuery":
+                  // ESQuery 처리
 
-              accumulatedText += parsedLine.data; // 각 조각을 누적
-              onDataReceived(accumulatedText); // 현재까지의 누적 텍스트를 전달
+                  console.log("ESQuery:", parsedLine.data);
+                  hadnleESQuery(parsedLine.data);
+                  break;
+                case "DBQuery":
+                  // DBQuery 처리
+
+                  console.log("DBQuery:", parsedLine.data);
+                  handleDBQuery(parsedLine.data);
+                  break;
+                case "ESResult":
+                  // ESResult 처리
+                  console.log("ESResult:", parsedLine.data);
+                  handleESResult(parsedLine.data);
+                  break;
+                case "DBResult":
+                  // ESResult 처리
+                  console.log("DBResult:", parsedLine.data);
+                  handleDBResult(parsedLine.data);
+                  break;
+                case "Summary":
+                  // Summary 데이터를 누적
+                  accumulatedText += parsedLine.data;
+                  handleStreamData(accumulatedText);
+                  break;
+
+                case "RecommendQuestions":
+                  // 추천 질문을 처리
+                  handleRecommendQuestionsChunk(parsedLine.data);
+                  break;
+                default:
+                  if (parsedLine.status !== "complete") {
+                    console.warn("알 수 없는 데이터 유형:", parsedLine.type);
+                  }
+              }
             } catch (error) {
               console.error("데이터 파싱 중 오류 발생", error);
             }

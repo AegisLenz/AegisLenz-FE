@@ -16,6 +16,7 @@ import {
   AccountStatus,
   EC2Status,
   Report,
+  ShowPolicy,
 } from "./elements";
 
 const Grid = ({
@@ -32,8 +33,13 @@ const Grid = ({
   const [rowHeight, setrowHeight] = useState(window.screen.height);
   const [width, setwidth] = useState(window.innerWidth);
   const [zoomLevel, setZoomLevel] = useState(getZoomLevel());
-  const [promptSession, setPromptSession] = useState();
+  const [promptSession, setPromptSession] = useState("");
+  const [ReportData, setReportData] = useState("");
+  const [FillterOFF, setFillterOFF] = useState(isFillterOFF);
 
+  const getReportData = (value) => {
+    setReportData(value);
+  };
   const getPromptSession = (value) => {
     setPromptSession(value);
   };
@@ -49,7 +55,10 @@ const Grid = ({
   const setChatToggleOpen = () => {
     setChatToggle(true);
   };
-
+  const InAlert = () => {
+    setMarkData(["Report"]);
+    // setFillterOFF(true);
+  };
   const FilterToggleButton = () => {
     setFilter((prev) => !prev);
   };
@@ -101,7 +110,7 @@ const Grid = ({
         h: 8 * zoomLevel,
         isResizable: false,
       },
-      { i: "filter", x: 0, y: 0, w: 47, h: 4 * zoomLevel, isResizable: false },
+      { i: "filter", x: 0, y: 0, w: 47, h: 3 * zoomLevel, isResizable: false },
       {
         i: "AccountCount",
         x: 47,
@@ -174,13 +183,22 @@ const Grid = ({
         content: <EC2Status GenDetailData={() => {}} />,
         isResizable: true,
       },
+      // {
+      //   i: "Report",
+      //   x: 47,
+      //   y: 0,
+      //   w: 47,
+      //   h: 30,
+      //   content: <Report data={ReportData} />,
+      //   isResizable: true,
+      // },
       {
-        i: "Report",
+        i: "ShowPolicy",
         x: 47,
         y: 0,
         w: 47,
-        h: 15,
-        content: <Report />,
+        h: 30,
+        content: <ShowPolicy />,
         isResizable: true,
       },
     ],
@@ -229,6 +247,18 @@ const Grid = ({
       });
 
       setGridLayout(filteredLayout);
+      setGridLayout((prevLayout) => [
+        ...prevLayout,
+        {
+          i: "Report",
+          x: 47,
+          y: 0,
+          w: 47,
+          h: 30,
+          content: <Report data={ReportData} />,
+          isResizable: true,
+        },
+      ]);
     } else {
       setGridLayout(InitLayout);
     }
@@ -242,6 +272,7 @@ const Grid = ({
     isChattoggleOpen,
     isFillterOFF,
     isChatOFF,
+    ReportData,
   ]);
 
   // 토글 오픈
@@ -270,7 +301,11 @@ const Grid = ({
 
   return (
     <S.Wrapper>
-      <Alert setChatToggleOpen={setChatToggleOpen} />
+      <Alert
+        setChatToggleOpen={setChatToggleOpen}
+        getPromptSession={getPromptSession}
+        InAlert={InAlert}
+      />
       {!isChatOFF ? (
         <ChatToggle
           isChattoggleOpen={isChattoggleOpen}
@@ -280,13 +315,14 @@ const Grid = ({
           SideContent={SideContent} //오른쪽 On/Off
           markData={setMarkDataFunc} //오른쪽에 띄울 데이터
           promptIndex={false}
-          promptSession={promptSession}
+          promptSession={promptSession !== "" ? promptSession : "Grid"}
           getPromptSession={getPromptSession}
+          getReportData={getReportData}
         />
       ) : (
         ""
       )}
-      {isFillterOFF ? (
+      {FillterOFF ? (
         ""
       ) : (
         <FilterToggle

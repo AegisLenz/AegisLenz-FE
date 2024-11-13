@@ -46,6 +46,15 @@ export const ContentArea = styled.div`
 
   overflow-y: auto;
   overflow-x: auto;
+
+  &::-webkit-scrollbar {
+    background-color: transparent;
+    width: 0.5vw;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 30em;
+    background-color: #104f55;
+  }
 `;
 export const DownloadButton = styled.button`
   height: 100%;
