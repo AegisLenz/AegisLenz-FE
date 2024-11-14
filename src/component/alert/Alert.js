@@ -1,10 +1,14 @@
 import * as S from "./Alert_style";
 import { useState, useEffect } from "react";
 
-const Alert = ({ setChatToggleOpen }) => {
+const Alert = ({ setChatToggleOpen, getPromptSession, InAlert }) => {
   const [AlertData, setAlertData] = useState([
-    { id: 1, title: "tatic-103", contents: "원젠데요...", isRemoving: false },
-    { id: 2, title: "tatic-104", contents: "원젠데요...", isRemoving: false },
+    {
+      id: 1,
+      title: "공격이 탐지되었습니다.",
+      contents: "['T1087 - Account Discovery', 'TA0007 - Discovery'] ",
+      isRemoving: false,
+    },
   ]);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -32,17 +36,23 @@ const Alert = ({ setChatToggleOpen }) => {
 
   return (
     <S.FixedWrapper isHovered={isHovered}>
-      <S.AlertIconWrapper
-        onMouseEnter={() => AlertData.length > 0 && setIsHovered(true)}
-      >
-        <S.AlertIcon />
-      </S.AlertIconWrapper>
+      {/* AlertData가 있을 때만 AlertIcon을 보여줌 */}
+      {AlertData.length > 0 && (
+        <S.AlertIconWrapper
+          onMouseEnter={() => AlertData.length > 0 && setIsHovered(true)}
+        >
+          <S.AlertIcon />
+        </S.AlertIconWrapper>
+      )}
       {AlertData.map((alert) => (
         <S.AlertBubble
           key={alert.id}
           isRemoving={alert.isRemoving}
           onClick={() => {
             setChatToggleOpen(true);
+            getPromptSession("673436c093af690c341f70ba");
+            InAlert();
+            handleDeleteAlert(alert.id);
           }}
         >
           <S.CancleToggle onClick={() => handleDeleteAlert(alert.id)} />

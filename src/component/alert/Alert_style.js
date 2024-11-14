@@ -73,7 +73,6 @@ export const AlertIcon = styled.svg`
 `;
 export const AlertBubble = styled.div`
   width: 87%;
-  height: 10%;
   position: relative;
 
   border-radius: 1em;
@@ -86,6 +85,12 @@ export const AlertBubble = styled.div`
 
   animation: ${(props) => (props.isRemoving ? fadeOut : fadeIn)} 0.3s ease
     forwards;
+
+  overflow: visible;
+
+  h3 {
+    font-size: 1em;
+  }
 `;
 export const CancleToggle = styled.svg`
   position: absolute;

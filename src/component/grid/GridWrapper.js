@@ -1,22 +1,23 @@
-import * as S from "./Grid_style";
-import { useState, useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import GridLayout from "react-grid-layout";
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
+import Alert from "../alert/Alert";
 import ChatToggle from "../toggle/chat/ToggleChat";
 import FilterToggle from "../toggle/filter/Filter";
-import Alert from "../alert/Alert";
 import {
-  AccountCount,
-  DailyInsight,
   AccountByService,
-  Score,
-  NeedCheck,
-  Detection,
+  AccountCount,
   AccountStatus,
+  DailyInsight,
+  Detection,
   EC2Status,
+  NeedCheck,
   Report,
+  Score,
+  ShowPolicy,
 } from "./elements";
+import * as S from "./Grid_style";
 
 const Grid = ({
   isEditOn,
@@ -32,7 +33,16 @@ const Grid = ({
   const [rowHeight, setrowHeight] = useState(window.screen.height);
   const [width, setwidth] = useState(window.innerWidth);
   const [zoomLevel, setZoomLevel] = useState(getZoomLevel());
+  const [promptSession, setPromptSession] = useState("");
+  const [ReportData, setReportData] = useState("");
+  const [FillterOFF, setFillterOFF] = useState(isFillterOFF);
 
+  const getReportData = (value) => {
+    setReportData(value);
+  };
+  const getPromptSession = (value) => {
+    setPromptSession(value);
+  };
   const ChatToggleButton = () => {
     if (isChattoggleOpen) {
       setMarkData([]);
@@ -45,7 +55,10 @@ const Grid = ({
   const setChatToggleOpen = () => {
     setChatToggle(true);
   };
-
+  const InAlert = () => {
+    setMarkData(["Report", "ShowPolicy"]);
+    // setFillterOFF(true);
+  };
   const FilterToggleButton = () => {
     setFilter((prev) => !prev);
   };
@@ -94,10 +107,10 @@ const Grid = ({
         x: 0,
         y: 0,
         w: 47,
-        h: 11 * zoomLevel,
+        h: 8 * zoomLevel,
         isResizable: false,
       },
-      { i: "filter", x: 0, y: 0, w: 47, h: 0, isResizable: false },
+      { i: "filter", x: 0, y: 0, w: 47, h: 3 * zoomLevel, isResizable: false },
       {
         i: "AccountCount",
         x: 47,
@@ -170,15 +183,24 @@ const Grid = ({
         content: <EC2Status GenDetailData={() => {}} />,
         isResizable: true,
       },
-      {
-        i: "Report",
-        x: 47,
-        y: 0,
-        w: 47,
-        h: 15,
-        content: <Report />,
-        isResizable: true,
-      },
+      // {
+      //   i: "Report",
+      //   x: 47,
+      //   y: 0,
+      //   w: 47,
+      //   h: 30,
+      //   content: <Report data={ReportData} />,
+      //   isResizable: true,
+      // },
+      // {
+      //   i: "ShowPolicy",
+      //   x: 47,
+      //   y: 30,
+      //   w: 47,
+      //   h: 30,
+      //   content: <ShowPolicy />,
+      //   isResizable: true,
+      // },
     ],
     [zoomLevel]
   );
@@ -225,6 +247,27 @@ const Grid = ({
       });
 
       setGridLayout(filteredLayout);
+      setGridLayout((prevLayout) => [
+        ...prevLayout,
+        {
+          i: "Report",
+          x: 47,
+          y: 0,
+          w: 47,
+          h: 20,
+          content: <Report data={ReportData} />,
+          isResizable: true,
+        },
+        {
+          i: "ShowPolicy",
+          x: 47,
+          y: 30,
+          w: 47,
+          h: 25,
+          content: <ShowPolicy />,
+          isResizable: true,
+        },
+      ]);
     } else {
       setGridLayout(InitLayout);
     }
@@ -238,6 +281,7 @@ const Grid = ({
     isChattoggleOpen,
     isFillterOFF,
     isChatOFF,
+    ReportData,
   ]);
 
   // 토글 오픈
@@ -266,7 +310,11 @@ const Grid = ({
 
   return (
     <S.Wrapper>
-      <Alert setChatToggleOpen={setChatToggleOpen} />
+      <Alert
+        setChatToggleOpen={setChatToggleOpen}
+        getPromptSession={getPromptSession}
+        InAlert={InAlert}
+      />
       {!isChatOFF ? (
         <ChatToggle
           isChattoggleOpen={isChattoggleOpen}
@@ -275,11 +323,15 @@ const Grid = ({
           sizeFull={false}
           SideContent={SideContent} //오른쪽 On/Off
           markData={setMarkDataFunc} //오른쪽에 띄울 데이터
+          promptIndex={false}
+          promptSession={promptSession !== "" ? promptSession : "Grid"}
+          getPromptSession={getPromptSession}
+          getReportData={getReportData}
         />
       ) : (
         ""
       )}
-      {isFillterOFF ? (
+      {FillterOFF ? (
         ""
       ) : (
         <FilterToggle

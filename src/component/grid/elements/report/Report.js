@@ -1,17 +1,15 @@
 import * as S from "./Report_style";
 import ReactMarkdown from "react-markdown";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import html2pdf from "html2pdf.js";
 
-const Report = () => {
+const Report = (data) => {
   const contentRef = useRef();
-  const [MarkdownReport] = useState(`
-  # 안녕하세요!
-  저는 현재 리액트에서 \`react-markdown\`을 이용하여 **마크다운**을 렌더링하고 있습니다.
-  
-  - 목록 항목 1
-  - 목록 항목 2
-  `);
+  const [MarkdownReport, setMarkData] = useState(``);
+
+  useEffect(() => {
+    setMarkData(data.data);
+  }, [data]);
 
   const downloadPDF = () => {
     const now = new Date();

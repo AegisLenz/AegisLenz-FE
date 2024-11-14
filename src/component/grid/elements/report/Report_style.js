@@ -39,13 +39,22 @@ export const ContentArea = styled.div`
   height: 79%;
   width: 92%;
 
-  margin: 1% 0;
+  margin-bottom: 1%;
 
   background-color: #eee;
   border-radius: 1em;
 
   overflow-y: auto;
   overflow-x: auto;
+
+  &::-webkit-scrollbar {
+    background-color: transparent;
+    width: 0.5vw;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 30em;
+    background-color: #104f55;
+  }
 `;
 export const DownloadButton = styled.button`
   height: 100%;
@@ -53,7 +62,7 @@ export const DownloadButton = styled.button`
 
   background-image: url("/icon/download.svg");
   background-position: center;
-  background-size: 90%;
+  background-size: 70%;
   background-repeat: no-repeat;
   background-color: transparent;
   border: none;
