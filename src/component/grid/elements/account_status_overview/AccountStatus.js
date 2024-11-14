@@ -161,14 +161,14 @@ const AccountStatus = ({ GenDetailData }) => {
   return (
     <S.Wrapper>
       <S.Title>
-        <p>Account Overview</p>
+        <p>IAM Status Overview</p>
         <S.FilterWrapper>
-        <S.FilterDropdown>
-          <Dropdown
-            options={filterOptions}
-            selectedOption={filterCategory}
-            onSelect={(value) => setFilterCategory(value)}
-          />
+          <S.FilterDropdown>
+            <Dropdown
+              options={filterOptions}
+              selectedOption={filterCategory}
+              onSelect={(value) => setFilterCategory(value)}
+            />
           </S.FilterDropdown>
           <S.SearchInput
             placeholder="Search"
@@ -176,7 +176,7 @@ const AccountStatus = ({ GenDetailData }) => {
             onChange={handleSearch}
           />
           <S.InitButton onClick={resetSearch}>Reset</S.InitButton>
-      </S.FilterWrapper>
+        </S.FilterWrapper>
       </S.Title>
       <S.TableWrapper>
         <S.Table>
@@ -190,7 +190,11 @@ const AccountStatus = ({ GenDetailData }) => {
           </S.Thead>
           <S.Tbody>
             {filteredData.map((row, index) => (
-              <S.Tr key={index} type={true} onClick={() => GenDetailData(row, "iam")}>
+              <S.Tr
+                key={index}
+                type={true}
+                onClick={() => GenDetailData(row, "iam")}
+              >
                 <S.Td>
                   <S.StatusIcon type={true} />
                 </S.Td>
@@ -199,8 +203,8 @@ const AccountStatus = ({ GenDetailData }) => {
                 <S.Td>
                   <p>
                     {row.AttachedPolicies.length > 0
-                    ? row.AttachedPolicies.join("\n")
-                    : "No Policies"}
+                      ? row.AttachedPolicies.join("\n")
+                      : "No Policies"}
                   </p>
                 </S.Td>
                 <S.Td>{row.UserId}</S.Td>

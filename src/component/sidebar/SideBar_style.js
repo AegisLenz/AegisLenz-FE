@@ -23,8 +23,9 @@ export const Wrapper = styled.div`
 `;
 export const Icon = styled.img`
   margin: 15%;
-  width: 40%;
+  width: 2vw;
   transition: all ease 0.3s;
+
   ${Wrapper}:hover & {
     opacity: 0.6;
   }

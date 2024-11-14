@@ -8,13 +8,13 @@ import { Loading } from "../../loading/loading";
 //   "example 질문",
 //   "Bookmark 된 질문",
 // ];
-const ExampleQ = [
-  "Bookmark 된 질문1",
+const BookMarkQ = [
+  "이번주 공격으로 접속된 IP 알려줘",
   "Bookmark 된 질문2",
   "Bookmark 된 질문3",
 ];
 
-const InnerChat = ({ isOpen, isFull, chatData, addExample }) => {
+const InnerChat = ({ isOpen, isFull, chatData, addExample, SuggestData }) => {
   const chatEndRef = useRef(null);
   const [OpenQueries, setOpenQueries] = useState({});
   const [bookmarkedMessages, setBookmarkedMessages] = useState({});
@@ -44,44 +44,61 @@ const InnerChat = ({ isOpen, isFull, chatData, addExample }) => {
   return (
     <S.Wrapper isOpen={isOpen} isFull={isFull}>
       <S.InnerWrapper>
-        {chatData.map((message, index) => (
-          <S.MessageBubble
-            key={index}
-            isUser={message.isUser}
-            isOpen={isOpen}
-            isFull={isFull}
-            isFirst={message.isFirst}
-          >
-            {message.isUser || message.role === "user" ? (
-              <S.Bookmark
-                isBookmarked={bookmarkedMessages[index]}
-                onClick={() => {
-                  AddBookmark(
-                    message.text ? message.text : message.content,
-                    index
-                  );
-                }}
-              />
-            ) : (
-              ""
-            )}
-            {message.isStreem ? <Loading /> : ""}
-            {message.text}
+        {Array.isArray(chatData) &&
+          chatData.map((message, index) => (
+            <S.MessageBubble
+              key={index}
+              isUser={message.isUser ? message.isUser : message.role === "user"}
+              isOpen={isOpen}
+              isFull={isFull}
+              isFirst={message.isFirst}
+              isStart={message.isStart}
+            >
+              {message.isUser || message.role === "user" ? (
+                <S.Bookmark
+                  isBookmarked={bookmarkedMessages[index]}
+                  onClick={() => {
+                    AddBookmark(
+                      message.text ? message.text : message.content,
+                      index
+                    );
+                  }}
+                />
+              ) : (
+                ""
+              )}
+              {message.isStreem ? <Loading /> : ""}
+              {message.text ? message.text : message.content}
 
-            {message.isFirst
-              ? ExampleQ.map((item) => (
-                  <S.ExampleArea>
+              <S.ExampleArea>
+                {message.isStart && <p>추천질문</p>}
+                {message.isStart &&
+                  Array.isArray(SuggestData) &&
+                  SuggestData.map((item, idx) => (
+                    <S.Example
+                      key={idx}
+                      onClick={(e) => addExample(e.target.textContent)}
+                    >
+                      {item}
+                    </S.Example>
+                  ))}
+              </S.ExampleArea>
+
+              <S.ExampleArea>
+                {(message.isFirst || message.isStart) && <p>북마크된 질문</p>}
+                {(message.isFirst || message.isStart) &&
+                  Array.isArray(BookMarkQ) &&
+                  BookMarkQ.map((item) => (
                     <S.Example
                       onClick={(item) => addExample(item.target.textContent)}
                     >
                       <S.CancleBookMark />
                       {item}
                     </S.Example>
-                  </S.ExampleArea>
-                ))
-              : ""}
-            {message.isQuery ? (
-              <>
+                  ))}
+              </S.ExampleArea>
+
+              {message.isQuery ? (
                 <S.QueryWrapper Open={OpenQueries[index]}>
                   <S.QueryToggleWrapper>
                     <p>Query</p>
@@ -90,15 +107,14 @@ const InnerChat = ({ isOpen, isFull, chatData, addExample }) => {
                       onClick={() => toggleQuery(index)}
                     />
                   </S.QueryToggleWrapper>
-
-                  <S.Query Open={OpenQueries[index]}>{message.isQuery}</S.Query>
+                  <S.Query Open={OpenQueries[index]}>
+                    {message.isESQuery}
+                    {message.isDBQuery}
+                  </S.Query>
                 </S.QueryWrapper>
-              </>
-            ) : (
-              ""
-            )}
-          </S.MessageBubble>
-        ))}
+              ) : null}
+            </S.MessageBubble>
+          ))}
         <div ref={chatEndRef} />
       </S.InnerWrapper>
     </S.Wrapper>

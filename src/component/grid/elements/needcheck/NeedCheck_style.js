@@ -29,7 +29,7 @@ export const ContentArea = styled.div`
   height: 80%;
   top: 20%;
   overflow-y: scroll;
-  width: ${(NeedCheckStatus) => (!NeedCheckStatus ? "70%" : "90%")};
+  width: 90%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -50,7 +50,7 @@ export const Content = styled.div`
   background-color: #104f55;
   padding: 5% 2% 5% 2%;
   color: white;
-  font-size: ${(props) => (props.NeedCheckStatus ? "100%" : "90%")};
+  font-size: 90%;
   font-weight: 600;
   box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
   transition: all ease 0.6s;
@@ -59,7 +59,7 @@ export const Content = styled.div`
     content: "";
     display: block;
     position: absolute;
-    width: ${(props) => (props.NeedCheckStatus ? "10vw" : "3vw")};
+    width: 3vw;
     height: 3vh;
     background-color: #ff9900;
     border-radius: 0.5em;

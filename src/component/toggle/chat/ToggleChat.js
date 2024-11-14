@@ -1,7 +1,9 @@
 import * as S from "./ToggleChat_style";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import InnerChat from "./innerchat/InnerChat";
-import Prompthook from "../../hook/Hook";
+import GetPromptContents from "../../hook/Prompt/GetPromptContents";
+import Prompthook from "../../hook/Prompt/Prompthook";
+import CreateSession from "../../hook/Prompt/CreateNewPrompt";
 
 const ToggleChat = ({
   ChatToggleButton,
@@ -9,40 +11,90 @@ const ToggleChat = ({
   setChatToggleOpen,
   sizeFull,
   markData,
+  promptSession,
+  promptIndex,
+  getPromptSession,
+  getReportData,
 }) => {
   const [inputValue, setInputValue] = useState("");
-  const [ChatData, setChatData] = useState([
-    {
-      text: "안녕하세요! AegisLenz의 사용자 도우미 Aegis입니다!\n무엇을 도와드릴까요?\n\n저는 이런 질문들을 도와드릴 수 있어요!\n\n",
-      isUser: false,
-      isFirst: true,
-      isQuery: `{
-      "query": {
-        "bool": {
-          "must": [
-            {
-              "term": {
-                "eventName": "CreateUser"
-              }
-            },
-            {
-              "range": {
-                "eventTime": {
-                  "gte": "now-7d/d",
-                  "lt": "now/d"
-                }
-              }
-            }
-          ]
-        }
-      }
-    }`,
-    },
-  ]);
 
-  // 로딩 상태관리
-  // eslint-disable-next-line no-unused-vars
-  const [loading, setLoading] = useState(false);
+  const [session, setSession] = useState();
+
+  const [ChatData, setChatData] = useState([]);
+  const [SuggestData, setSuggestData] = useState([]);
+  const [ESQuery, setESQuery] = useState("");
+  const [ESResult, setESResult] = useState([]);
+  const [DBQuery, setDBQuery] = useState("");
+  const [DBResult, setDBResult] = useState([]);
+
+  //이전 대화 기록 불러오기
+  useEffect(() => {
+    const fetchPromptsContents = async () => {
+      try {
+        let session = "";
+        if (promptSession) {
+          session = promptSession;
+        } else {
+          if (promptIndex.length !== 0) {
+            session = promptIndex[0];
+          } else {
+            const NewSession = await CreateSession();
+            session = NewSession.prompt_session_id;
+            getPromptSession(NewSession.prompt_session_id);
+          }
+        }
+
+        if (promptSession === "Grid") {
+          const NewSession = await CreateSession();
+          session = NewSession.prompt_session_id;
+          getPromptSession(NewSession.prompt_session_id);
+        }
+
+        if (session !== "") {
+          setSession(session);
+          const data = await GetPromptContents(session);
+          setChatData(data.chats);
+          getReportData(data.report);
+          if (
+            data.init_recommend_questions.length !== null &&
+            data.init_recommend_questions.length !== 0
+          ) {
+            setSuggestData(data.init_recommend_questions);
+            setChatData((prev) => [
+              ...prev,
+              {
+                text: "다음 입력하실 질문을 예측해 봤습니다.",
+                isUser: false,
+                isFirst: true,
+                isStart: true,
+              },
+            ]);
+          } else {
+            setSuggestData([]);
+          }
+        } else {
+          console.log("No valid session available");
+        }
+      } catch (e) {
+        console.log(e.message);
+      }
+    };
+    fetchPromptsContents();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [promptSession]);
+
+  useEffect(() => {
+    if (ChatData.length === 0) {
+      setChatData((prev) => [
+        ...prev,
+        {
+          text: "안녕하세요! AegisLenz의 사용자 도우미 Aegis입니다!\n무엇을 도와드릴까요?\n\n저는 이런 질문들을 도와드릴 수 있어요!\n\n",
+          isUser: false,
+          isFirst: true,
+        },
+      ]);
+    }
+  }, [ChatData]);
 
   const handleStreamData = (currentText, index) => {
     // 특정 인덱스의 메시지를 업데이트
@@ -55,7 +107,6 @@ const ToggleChat = ({
 
   // 스트림이 완료되었을 때 호출되는 함수
   const handleStreamComplete = (finalText, index) => {
-    setLoading(false); // 로딩 상태 종료
     setChatData((prev) => {
       const updatedChatData = [...prev];
       updatedChatData[index].text = finalText; // 최종 데이터를 해당 인덱스에 설정
@@ -63,36 +114,79 @@ const ToggleChat = ({
       updatedChatData[index].isStreem = false;
       return updatedChatData;
     });
+    if (SuggestData !== null && SuggestData.length !== 0) {
+      setChatData((prev) => [
+        ...prev,
+        {
+          text: "다음 입력하실 질문을 예측해 봤습니다.",
+          isUser: false,
+          isFirst: true,
+          isStart: true,
+        },
+      ]);
+    }
   };
-  const handleLastChunk = (lastChunk) => {
-    const originalString = lastChunk;
 
-    // 1. 먼저 외부의 이중 따옴표를 제거하기 위해 다시 한번 replace 적용
-    const cleanedString = originalString.replace(/\\"/g, '"');
-
-    // 2. 첫 번째와 마지막 따옴표를 제거하여 배열로 변환할 수 있는 형태로 만듭니다
-    const jsonString = cleanedString.slice(1, -1);
-    // 2. 문자열을 실제 배열로 파싱
-    const parsedArray = JSON.parse(jsonString);
-    console.log(parsedArray);
-    markData(parsedArray);
+  const handleRecommendQuestionsChunk = (data) => {
+    if (data !== null && data.length !== 0) {
+      setSuggestData(data);
+    } else {
+      setSuggestData([]);
+    }
   };
+
+  const handleESQuery = (data, index) => {
+    setChatData((prev) => {
+      const updatedChatData = [...prev];
+      updatedChatData[index].isQuery = true;
+      updatedChatData[index].isESQuery = data;
+      return updatedChatData;
+    });
+  };
+  const handleESResult = (data, index) => {
+    if (data.length !== 0) {
+      setESResult(data);
+    }
+  };
+  const handleDBQuery = (data, index) => {
+    setChatData((prev) => {
+      const updatedChatData = [...prev];
+      updatedChatData[index].isQuery = true;
+      updatedChatData[index].isDBQuery = data;
+      return updatedChatData;
+    });
+  };
+  const handleDBResult = (data, index) => {
+    if (data.length !== 0) {
+      setDBResult(data);
+    }
+  };
+
   // API 호출 및 데이터 처리
-  const SendMessage = async (inputValue) => {
-    setLoading(true); // API 호출 시작 전에 로딩 상태 설정
+  const SendMessage = async (inputValue, session) => {
+    if (!session) {
+      console.error("Session 값이 정의되지 않았습니다.");
+      return;
+    }
 
     setChatData((prev) => [
       ...prev,
       { text: "", isUser: false, isStreem: true },
     ]);
     const messageIndex = ChatData.length + 1; // 새로 추가할 요소의 인덱스
+
     try {
       // Prompthook 호출 시 스트림 데이터 처리 콜백 전달
       await Prompthook(
         inputValue,
+        session,
         (currentText) => handleStreamData(currentText, messageIndex),
         (finalText) => handleStreamComplete(finalText, messageIndex),
-        handleLastChunk
+        handleRecommendQuestionsChunk,
+        (data) => handleESQuery(data, messageIndex),
+        (data) => handleESResult(data, messageIndex),
+        (data) => handleDBQuery(data, messageIndex),
+        (data) => handleDBResult(data, messageIndex)
       );
     } catch (error) {
       setChatData((prev) => prev.filter((msg) => !msg.isLoading));
@@ -104,8 +198,6 @@ const ToggleChat = ({
             : msg
         )
       );
-    } finally {
-      setLoading(false); // API 호출 완료 후 로딩 상태 종료
     }
   };
 
@@ -122,7 +214,7 @@ const ToggleChat = ({
       },
     ]);
 
-    SendMessage(inputValue);
+    SendMessage(inputValue, session);
 
     // 입력 초기화
     setInputValue("");
@@ -146,7 +238,7 @@ const ToggleChat = ({
       },
     ]);
 
-    SendMessage(value);
+    SendMessage(value, session);
 
     // 입력 초기화
     setInputValue("");
@@ -159,6 +251,7 @@ const ToggleChat = ({
         isFull={sizeFull}
         chatData={ChatData}
         addExample={addExample}
+        SuggestData={SuggestData}
       />
       <S.ChatBox isOpen={isChattoggleOpen}>
         <S.ChatInputWrapper>
