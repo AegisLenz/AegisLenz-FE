@@ -47,7 +47,6 @@ const Grid = ({
     if (isChattoggleOpen) {
       setMarkData([]);
       setFillterOFF(false);
-      setFillterOFF(false);
     } else {
       setMarkData(MarkData);
     }
