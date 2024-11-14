@@ -36,6 +36,7 @@ const Grid = ({
   const ChatToggleButton = () => {
     if (isChattoggleOpen) {
       setMarkData([]);
+      setFillterOFF(false);
     } else {
       setMarkData(MarkData);
     }
@@ -45,7 +46,10 @@ const Grid = ({
   const setChatToggleOpen = () => {
     setChatToggle(true);
   };
-
+  const InAlert = () => {
+    setMarkData(["Report", "ShowPolicy"]);
+    setFillterOFF(true);
+  };
   const FilterToggleButton = () => {
     setFilter((prev) => !prev);
   };
