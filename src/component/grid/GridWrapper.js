@@ -46,6 +46,7 @@ const Grid = ({
   const ChatToggleButton = () => {
     if (isChattoggleOpen) {
       setMarkData([]);
+      setFillterOFF(false);
     } else {
       setMarkData(MarkData);
     }
