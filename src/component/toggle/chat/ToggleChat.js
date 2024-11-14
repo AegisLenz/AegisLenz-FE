@@ -22,10 +22,16 @@ const ToggleChat = ({
 
   const [ChatData, setChatData] = useState([]);
   const [SuggestData, setSuggestData] = useState([]);
-  const [ESQuery, setESQuery] = useState("");
+
   const [ESResult, setESResult] = useState([]);
-  const [DBQuery, setDBQuery] = useState("");
   const [DBResult, setDBResult] = useState([]);
+
+  //ESResult, DBResult에 따라 markData수정
+  // useEffect(() => {
+  //   if (ESResult && DBResult) {
+  //     markData();
+  //   }
+  // }, [ESResult, DBResult]);
 
   //이전 대화 기록 불러오기
   useEffect(() => {
@@ -143,7 +149,7 @@ const ToggleChat = ({
       return updatedChatData;
     });
   };
-  const handleESResult = (data, index) => {
+  const handleESResult = (data) => {
     if (data.length !== 0) {
       setESResult(data);
     }
@@ -156,7 +162,7 @@ const ToggleChat = ({
       return updatedChatData;
     });
   };
-  const handleDBResult = (data, index) => {
+  const handleDBResult = (data) => {
     if (data.length !== 0) {
       setDBResult(data);
     }
@@ -184,9 +190,9 @@ const ToggleChat = ({
         (finalText) => handleStreamComplete(finalText, messageIndex),
         handleRecommendQuestionsChunk,
         (data) => handleESQuery(data, messageIndex),
-        (data) => handleESResult(data, messageIndex),
+        (data) => handleESResult(data),
         (data) => handleDBQuery(data, messageIndex),
-        (data) => handleDBResult(data, messageIndex)
+        (data) => handleDBResult(data)
       );
     } catch (error) {
       setChatData((prev) => prev.filter((msg) => !msg.isLoading));

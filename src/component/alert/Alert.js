@@ -1,16 +1,23 @@
 import * as S from "./Alert_style";
 import { useState, useEffect } from "react";
+import AlertHook from "../hook/Alert/AlertHook";
 
 const Alert = ({ setChatToggleOpen, getPromptSession, InAlert }) => {
   const [AlertData, setAlertData] = useState([
     {
-      id: 1,
       title: "공격이 탐지되었습니다.",
       contents: "['T1087 - Account Discovery', 'TA0007 - Discovery'] ",
       isRemoving: false,
     },
   ]);
   const [isHovered, setIsHovered] = useState(false);
+  // useEffect(() => {
+  //   const getAlertIndex = async () => {
+  //     await AlertHook((data) => setAlertData(data));
+  //   };
+
+  //   getAlertIndex();
+  // }, []);
 
   const handleDeleteAlert = (id) => {
     // 삭제 애니메이션을 위해 isRemoving 상태를 true로 변경

@@ -1,42 +1,43 @@
 import React from "react";
 import DiffViewer from "react-diff-viewer-continued";
-import * as S from "./ShowPolicy_style";
+import * as S from "./MarkDiff_style";
 
-const policy1 = `{
-  PolicyName: "Aegislenz-s3-queue",
-  PolicyDocument: {
-    Version: "2012-10-17",
-    Statement: [
-      {
-        Sid: "S3AndSQSAccess",
-        Effect: "Allow",
-        Action: [
-          "s3:GetObject",
-          "s3:ListBucket",
-          "s3:PutObject",
-          "s3:PutObjectAcl",
-          "s3:GetBucketLocation",
-          "logs:DescribeLogGroups", 
-          "logs:GetLogEvents",
-          "logs:FilterLogEvents",
-          "sqs:ReceiveMessage",
-          "sqs:DeleteMessage",
-          "sqs:ChangeMessageVisibility",
-          "sqs:GetQueueAttributes",
-          "sqs:ListQueues",
-        ],
-        Resource: [
-          "arn:aws:s3:::aegislenz-s3",
-          "arn:aws:s3:::aegislenz-s3/*",
-          "arn:aws:s3:::aegislenz-s3/AWSLogs/*",
-          "arn:aws:sqs:us-east-1:713881791527:AegisLenz-s3-queue",
-          "arn:aws:sqs:us-east-1:713881791527:AegisLenz-cloudtrail-queue",
-        ],
-      },
-    ],
-  },
-}`;
-const policy2 = `{
+const MarkDiff = () => {
+  const policy1 = `{
+    PolicyName: "Aegislenz-s3-queue",
+    PolicyDocument: {
+      Version: "2012-10-17",
+      Statement: [
+        {
+          Sid: "S3AndSQSAccess",
+          Effect: "Allow",
+          Action: [
+            "s3:GetObject",
+            "s3:ListBucket",
+            "s3:PutObject",
+            "s3:PutObjectAcl",
+            "s3:GetBucketLocation",
+            "logs:DescribeLogGroups", 
+            "logs:GetLogEvents",
+            "logs:FilterLogEvents",
+            "sqs:ReceiveMessage",
+            "sqs:DeleteMessage",
+            "sqs:ChangeMessageVisibility",
+            "sqs:GetQueueAttributes",
+            "sqs:ListQueues",
+          ],
+          Resource: [
+            "arn:aws:s3:::aegislenz-s3",
+            "arn:aws:s3:::aegislenz-s3/*",
+            "arn:aws:s3:::aegislenz-s3/AWSLogs/*",
+            "arn:aws:sqs:us-east-1:713881791527:AegisLenz-s3-queue",
+            "arn:aws:sqs:us-east-1:713881791527:AegisLenz-cloudtrail-queue",
+          ],
+        },
+      ],
+    },
+  }`;
+  const policy2 = `{
     PolicyName: "AmazonEC2FullAccess",
     PolicyDocument: {
       Version: "2012-10-17",
@@ -44,7 +45,6 @@ const policy2 = `{
     },
   }`;
 
-const ShowPolicy = () => {
   return (
     <S.Wrapper>
       <S.Title>Policy</S.Title>
@@ -82,4 +82,4 @@ const ShowPolicy = () => {
   );
 };
 
-export default ShowPolicy;
+export default MarkDiff;
