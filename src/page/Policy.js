@@ -1,6 +1,6 @@
-import * as S from "./pagestyle/Policy_style";
-import TopBar from "../component/topbar/TopBar";
 import SideBar from "../component/sidebar/SideBar";
+import TopBar from "../component/topbar/TopBar";
+import * as S from "./pagestyle/Policy_style";
 
 const Policy = () => {
   return (

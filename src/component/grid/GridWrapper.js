@@ -1,23 +1,23 @@
-import * as S from "./Grid_style";
-import { useState, useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import GridLayout from "react-grid-layout";
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
+import Alert from "../alert/Alert";
 import ChatToggle from "../toggle/chat/ToggleChat";
 import FilterToggle from "../toggle/filter/Filter";
-import Alert from "../alert/Alert";
 import {
-  AccountCount,
-  DailyInsight,
   AccountByService,
-  Score,
-  NeedCheck,
-  Detection,
+  AccountCount,
   AccountStatus,
+  DailyInsight,
+  Detection,
   EC2Status,
+  NeedCheck,
   Report,
+  Score,
   ShowPolicy,
 } from "./elements";
+import * as S from "./Grid_style";
 
 const Grid = ({
   isEditOn,
@@ -56,7 +56,7 @@ const Grid = ({
     setChatToggle(true);
   };
   const InAlert = () => {
-    setMarkData(["Report"]);
+    setMarkData(["Report", "ShowPolicy"]);
     // setFillterOFF(true);
   };
   const FilterToggleButton = () => {
@@ -192,15 +192,15 @@ const Grid = ({
       //   content: <Report data={ReportData} />,
       //   isResizable: true,
       // },
-      {
-        i: "ShowPolicy",
-        x: 47,
-        y: 0,
-        w: 47,
-        h: 30,
-        content: <ShowPolicy />,
-        isResizable: true,
-      },
+      // {
+      //   i: "ShowPolicy",
+      //   x: 47,
+      //   y: 30,
+      //   w: 47,
+      //   h: 30,
+      //   content: <ShowPolicy />,
+      //   isResizable: true,
+      // },
     ],
     [zoomLevel]
   );
@@ -254,8 +254,17 @@ const Grid = ({
           x: 47,
           y: 0,
           w: 47,
-          h: 30,
+          h: 20,
           content: <Report data={ReportData} />,
+          isResizable: true,
+        },
+        {
+          i: "ShowPolicy",
+          x: 47,
+          y: 30,
+          w: 47,
+          h: 25,
+          content: <ShowPolicy />,
           isResizable: true,
         },
       ]);
