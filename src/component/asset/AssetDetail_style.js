@@ -17,7 +17,7 @@ export const Wrapper = styled.div`
 export const InnerTop = styled.div`
   position: relative;
   width: 90%;
-  height: 16%;
+  height: 18%;
   border-bottom: solid 1px #aaa;
 `;
 export const InnerTitleArea = styled.div`
@@ -25,48 +25,84 @@ export const InnerTitleArea = styled.div`
   align-items: center;
   justify-content: flex-start;
   flex-direction: row;
+  position: relative;
 
-  width: 40%;
+  width: 70%;
   height: 80%;
   margin-top: 3%;
 `;
 export const InnerTitle = styled.h1`
-  position: relative;
-  margin: 0 0 7% 3%;
+  margin: 0 0 4% 3%;
   padding: 0;
 
   &::after {
-    content: "${(props) => props.service}";
+    content: "${(props) => props.UserId}";
     position: absolute;
     font-size: 50%;
-    left: 2%;
-    bottom: -45%;
+    left: 12%;
+    bottom: 30%;
     opacity: 0.5;
   }
 `;
+export const Icon = styled.svg`
+  width: 10%;
+
+  background-image: url(${(props) => props.url});
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+`;
 export const InnerTopInfo = styled.div`
   position: absolute;
+
+  display: flex;
+  flex-direction: row;
+  width: 100%;
   bottom: 0;
   left: 7%;
   padding: 1%;
-  width: 20%;
 `;
 export const InfoLink = styled(Link)`
-  margin-right: 7%;
+  margin-right: 2%;
   text-decoration: none;
   color: black;
   opacity: 0.5;
-
+  border-top: solid 1px #333;
   transition: all ease 0.3s;
   &:hover {
     opacity: 1;
     text-decoration: underline;
   }
 `;
-export const InnerTitleIcon = styled.img``;
 
 export const InnerCategorWrapper = styled.div`
-  width: 90%;
-  height: 7%;
+  width: 76%;
+  height: 5%;
   border-bottom: solid 1px #aaa;
+  padding: 0 7% 0 7%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  overflow-y: hidden;
+  overflow-x: auto;
+`;
+
+export const InnerCategory = styled.div`
+  transition: all ease 0.3s;
+
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+    transform: scale(1.1);
+  }
+`;
+
+export const InnerContentArea = styled.div`
+  position: relative;
+
+  margin: 1% 0 1% 0;
+
+  height: 77%;
+  width: 90%;
 `;

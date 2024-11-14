@@ -1,19 +1,23 @@
-import * as S from "./Grid_style";
-import { useState, useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import GridLayout from "react-grid-layout";
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
+import Alert from "../alert/Alert";
 import ChatToggle from "../toggle/chat/ToggleChat";
 import FilterToggle from "../toggle/filter/Filter";
 import {
-  AccountCount,
-  DailyInsight,
   AccountByService,
-  Score,
-  NeedCheck,
-  Detection,
+  AccountCount,
   AccountStatus,
+  DailyInsight,
+  Detection,
+  EC2Status,
+  NeedCheck,
+  Report,
+  Score,
+  ShowPolicy,
 } from "./elements";
+import * as S from "./Grid_style";
 
 const Grid = ({
   isEditOn,
@@ -25,12 +29,24 @@ const Grid = ({
 }) => {
   const [isChattoggleOpen, setChatToggle] = useState(false);
   const [isFilterOpen, setFilter] = useState(false);
-  const [NeedCheckStatus, setNeedCheckStatus] = useState(false);
   const [markData, setMarkData] = useState(MarkData || []);
+  const [rowHeight, setrowHeight] = useState(window.screen.height);
+  const [width, setwidth] = useState(window.innerWidth);
+  const [zoomLevel, setZoomLevel] = useState(getZoomLevel());
+  const [promptSession, setPromptSession] = useState("");
+  const [ReportData, setReportData] = useState("");
+  const [FillterOFF, setFillterOFF] = useState(isFillterOFF);
 
+  const getReportData = (value) => {
+    setReportData(value);
+  };
+  const getPromptSession = (value) => {
+    setPromptSession(value);
+  };
   const ChatToggleButton = () => {
     if (isChattoggleOpen) {
       setMarkData([]);
+      setFillterOFF(false);
     } else {
       setMarkData(MarkData);
     }
@@ -40,7 +56,10 @@ const Grid = ({
   const setChatToggleOpen = () => {
     setChatToggle(true);
   };
-
+  const InAlert = () => {
+    setMarkData(["Report", "ShowPolicy"]);
+    setFillterOFF(true);
+  };
   const FilterToggleButton = () => {
     setFilter((prev) => !prev);
   };
@@ -49,13 +68,50 @@ const Grid = ({
     setFilter(true);
   };
 
-  const isNeedCheck = () => {
-    setNeedCheckStatus((prev) => !prev);
-  };
+  function getZoomLevel() {
+    return window.innerWidth / window.screen.width;
+  }
+
+  //줌레벨 변화감지
+  useEffect(() => {
+    const handleResize = () => {
+      const newZoomLevel = getZoomLevel();
+      if (newZoomLevel !== zoomLevel) {
+        setZoomLevel(newZoomLevel);
+      }
+      setrowHeight(window.screen.height);
+      setwidth(window.innerWidth);
+      setGridLayout((prevLayout) =>
+        prevLayout.map((item) =>
+          item.i === "chat" ? item.h * zoomLevel : item
+        )
+      );
+      setGridLayout((prevLayout) =>
+        prevLayout.map((item) =>
+          item.i === "filter" ? item.h * zoomLevel : item
+        )
+      );
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    // 컴포넌트가 언마운트될 때 이벤트 리스너 제거
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [zoomLevel]);
+
   const InitLayout = useMemo(
     () => [
-      { i: "chat", x: 0, y: 0, w: 47, h: 3, isResizable: false },
-      { i: "filter", x: 0, y: 0, w: 47, h: 8, isResizable: false },
+      {
+        i: "chat",
+        x: 0,
+        y: 0,
+        w: 47,
+        h: 8 * zoomLevel,
+        isResizable: false,
+      },
+      { i: "filter", x: 0, y: 0, w: 47, h: 3 * zoomLevel, isResizable: false },
       {
         i: "AccountCount",
         x: 47,
@@ -98,12 +154,7 @@ const Grid = ({
         y: 25,
         w: 20,
         h: 17,
-        content: (
-          <NeedCheck
-            isNeedCheck={isNeedCheck}
-            NeedCheckStatus={NeedCheckStatus}
-          />
-        ),
+        content: <NeedCheck />,
         isResizable: true,
       },
       {
@@ -120,17 +171,45 @@ const Grid = ({
         x: 47,
         y: 10,
         w: 47,
-        h: 35,
-        content: <AccountStatus />,
+        h: 18,
+        content: <AccountStatus GenDetailData={() => {}} />,
         isResizable: true,
       },
+      {
+        i: "EC2Status",
+        x: 47,
+        y: 28,
+        w: 47,
+        h: 18,
+        content: <EC2Status GenDetailData={() => {}} />,
+        isResizable: true,
+      },
+      // {
+      //   i: "Report",
+      //   x: 47,
+      //   y: 0,
+      //   w: 47,
+      //   h: 30,
+      //   content: <Report data={ReportData} />,
+      //   isResizable: true,
+      // },
+      // {
+      //   i: "ShowPolicy",
+      //   x: 47,
+      //   y: 30,
+      //   w: 47,
+      //   h: 30,
+      //   content: <ShowPolicy />,
+      //   isResizable: true,
+      // },
     ],
-    [NeedCheckStatus]
+    [zoomLevel]
   );
 
   // 초기 레이아웃 설정
   const [gridLayout, setGridLayout] = useState(InitLayout);
 
+  // markData 없데이트 시에
   useEffect(() => {
     // MarkData가 업데이트될 때 markData를 업데이트
     if (MarkData.length > 0) {
@@ -138,6 +217,7 @@ const Grid = ({
     }
   }, [MarkData]);
 
+  // markData가 존재할 때
   useEffect(() => {
     if (markData && markData.length > 0) {
       let currentX = 0;
@@ -168,6 +248,27 @@ const Grid = ({
       });
 
       setGridLayout(filteredLayout);
+      setGridLayout((prevLayout) => [
+        ...prevLayout,
+        {
+          i: "Report",
+          x: 47,
+          y: 0,
+          w: 47,
+          h: 20,
+          content: <Report data={ReportData} />,
+          isResizable: true,
+        },
+        {
+          i: "ShowPolicy",
+          x: 47,
+          y: 30,
+          w: 47,
+          h: 25,
+          content: <ShowPolicy />,
+          isResizable: true,
+        },
+      ]);
     } else {
       setGridLayout(InitLayout);
     }
@@ -181,6 +282,7 @@ const Grid = ({
     isChattoggleOpen,
     isFillterOFF,
     isChatOFF,
+    ReportData,
   ]);
 
   // 토글 오픈
@@ -191,51 +293,29 @@ const Grid = ({
           item.i === "chat"
             ? item
             : item.x >= 47
-            ? { ...item, w: item.w - 1 }
-            : { ...item, x: item.x + 47, w: item.w - 1 }
+            ? { ...item, w: item.w }
+            : { ...item, x: item.x + 47, w: item.w }
         )
       );
-    } else if (NeedCheckStatus) {
       setGridLayout((prevLayout) =>
-        prevLayout.map((item) => {
-          // "NeedCheck"인 경우
-          if (item.i === "NeedCheck") {
-            return { ...item, x: 47, y: 0, w: 47, h: 20 };
-          }
-          // y <= 20이면서 x >= 46인 경우
-          if (item.y <= 20 && item.x >= 47) {
-            return { ...item, y: item.y + 20 };
-          }
-          // 그 외의 항목은 수정하지 않음
-          return item;
-        })
+        prevLayout.map((item) =>
+          item.i === "filter" ? { ...item, h: 8 * zoomLevel } : item
+        )
       );
     } else {
       if (markData.length < 0) {
         setGridLayout(InitLayout);
       }
     }
-  }, [isChattoggleOpen, NeedCheckStatus, InitLayout, markData]);
-
-  const [rowHeight, setrowHeight] = useState(window.innerHeight);
-  const [width, setwidth] = useState(window.innerWidth);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setrowHeight(window.innerHeight);
-      setwidth(window.innerWidth);
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    // 컴포넌트가 언마운트될 때 이벤트 리스너 제거
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
+  }, [isChattoggleOpen, InitLayout, markData, zoomLevel]);
 
   return (
     <S.Wrapper>
+      <Alert
+        setChatToggleOpen={setChatToggleOpen}
+        getPromptSession={getPromptSession}
+        InAlert={InAlert}
+      />
       {!isChatOFF ? (
         <ChatToggle
           isChattoggleOpen={isChattoggleOpen}
@@ -244,11 +324,15 @@ const Grid = ({
           sizeFull={false}
           SideContent={SideContent} //오른쪽 On/Off
           markData={setMarkDataFunc} //오른쪽에 띄울 데이터
+          promptIndex={false}
+          promptSession={promptSession !== "" ? promptSession : "Grid"}
+          getPromptSession={getPromptSession}
+          getReportData={getReportData}
         />
       ) : (
         ""
       )}
-      {isFillterOFF ? (
+      {FillterOFF ? (
         ""
       ) : (
         <FilterToggle
@@ -266,7 +350,7 @@ const Grid = ({
         }))}
         cols={94}
         rowHeight={rowHeight * 0.01}
-        width={width * 0.95}
+        width={width * 0.945}
         draggableHandle=".grid-item"
         style={{ backgroundColor: "transparent" }}
       >

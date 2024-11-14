@@ -36,6 +36,7 @@ export const SideInnerToggle = styled.div`
   background-position: center;
 
   &:hover {
+    cursor: pointer;
     background-color: #a9a9a9;
     box-shadow: 1px 1px 1px 0 #777777;
   }
@@ -63,6 +64,7 @@ export const SideOuterToggle = styled.div`
   transform: rotate(180deg);
 
   &:hover {
+    cursor: pointer;
     background-color: #bbbbbb;
     box-shadow: -1px -1px 1px 0 #777777;
   }
@@ -80,6 +82,13 @@ export const Content = styled.div`
   width: 100%;
   padding: 1% 1% 0 1%;
   border-bottom: solid 1px #121212;
+
+  transition: all ease 0.3s;
+
+  &:hover {
+    cursor: pointer;
+    background-color: #aaa;
+  }
 `;
 export const ContetnsDate = styled.h5`
   padding: 0;
