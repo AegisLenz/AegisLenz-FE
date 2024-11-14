@@ -47,6 +47,7 @@ const Grid = ({
     if (isChattoggleOpen) {
       setMarkData([]);
       setFillterOFF(false);
+      setFillterOFF(false);
     } else {
       setMarkData(MarkData);
     }
@@ -58,7 +59,7 @@ const Grid = ({
   };
   const InAlert = () => {
     setMarkData(["Report", "ShowPolicy"]);
-    // setFillterOFF(true);
+    setFillterOFF(true);
   };
   const FilterToggleButton = () => {
     setFilter((prev) => !prev);
