@@ -1,9 +1,11 @@
 import React from "react";
 import DiffViewer from "react-diff-viewer-continued";
 import * as S from "./MarkDiff_style";
+import { useState } from "react";
 
 const MarkDiff = () => {
-  const policy1 = `{
+  const [Policy, setPolicy] = useState([
+    `{
     PolicyName: "Aegislenz-s3-queue",
     PolicyDocument: {
       Version: "2012-10-17",
@@ -36,22 +38,103 @@ const MarkDiff = () => {
         },
       ],
     },
-  }`;
-  const policy2 = `{
+  }`,
+    `{
+    PolicyName: "Aegislenz-s3-queue111",
+    PolicyDocument: {
+      Version: "2012-10-17",
+      Statement: [
+        {
+          Sid: "S3AndSQSAccess",
+          Effect: "Allow",
+          Action: [
+            "s3:GetObject",
+            "s3:ListBucket",
+            "sqs:ChangeMessageVisibility",
+            "sqs:GetQueueAttributes",
+            "sqs:ListQueues",
+          ],
+          Resource: [
+            "arn:aws:s3:::aegislenz-s3",
+          ],
+        },
+      ],
+    },
+  }`,
+    `{
     PolicyName: "AmazonEC2FullAccess",
     PolicyDocument: {
       Version: "2012-10-17",
       Statement: [{ Action: "ec2:*", Effect: "Allow", Resource: "*" }],
     },
-  }`;
+  }`,
+    `{
+    PolicyName: "AmazonEC2FullAccess",
+    PolicyDocument: {
+      Version: "2012-10-17",
+      Statement: [{ Action: "ec2:*", Effect: "Allow", Resource: "*" }],
+    },
+  }`,
+    `{
+    PolicyName: "AmazonEC2FullAccess",
+    PolicyDocument: {
+      Version: "2012-10-17",
+      Statement: [{ Action: "ec2:*", Effect: "Allow", Resource: "*" }],
+    },
+  }`,
+    `{
+    PolicyName: "AmazonEC2FullAccess",
+    PolicyDocument: {
+      Version: "2012-10-17",
+      Statement: [{ Action: "ec2:*", Effect: "Allow", Resource: "*" }],
+    },
+  }`,
+  ]);
+
+  const [policyIndex, setpolicyIndex] = useState([
+    "Aegislenz-s3-queue",
+    "AmazonEC2FullAccess1",
+    "AmazonEC2FullAccess",
+    "AmazonEC2FullAccess",
+    "AmazonEC2FullAccess",
+  ]);
+
+  const [newValue, setnewValue] = useState(Policy[0]);
+  const [oldValue, setoldValue] = useState(Policy[1]);
 
   return (
     <S.Wrapper>
       <S.Title>Policy</S.Title>
+      <S.IndexWrapper>
+        <S.IndexArea>
+          {policyIndex.map((value, index) => (
+            <S.Policy_index
+              index={index}
+              onClick={() => {
+                setoldValue(Policy[index]);
+              }}
+            >
+              {value}
+            </S.Policy_index>
+          ))}
+        </S.IndexArea>
+        <S.IndexArea>
+          {policyIndex.map((value, index) => (
+            <S.Policy_index
+              index={index}
+              onClick={() => {
+                setnewValue(Policy[index]);
+              }}
+            >
+              {value}
+            </S.Policy_index>
+          ))}
+        </S.IndexArea>
+      </S.IndexWrapper>
       <S.ContentArea>
         <DiffViewer
-          oldValue={policy1}
-          newValue={policy2}
+          oldValue={oldValue}
+          newValue={newValue}
           splitView={true}
           hideLineNumbers={false}
           showDiffOnly={true}
@@ -67,7 +150,6 @@ const MarkDiff = () => {
             },
             diffContainer: {
               display: "flex",
-              width: "100%",
             },
             line: {
               minWidth: "50%",

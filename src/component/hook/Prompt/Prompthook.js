@@ -11,7 +11,6 @@ const Prompthook = async (
   handleDBResult
 ) => {
   try {
-    console.log(session);
     const response = await fetch(`/server/api/v1/prompt/${session}/chat`, {
       method: "POST",
       headers: {
@@ -42,10 +41,11 @@ const Prompthook = async (
 
         // 수신된 데이터를 한 문자열로 누적
         lines.forEach((line) => {
+          console.log(line);
           if (line.trim()) {
             try {
               const parsedLine = JSON.parse(line); // JSON 데이터로 파싱
-
+              console.log(parsedLine);
               switch (parsedLine.type) {
                 case "ESQuery":
                   // ESQuery 처리
@@ -81,6 +81,8 @@ const Prompthook = async (
                   break;
                 default:
                   if (parsedLine.status !== "complete") {
+                    console.log("통신종료");
+                  } else {
                     console.warn("알 수 없는 데이터 유형:", parsedLine.type);
                   }
               }

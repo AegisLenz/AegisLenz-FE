@@ -9,9 +9,9 @@ const Account = () => {
   ];
   // eslint-disable-next-line no-unused-vars
   const [AccountCountList, setAccountCountList] = useState({
-    Users: 102312,
-    CSA: 100,
-    Groups: 50,
+    Users: 6,
+    CSA: 1,
+    Groups: 10,
   });
   const [fontSize, setFontSize] = useState(16);
   const innerWrapperRef = useRef(null);
