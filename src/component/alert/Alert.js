@@ -57,7 +57,7 @@ const Alert = ({ setChatToggleOpen, getPromptSession, InAlert }) => {
           isRemoving={alert.isRemoving}
           onClick={() => {
             setChatToggleOpen(true);
-            getPromptSession("673436c093af690c341f70ba");
+            getPromptSession("673723b837274528bb2daf13");
             InAlert();
             handleDeleteAlert(alert.id);
           }}

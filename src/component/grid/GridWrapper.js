@@ -19,8 +19,102 @@ import {
   ShowLog,
 } from "./elements";
 import * as S from "./Grid_style";
+const testAccount = [
+  {
+    UserName: "Hyunjun_Park",
+    UserId: "AIDA2MNVLVQT4YD7QRMBR",
+    CreateDate: "2024-10-01T05:45:15.000Z",
+    UserPolicies: [],
+    AttachedPolicies: [
+      "Aegislenz-s3-queue",
+      "AmazonEC2FullAccess",
+      "AdministratorAccess",
+      "IAMUserChangePassword",
+      "AmazonS3FullAccess",
+    ],
+    Groups: [],
+    AccessKeysLastUsed: [],
+    LastUpdated: "2024-10-31T15:22:50.969Z",
+  },
+  {
+    UserName: "Jiyun_Kim",
+    UserId: "AIDA2MNVLVQTRDIWKGAC5",
+    CreateDate: "2024-09-30T08:23:21.000Z",
+    UserPolicies: [],
+    AttachedPolicies: [
+      "Aegislenz-s3-queue",
+      "AmazonEC2FullAccess",
+      "AdministratorAccess",
+      "IAMUserChangePassword",
+      "AmazonS3FullAccess",
+    ],
+    Groups: [],
+    AccessKeysLastUsed: [],
+    LastUpdated: "2024-10-31T15:22:52.075Z",
+  },
+  {
+    UserName: "Taeyang_Kim",
+    UserId: "AIDA2MNVLVQTWUUAMZCZE",
+    CreateDate: "2024-09-30T08:19:35.000Z",
+    UserPolicies: [],
+    AttachedPolicies: [
+      "Aegislenz-s3-queue",
+      "AmazonEC2FullAccess",
+      "AdministratorAccess",
+      "IAMUserChangePassword",
+      "AmazonS3FullAccess",
+    ],
+    Groups: [],
+    AccessKeysLastUsed: [],
+    LastUpdated: "2024-10-31T15:22:53.895Z",
+  },
+  {
+    UserName: "Wonje_Cha",
+    UserId: "AIDA2MNVLVQT5TARLHOZP",
+    CreateDate: "2024-10-01T04:11:48.000Z",
+    UserPolicies: [],
+    AttachedPolicies: ["AmazonEC2FullAccess", "AdministratorAccess"],
+    Groups: [],
+    AccessKeysLastUsed: [
+      {
+        AccessKeyId: "AKIA2MNVLVQT53CDZV4V",
+        Status: "Active",
+        LastUsedDate: "2024-10-31T15:10:00.000Z",
+      },
+    ],
+    LastUpdated: "2024-10-31T15:22:55.125Z",
+  },
+  {
+    UserName: "Yeji_Shin",
+    UserId: "AIDA2MNVLVQTSEX5JPOM3",
+    CreateDate: "2024-09-30T08:21:28.000Z",
+    UserPolicies: [],
+    AttachedPolicies: [
+      "AmazonEC2FullAccess",
+      "AdministratorAccess",
+      "IAMUserChangePassword",
+    ],
+    Groups: [],
+    AccessKeysLastUsed: [],
+    LastUpdated: "2024-10-31T15:22:56.459Z",
+  },
+  {
+    UserName: "Yujeong_Choi",
+    UserId: "AIDA2MNVLVQT6H4YW2SMB",
+    CreateDate: "2024-10-01T05:47:18.000Z",
+    UserPolicies: [],
+    AttachedPolicies: [
+      "AmazonEC2FullAccess",
+      "AdministratorAccess",
+      "IAMUserChangePassword",
+    ],
+    Groups: [],
+    AccessKeysLastUsed: [],
+    LastUpdated: "2024-10-31T15:22:57.687Z",
+  },
+];
 
-const testdata = [
+const testlogdata = [
   {
     eventVersion: "1.10",
     userIdentity: {
@@ -6353,11 +6447,14 @@ const Grid = ({
   const [ReportData, setReportData] = useState("");
   const [FillterOFF, setFillterOFF] = useState(isFillterOFF);
 
-  const [ESResultData, setESREsultData] = useState(testdata || []);
-  // const [DBResultData, setDBREsultData] = useState();
+  const [ESResultData, setESREsultData] = useState(testlogdata || []);
+  const [DBResultData, setDBREsultData] = useState(testAccount || []);
 
   const getESResultData = (value) => {
     setESREsultData(value);
+  };
+  const getDBResultData = (value) => {
+    setDBREsultData(value);
   };
   const getReportData = (value) => {
     setReportData(value);
@@ -6391,7 +6488,9 @@ const Grid = ({
   };
 
   function getZoomLevel() {
-    return window.innerWidth / window.screen.width;
+    const Level = window.screen.height * 0.005;
+    console.log(Level);
+    return Level;
   }
 
   //줌레벨 변화감지
@@ -6405,12 +6504,12 @@ const Grid = ({
       setwidth(window.innerWidth);
       setGridLayout((prevLayout) =>
         prevLayout.map((item) =>
-          item.i === "chat" ? item.h * zoomLevel : item
+          item.i === "chat" ? { ...item, h: zoomLevel } : item
         )
       );
       setGridLayout((prevLayout) =>
         prevLayout.map((item) =>
-          item.i === "filter" ? item.h * zoomLevel : item
+          item.i === "filter" ? { ...item, h: zoomLevel } : item
         )
       );
     };
@@ -6430,7 +6529,7 @@ const Grid = ({
         x: 0,
         y: 0,
         w: 47,
-        h: 8 * zoomLevel,
+        h: zoomLevel,
         isResizable: false,
       },
       {
@@ -6438,7 +6537,7 @@ const Grid = ({
         x: 0,
         y: 0,
         w: 47,
-        h: 3 * zoomLevel,
+        h: zoomLevel,
         isResizable: false,
       },
       {
@@ -6501,7 +6600,7 @@ const Grid = ({
         y: 10,
         w: 47,
         h: 18,
-        content: <AccountStatus GenDetailData={() => {}} />,
+        content: <AccountStatus data={DBResultData} GenDetailData={() => {}} />,
         isResizable: true,
       },
       {
@@ -6532,7 +6631,7 @@ const Grid = ({
       //   isResizable: true,
       // },
     ],
-    [zoomLevel]
+    [zoomLevel, DBResultData]
   );
 
   // 초기 레이아웃 설정
@@ -6680,7 +6779,7 @@ const Grid = ({
           getPromptSession={getPromptSession}
           getReportData={getReportData}
           setESREsultData={getESResultData}
-          // setDBREsultData={setDBREsultData}
+          setDBREsultData={getDBResultData}
         />
       ) : (
         ""

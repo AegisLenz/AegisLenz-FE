@@ -45,7 +45,6 @@ const Prompthook = async (
           if (line.trim()) {
             try {
               const parsedLine = JSON.parse(line); // JSON 데이터로 파싱
-              console.log(parsedLine);
               switch (parsedLine.type) {
                 case "ESQuery":
                   // ESQuery 처리
@@ -61,7 +60,7 @@ const Prompthook = async (
                   break;
                 case "ESResult":
                   // ESResult 처리
-                  console.log("ESResult:", parsedLine.data);
+                  console.log("ESResult:", parsedLine);
                   handleESResult(parsedLine.data);
                   break;
                 case "DBResult":

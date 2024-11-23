@@ -6088,6 +6088,25 @@ const testdata = [
   },
 ];
 
+const testAccountData = [
+  {
+    UserName: "Wonje_Cha",
+    UserId: "AIDA2MNVLVQT5TARLHOZP",
+    CreateDate: "2024-10-01T04:11:48.000Z",
+    UserPolicies: [],
+    AttachedPolicies: ["AmazonEC2FullAccess", "AdministratorAccess"],
+    Groups: [],
+    AccessKeysLastUsed: [
+      {
+        AccessKeyId: "AKIA2MNVLVQT53CDZV4V",
+        Status: "Active",
+        LastUsedDate: "2024-10-31T15:10:00.000Z",
+      },
+    ],
+    LastUpdated: "2024-10-31T15:22:55.125Z",
+  },
+];
+
 const ToggleChat = ({
   ChatToggleButton,
   isChattoggleOpen,
@@ -6249,12 +6268,14 @@ const ToggleChat = ({
       updatedChatData[index].isDBQuery = data;
       return updatedChatData;
     });
-    markData(["ShowLog"]);
+    markData(["AccountStatus"]);
+    setDBREsultData(testAccountData);
   };
   const handleDBResult = (data) => {
-    if (data.length !== 0) {
-      setDBREsultData(data);
-    }
+    // if (data.length !== 0) {
+    //   setDBREsultData(data);
+    //   console.log(data);
+    // }
   };
 
   // API 호출 및 데이터 처리
