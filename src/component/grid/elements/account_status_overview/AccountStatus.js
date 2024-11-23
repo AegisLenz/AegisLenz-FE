@@ -2,101 +2,6 @@ import * as S from "./AccountStatus_styel";
 import { useState } from "react";
 import Dropdown from "../../../toggle/dropdown/DropDown";
 
-const testData = [
-  {
-    UserName: "Hyunjun_Park",
-    UserId: "AIDA2MNVLVQT4YD7QRMBR",
-    CreateDate: "2024-10-01T05:45:15.000Z",
-    UserPolicies: [],
-    AttachedPolicies: [
-      "Aegislenz-s3-queue",
-      "AmazonEC2FullAccess",
-      "AdministratorAccess",
-      "IAMUserChangePassword",
-      "AmazonS3FullAccess",
-    ],
-    Groups: [],
-    AccessKeysLastUsed: [],
-    LastUpdated: "2024-10-31T15:22:50.969Z",
-  },
-  {
-    UserName: "Jiyun_Kim",
-    UserId: "AIDA2MNVLVQTRDIWKGAC5",
-    CreateDate: "2024-09-30T08:23:21.000Z",
-    UserPolicies: [],
-    AttachedPolicies: [
-      "Aegislenz-s3-queue",
-      "AmazonEC2FullAccess",
-      "AdministratorAccess",
-      "IAMUserChangePassword",
-      "AmazonS3FullAccess",
-    ],
-    Groups: [],
-    AccessKeysLastUsed: [],
-    LastUpdated: "2024-10-31T15:22:52.075Z",
-  },
-  {
-    UserName: "Taeyang_Kim",
-    UserId: "AIDA2MNVLVQTWUUAMZCZE",
-    CreateDate: "2024-09-30T08:19:35.000Z",
-    UserPolicies: [],
-    AttachedPolicies: [
-      "Aegislenz-s3-queue",
-      "AmazonEC2FullAccess",
-      "AdministratorAccess",
-      "IAMUserChangePassword",
-      "AmazonS3FullAccess",
-    ],
-    Groups: [],
-    AccessKeysLastUsed: [],
-    LastUpdated: "2024-10-31T15:22:53.895Z",
-  },
-  {
-    UserName: "Wonje_Cha",
-    UserId: "AIDA2MNVLVQT5TARLHOZP",
-    CreateDate: "2024-10-01T04:11:48.000Z",
-    UserPolicies: [],
-    AttachedPolicies: ["AmazonEC2FullAccess", "AdministratorAccess"],
-    Groups: [],
-    AccessKeysLastUsed: [
-      {
-        AccessKeyId: "AKIA2MNVLVQT53CDZV4V",
-        Status: "Active",
-        LastUsedDate: "2024-10-31T15:10:00.000Z",
-      },
-    ],
-    LastUpdated: "2024-10-31T15:22:55.125Z",
-  },
-  {
-    UserName: "Yeji_Shin",
-    UserId: "AIDA2MNVLVQTSEX5JPOM3",
-    CreateDate: "2024-09-30T08:21:28.000Z",
-    UserPolicies: [],
-    AttachedPolicies: [
-      "AmazonEC2FullAccess",
-      "AdministratorAccess",
-      "IAMUserChangePassword",
-    ],
-    Groups: [],
-    AccessKeysLastUsed: [],
-    LastUpdated: "2024-10-31T15:22:56.459Z",
-  },
-  {
-    UserName: "Yujeong_Choi",
-    UserId: "AIDA2MNVLVQT6H4YW2SMB",
-    CreateDate: "2024-10-01T05:47:18.000Z",
-    UserPolicies: [],
-    AttachedPolicies: [
-      "AmazonEC2FullAccess",
-      "AdministratorAccess",
-      "IAMUserChangePassword",
-    ],
-    Groups: [],
-    AccessKeysLastUsed: [],
-    LastUpdated: "2024-10-31T15:22:57.687Z",
-  },
-];
-
 const type = {
   0: ["Privileges", "#6A4FA3"],
   1: ["Dev", "#216261"],
@@ -113,17 +18,17 @@ const filterOptions = [
   { label: "Type", value: "Type" },
 ];
 
-const AccountStatus = ({ GenDetailData }) => {
+const AccountStatus = ({ GenDetailData, data }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterCategory, setFilterCategory] = useState("none");
-  const [filteredData, setFilteredData] = useState(testData);
+  const [filteredData, setFilteredData] = useState(data);
 
   const handleSearch = (e) => {
     const value = e.target.value.toLowerCase();
     setSearchTerm(value);
 
     // includes 메서드를 사용하여 대소문자 구분 없이 부분 일치를 찾습니다.
-    const filtered = testData.filter((user) => {
+    const filtered = data.filter((user) => {
       switch (filterCategory) {
         case "none":
           return user;
@@ -155,7 +60,7 @@ const AccountStatus = ({ GenDetailData }) => {
   const resetSearch = () => {
     setSearchTerm("");
     setFilterCategory("");
-    setFilteredData(testData);
+    setFilteredData(data);
   };
 
   return (

@@ -13,14 +13,17 @@ export const Wrapper = styled.div`
 `;
 
 export const Title = styled.h2`
+  z-index: 202;
+  top: 0;
   color: #104f55;
-  width: 100%;
-  height: 8%;
+  width: 94%;
+  height: 10%;
+  left: 0;
   font-size: 130%;
-  padding: 0 0 0 10%;
-  margin: 2% 0 1% 0;
-  align-items: left;
-  align-content: center;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 export const ContentArea = styled.div`
@@ -30,6 +33,14 @@ export const ContentArea = styled.div`
   padding: 0 1%;
 
   overflow: auto;
+
+  table {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8em;
+  }
 
   &::-webkit-scrollbar {
     background-color: transparent;

@@ -105,7 +105,7 @@ export const MessageBubble = styled.div`
 
   align-self: ${({ isUser }) => (isUser ? "flex-end" : "flex-start")};
 
-  max-width: 40%;
+  max-width: 60%;
   min-width: ${({ isStart }) => (isStart ? "40%" : "")};
 
   font-weight: 500;
