@@ -30,6 +30,16 @@ export const TableWrapper = styled.div`
   width: 96%;
   height: 80%;
   overflow: auto;
+
+  &::-webkit-scrollbar {
+    background-color: transparent;
+    width: 0.5vw;
+    height: 0.9vh;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 30em;
+    background-color: #104f55;
+  }
 `;
 export const Table = styled.table`
   border-collapse: collapse;

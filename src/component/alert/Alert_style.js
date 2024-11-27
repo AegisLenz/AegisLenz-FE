@@ -91,6 +91,10 @@ export const AlertBubble = styled.div`
   h3 {
     font-size: 1em;
   }
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 export const CancleToggle = styled.svg`
   position: absolute;
@@ -103,7 +107,10 @@ export const CancleToggle = styled.svg`
   background-repeat: no-repeat;
   background-position: center;
   background-size: 70%;
+  transition: all ease 0.3s;
+
   &:hover {
     cursor: pointer;
+    transform: scale(1.3);
   }
 `;

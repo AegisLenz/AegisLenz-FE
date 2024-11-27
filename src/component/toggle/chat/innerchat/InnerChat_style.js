@@ -27,13 +27,13 @@ export const InnerWrapper = styled.div`
 
   bottom: 0vh;
 
-  overflow-y: auto;
-
   border-radius: 1em;
-  display: flex;
   padding: 0 5% 0 5%;
-  justify-content: flex-end;
+
+  display: flex;
   flex-direction: column;
+
+  overflow-y: scroll;
 
   &::-webkit-scrollbar {
     background-color: transparent;
@@ -61,7 +61,6 @@ export const Bookmark = styled.svg`
   opacity: ${(props) => (props.isBookmarked ? "1" : "0.2")};
   border-radius: 1em;
   background-color: ${(props) => (props.isBookmarked ? "#ccc" : "")};
-  box-shadow: ${(props) => (props.isBookmarked ? "0px 1px 1px #aaa" : "")};
 
   &:hover {
     cursor: pointer;
