@@ -22,7 +22,48 @@ const ViewReportForm = () => {
           </S.IndexBubble>
         ))}
       </S.IndexWrapper>
-      <S.ContetnWrapper></S.ContetnWrapper>
+      <S.ContentWrapper>
+        <S.ContentSelectWrapper>
+          <S.ContentSelectTitle>
+            <h1>Form Edit</h1>
+          </S.ContentSelectTitle>
+          <S.ContentSelect>
+            <S.InputWrapper>
+              제목 :
+              <input
+                type="text"
+                placeholder="입력하지 않으면 자동으로 생성됩니다."
+              ></input>
+            </S.InputWrapper>
+            <S.InputWrapper>
+              날짜 :
+              <input
+                type="text"
+                placeholder="입력하지 않으면 생성 당시 날짜가 사용됩니다."
+              ></input>
+            </S.InputWrapper>
+            <S.RadioButtonWrapper>
+              <input type="checkbox" name="options1" value="option1" />
+              로그 포함하기
+            </S.RadioButtonWrapper>
+            <S.RadioButtonWrapper>
+              <input type="checkbox" name="options2" value="option2" />
+              공격근거 포함하기
+            </S.RadioButtonWrapper>
+            <S.RadioButtonWrapper>
+              <input type="checkbox" name="options3" value="option3" />
+              결과요약 포함하기
+            </S.RadioButtonWrapper>
+          </S.ContentSelect>
+        </S.ContentSelectWrapper>
+        <S.ContentPromptWrapper>
+          <S.ContentPromptTitle>
+            <h1>Prompt</h1>
+          </S.ContentPromptTitle>
+          <S.ContentPromptInnerText>test</S.ContentPromptInnerText>
+          <S.SaveButton onClick={() => {}}>Save</S.SaveButton>
+        </S.ContentPromptWrapper>
+      </S.ContentWrapper>
     </S.Wrapper>
   );
 };
