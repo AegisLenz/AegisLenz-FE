@@ -9,3 +9,4 @@ export { default as EC2Status } from "./ec2_status_overview/EC2Status";
 export { default as Report } from "./report/Report";
 export { default as ShowPolicy } from "./show_policy/ShowPolicy";
 export { default as ShowLog } from "./show_log/ShowLog";
+export { default as AttackVisualGraph } from "./attack_visualgraph/AttackVisualGraph";
