@@ -17,6 +17,7 @@ import {
   Score,
   ShowPolicy,
   ShowLog,
+  AttackVisualGraph,
 } from "./elements";
 import * as S from "./Grid_style";
 const testAccount = [
@@ -6476,7 +6477,7 @@ const Grid = ({
     setChatToggle(true);
   };
   const InAlert = () => {
-    setMarkData(["Report", "ShowPolicy", "ShowLog"]);
+    setMarkData(["Report", "ShowPolicy", "ShowLog", "AttackVisualGraph"]);
     setFillterOFF(true);
   };
   const FilterToggleButton = () => {
@@ -6710,10 +6711,24 @@ const Grid = ({
           {
             i: "ShowPolicy",
             x: 47,
-            y: 30,
+            y: 50,
             w: 47,
             h: 25,
             content: <ShowPolicy />,
+            isResizable: true,
+          },
+        ]);
+      }
+      if (markData.includes("AttackVisualGraph")) {
+        setGridLayout((prev) => [
+          ...prev,
+          {
+            i: "AttackVisualGraph",
+            x: 47,
+            y: 30,
+            w: 47,
+            h: 20,
+            content: <AttackVisualGraph />,
             isResizable: true,
           },
         ]);
