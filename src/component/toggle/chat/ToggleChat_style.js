@@ -92,7 +92,7 @@ export const ToggleButton = styled.button`
   transform: rotate(${({ isOpen }) => (isOpen ? "180deg" : "0")});
 
   &:hover {
-    transform: scale(1.5) rotate(${({ isOpen }) => (isOpen ? "180deg" : "0")});
+    transform: scale(1.3) rotate(${({ isOpen }) => (isOpen ? "180deg" : "0")});
   }
 `;
 
@@ -115,6 +115,6 @@ export const SendButton = styled.button`
   transition: all ease 0.3s;
 
   &:hover {
-    transform: scale(1.5);
+    transform: scale(1.3);
   }
 `;

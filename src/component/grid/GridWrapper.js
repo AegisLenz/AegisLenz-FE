@@ -6749,7 +6749,7 @@ const Grid = ({
       );
       setGridLayout((prevLayout) =>
         prevLayout.map((item) =>
-          item.i === "filter" ? { ...item, h: 8 * zoomLevel } : item
+          item.i === "filter" ? { ...item, h: 1.5 * zoomLevel } : item
         )
       );
     } else {

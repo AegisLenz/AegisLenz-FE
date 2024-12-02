@@ -62,7 +62,7 @@ export const IndexArea = styled.div`
 export const ContentArea = styled.div`
   position: relative;
 
-  width: 8%;
+  width: 84%;
   height: 68%;
 
   padding: 1% 0;
