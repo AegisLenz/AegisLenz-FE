@@ -4,6 +4,7 @@ import * as S from "./MarkDiff_style";
 import { useState } from "react";
 
 const MarkDiff = () => {
+  // eslint-disable-next-line no-unused-vars
   const [Policy, setPolicy] = useState([
     `{
     PolicyName: "Aegislenz-s3-queue",
@@ -90,7 +91,7 @@ const MarkDiff = () => {
     },
   }`,
   ]);
-
+  // eslint-disable-next-line no-unused-vars
   const [policyIndex, setpolicyIndex] = useState([
     "Aegislenz-s3-queue",
     "AmazonEC2FullAccess1",

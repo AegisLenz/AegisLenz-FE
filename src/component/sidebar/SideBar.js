@@ -1,19 +1,25 @@
 import * as S from "./SideBar_style";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 // import ToggleEdit from "../toggle/edit/ToggleEdit";
 
 const SideBar = ({ isEditOn, setEditOn }) => {
   // const setEditOnOff = () => {
   //   setEditOn((prev) => !prev);
   // };
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate("/", { state: { isChatOpen: false } }); // 강제로 상태 전달
+  };
 
   return (
     <S.Wrapper>
       <S.IconWrapper>
-        <Link to="/">
+        <div onClick={handleClick}>
           <S.Icon src="/icon/Frame.png" />
           <S.IconP>Dashboard</S.IconP>
-        </Link>
+        </div>
         <Link to="/AI">
           <S.Icon src="/icon/AI_Icon.png" />
           <S.IconP>Question History</S.IconP>
