@@ -27,4 +27,7 @@ export const Title = styled.div`
 
   display: flex;
   align-items: center;
+  &:hover {
+    cursor: pointer;
+  }
 `;

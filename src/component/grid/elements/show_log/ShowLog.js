@@ -1,6 +1,5 @@
 import * as S from "./ShowLog_style";
 import { Tooltip } from "react-tooltip";
-import { useState } from "react";
 
 const ShowLog = ({ Data }) => {
   const handleRowClick = (item) => {

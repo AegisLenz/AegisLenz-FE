@@ -75,4 +75,26 @@ export const IconWrapper = styled.div`
       transform: scale(1.1);
     }
   }
+  div {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    width: 5vw;
+    justify-content: center;
+    align-items: center;
+    align-self: flex-start;
+
+    &:hover ${Icon} {
+      cursor: pointer;
+      opacity: 1;
+      transform: scale(1.1);
+    }
+
+    &:hover ${IconP} {
+      cursor: pointer;
+      width: auto;
+      opacity: 1;
+      transform: scale(1.1);
+    }
+  }
 `;

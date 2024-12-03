@@ -2,6 +2,7 @@ import { useState } from "react";
 import * as S from "./ViewReportForm_style";
 
 const ViewReportForm = () => {
+  // eslint-disable-next-line no-unused-vars
   const [Index, setIndex] = useState([
     "보고서 형식 제목이 여기에 이렇게..",
     "보고서 형식 제목이...",

@@ -3,7 +3,6 @@ import * as S from "./ViewReport_style";
 import ReactMarkdown from "react-markdown";
 import { createRoot } from "react-dom/client";
 import html2pdf from "html2pdf.js";
-import { tree } from "d3";
 
 const ViewReport = () => {
   const [isOpen, setIsOpen] = useState(false); // ToolBar 열림 상태
@@ -164,13 +163,14 @@ const hello = "world";
 console.log(hello);
 \`\`\`
 `;
-
+  // eslint-disable-next-line no-unused-vars
   const [Index, setIndex] = useState([
     "보고서 제목이 여기에 이렇게..",
     "보고서 제목이...",
     "보고서 제목이 여기에 이렇게..",
     "보고서 제목이...",
   ]);
+  // eslint-disable-next-line no-unused-vars
   const [formIndex, setformIndex] = useState([
     "보고서 형식 제목이 여기에 이렇게..",
     "보고서 형식 제목이...",

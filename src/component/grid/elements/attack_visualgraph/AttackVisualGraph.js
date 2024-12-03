@@ -7,13 +7,7 @@ const ColorSet = ["#216261", "#6A4FA3", "#CD62B0"]; // 색상 배열
 const data = [
   {
     section: "User",
-    nodes: [
-      { id: "u1", label: "Google Cloud Account" },
-      { id: "u2", label: "Google Cloud Account" },
-      { id: "u3", label: "Google Cloud Account" },
-      { id: "u4", label: "Google Cloud Account" },
-      { id: "u5", label: "Google Cloud Account" },
-    ],
+    nodes: [{ id: "u1", label: "Google Cloud Account" }],
     links: [],
   },
   {

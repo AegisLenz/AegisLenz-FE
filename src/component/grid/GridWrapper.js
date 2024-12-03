@@ -5,6 +5,7 @@ import "react-resizable/css/styles.css";
 import Alert from "../alert/Alert";
 import ChatToggle from "../toggle/chat/ToggleChat";
 import FilterToggle from "../toggle/filter/Filter";
+import { useLocation } from "react-router-dom";
 import {
   AccountByService,
   AccountCount,
@@ -6450,6 +6451,14 @@ const Grid = ({
 
   const [ESResultData, setESREsultData] = useState(testlogdata || []);
   const [DBResultData, setDBREsultData] = useState(testAccount || []);
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.state && location.state.isChatOpen !== undefined) {
+      setChatToggle(location.state.isChatOpen);
+      setFillterOFF(false);
+    }
+  }, [location.state]);
 
   const getESResultData = (value) => {
     setESREsultData(value);

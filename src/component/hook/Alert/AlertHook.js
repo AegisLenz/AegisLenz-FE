@@ -23,7 +23,9 @@ const AlertHook = async () => {
           return; // 스트림이 완료되면 종료
         }
 
+        // eslint-disable-next-line no-unused-vars
         const chunk = decoder.decode(value, { stream: true });
+        // eslint-disable-next-line no-unused-vars
         const lines = chunk.split("\n");
 
         read(); // 스트림을 계속 읽음
