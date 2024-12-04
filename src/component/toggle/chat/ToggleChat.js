@@ -6139,7 +6139,6 @@ const ToggleChat = ({
 
   //이전 대화 기록 불러오기
   useEffect(() => {
-    console.log(session);
     const fetchPromptsContents = async () => {
       try {
         let session = "";
@@ -6164,10 +6163,14 @@ const ToggleChat = ({
         if (session !== "") {
           setSession(session);
           const data = await GetPromptContents(session);
-          setChatData(data.chats);
-          getReportData(data.report);
+          if (data.chats !== null) {
+            setChatData(data.chats);
+          }
+          if (data.report !== null) {
+            getReportData(data.report);
+          }
           if (
-            data.init_recommend_questions.length !== null &&
+            data.init_recommend_questions !== null &&
             data.init_recommend_questions.length !== 0
           ) {
             setSuggestData(data.init_recommend_questions);
@@ -6183,11 +6186,10 @@ const ToggleChat = ({
           } else {
             setSuggestData([]);
           }
-        } else {
-          console.log("No valid session available");
         }
       } catch (e) {
         console.log(e.message);
+        throw e;
       }
     };
     fetchPromptsContents();

@@ -160,7 +160,6 @@ const ViewReport = () => {
 \`\`\`javascript
 // 코드 블록도 지원됩니다.
 const hello = "world";
-console.log(hello);
 \`\`\`
 `;
   // eslint-disable-next-line no-unused-vars
@@ -213,10 +212,6 @@ console.log(hello);
         const testText = currentText + (currentText ? "\n" : "") + line.trim();
         await renderMarkdown(testText); // 비동기적으로 렌더링 후 대기
 
-        console.log("Testing:", testText);
-        console.log("Scroll Height:", containerRef.current.scrollHeight);
-        console.log("Offset Height:", containerRef.current.offsetHeight);
-
         if (isOverflowing()) {
           tempPages.push(currentText.trim());
           currentText = line.trim(); // 새 줄로 초기화
@@ -228,8 +223,6 @@ console.log(hello);
       if (currentText.trim()) {
         tempPages.push(currentText.trim());
       }
-
-      console.log(tempPages);
       setPages(tempPages); // 페이지 데이터 저장
     };
 

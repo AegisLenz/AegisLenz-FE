@@ -11,7 +11,7 @@ const GetPromptContents = async (promptSession) => {
       const data = await response.json();
       return data;
     } catch (e) {
-      console.log(e);
+      // console.log(e);
       throw e;
     }
   }
