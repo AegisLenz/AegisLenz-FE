@@ -14,6 +14,14 @@ const data = [
     links: [],
   },
   {
+    section: "EC2",
+    nodes: [
+      { id: "AIDA47CRYYD4WJZ3OBVPB", label: "smtpk" },
+      { id: "AIDA47CRYYD4ZK4QW73V5", label: "lookupIam" },
+    ],
+    links: [],
+  },
+  {
     section: "Role",
     nodes: [
       { id: "role_1", label: "testrole" },
@@ -48,13 +56,6 @@ const AttackVisualGraph = () => {
       <S.GraphWrapper>
         <Graph data={sortedSections}></Graph>
       </S.GraphWrapper>
-      <S.GropWrapper>
-        {sortedSections.slice(0, 3).map((section, index) => (
-          <S.Grop key={index} color={section.nodes[0].color}>
-            <p>{section.section}</p>
-          </S.Grop>
-        ))}
-      </S.GropWrapper>
     </S.Wrapper>
   );
 };
