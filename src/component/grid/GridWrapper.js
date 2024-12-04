@@ -21,6 +21,7 @@ import {
   AttackVisualGraph,
 } from "./elements";
 import * as S from "./Grid_style";
+
 const testAccount = [
   {
     UserName: "Hyunjun_Park",
@@ -6455,6 +6456,7 @@ const Grid = ({
 
   useEffect(() => {
     if (location.state && location.state.isChatOpen !== undefined) {
+      setMarkData([]);
       setChatToggle(location.state.isChatOpen);
       setFillterOFF(false);
     }
@@ -6499,7 +6501,6 @@ const Grid = ({
 
   function getZoomLevel() {
     const Level = window.screen.height * 0.005;
-    console.log(Level);
     return Level;
   }
 

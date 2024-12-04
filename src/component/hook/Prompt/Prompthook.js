@@ -41,7 +41,7 @@ const Prompthook = async (
 
         // 수신된 데이터를 한 문자열로 누적
         lines.forEach((line) => {
-          console.log(line);
+          // console.log(line);
           if (line.trim()) {
             try {
               const parsedLine = JSON.parse(line); // JSON 데이터로 파싱
@@ -49,23 +49,23 @@ const Prompthook = async (
                 case "ESQuery":
                   // ESQuery 처리
 
-                  console.log("ESQuery:", parsedLine.data);
+                  // console.log("ESQuery:", parsedLine.data);
                   hadnleESQuery(parsedLine.data);
                   break;
                 case "DBQuery":
                   // DBQuery 처리
 
-                  console.log("DBQuery:", parsedLine.data);
+                  // console.log("DBQuery:", parsedLine.data);
                   handleDBQuery(parsedLine.data);
                   break;
                 case "ESResult":
                   // ESResult 처리
-                  console.log("ESResult:", parsedLine);
+                  // console.log("ESResult:", parsedLine);
                   handleESResult(parsedLine.data);
                   break;
                 case "DBResult":
                   // ESResult 처리
-                  console.log("DBResult:", parsedLine.data);
+                  // console.log("DBResult:", parsedLine.data);
                   handleDBResult(parsedLine.data);
                   break;
                 case "Summary":
@@ -80,7 +80,7 @@ const Prompthook = async (
                   break;
                 default:
                   if (parsedLine.status !== "complete") {
-                    console.log("통신종료");
+                    // console.log("통신종료");
                   } else {
                     console.warn("알 수 없는 데이터 유형:", parsedLine.type);
                   }

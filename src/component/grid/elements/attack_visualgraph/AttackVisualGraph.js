@@ -7,26 +7,24 @@ const ColorSet = ["#216261", "#6A4FA3", "#CD62B0"]; // 색상 배열
 const data = [
   {
     section: "User",
-    nodes: [{ id: "u1", label: "Google Cloud Account" }],
-    links: [],
-  },
-  {
-    section: "Ec2",
     nodes: [
-      { id: "g1", label: "Google Cloud Account" },
-      { id: "g2", label: "Google Cloud Account" },
+      { id: "AIDA47CRYYD4WJZ3OBVPB", label: "smtpk" },
+      { id: "AIDA47CRYYD4ZK4QW73V5", label: "lookupIam" },
     ],
-    links: [{ source: "u1", target: "g1", value: 1 }],
+    links: [],
   },
   {
     section: "Role",
     nodes: [
-      { id: "r1", label: "Google Cloud Account" },
-      { id: "r2", label: "AWS Cloud Account" },
+      { id: "role_1", label: "testrole" },
+      { id: "role_2", label: "AWSServiceRoleForTrustedAdvisor" },
+      { id: "role_3", label: "AWSServiceRoleForSupport" },
     ],
     links: [
-      { source: "g1", target: "r1", value: 1 },
-      { source: "g1", target: "r2", value: 1 },
+      { source: "AIDA47CRYYD4WJZ3OBVPB", target: "role_1", value: 1 },
+      { source: "AIDA47CRYYD4WJZ3OBVPB", target: "role_2", value: 1 },
+      { source: "AIDA47CRYYD4WJZ3OBVPB", target: "role_3", value: 1 },
+      { source: "AIDA47CRYYD4ZK4QW73V5", target: "role_1", value: 1 },
     ],
   },
 ].map((section, index) => ({

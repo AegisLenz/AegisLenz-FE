@@ -10,7 +10,7 @@ const CreatePrompt = async () => {
     const Data = await response.json();
     return Data;
   } catch (e) {
-    console.log(e);
+    // console.log(e);
     throw e;
   }
 };

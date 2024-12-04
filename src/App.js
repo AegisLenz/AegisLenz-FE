@@ -4,6 +4,7 @@ import AI from "./page/AI";
 import Asset from "./page/Asset";
 import Policy from "./page/Policy";
 import Report from "./page/Report";
+import User from "./page/User";
 import "./App.css";
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
         <Route path="/Asset" element={<Asset />} />
         <Route path="/Policy" element={<Policy />} />
         <Route path="/Report" element={<Report />} />
+        <Route path="/User" element={<User />} />
       </Routes>
     </Router>
   );
