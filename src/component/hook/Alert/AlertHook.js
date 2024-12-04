@@ -1,4 +1,4 @@
-const useAlertSSE = () => {
+const useAlertSSE = (onDataReceived) => {
   const connectSSE = async () => {
     try {
       console.log("SSE 연결 시작"); // SSE 시작 시 로그 출력
@@ -34,6 +34,9 @@ const useAlertSSE = () => {
               try {
                 const parsedLine = JSON.parse(line);
                 console.log("수신된 SSE 데이터:", parsedLine); // 데이터 수신 시 로그 출력
+                if (onDataReceived) {
+                  onDataReceived(parsedLine); // 데이터 수신 시 콜백 호출
+                }
               } catch (error) {
                 console.error("SSE 데이터 파싱 중 오류 발생", error);
               }
@@ -49,7 +52,6 @@ const useAlertSSE = () => {
       console.error("SSE 연결 중 오류 발생:", error);
     }
   };
-
   return { connectSSE };
 };
 

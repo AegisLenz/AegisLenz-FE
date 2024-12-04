@@ -15,9 +15,13 @@ const Alert = ({ setChatToggleOpen, getPromptSession, InAlert }) => {
 
   const { connectSSE } = useAlertSSE();
   useEffect(() => {
-    connectSSE();
+    connectSSE((newData) => {
+      setAlertData((prevData) => [...prevData, { ...newData, id: Date.now() }]);
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // eslint-disable-next-line no-unused-vars
   const handleAlertBubbleClick = (promptSessionId) => {
     setChatToggleOpen(true);
     getPromptSession(promptSessionId);
