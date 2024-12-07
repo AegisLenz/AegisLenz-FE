@@ -6381,7 +6381,7 @@ const ToggleChat = ({
             isOpen={isChattoggleOpen}
             isFull={sizeFull}
             onKeyDown={handleKeyDown}
-            placeholder="Use Prompt..."
+            placeholder="여기에 질문을 쳐보세요.."
           />
           <S.SendButton
             isOpen={isChattoggleOpen}

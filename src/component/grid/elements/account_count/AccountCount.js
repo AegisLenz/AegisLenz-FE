@@ -6,6 +6,7 @@ const Account = () => {
     { key: "Users", info: "Users", color: "#216261" },
     { key: "CSA", info: "Cloud Service Account", color: "#6A4FA3" },
     { key: "Groups", info: "Groups", color: "#CD62B0" },
+    { key: "Groups", info: "Groups", color: "#CD62B0" },
   ];
   // eslint-disable-next-line no-unused-vars
   const [AccountCountList, setAccountCountList] = useState({

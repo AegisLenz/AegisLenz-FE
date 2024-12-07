@@ -11,7 +11,7 @@ const NeedCheck = () => {
 
   return (
     <S.Wrapper>
-      <S.Title>Need Check</S.Title>
+      <S.Title>Report Summary</S.Title>
       <S.ContentArea>
         {innerContents.map((content, index) => (
           <S.Content key={index}>{content}</S.Content>

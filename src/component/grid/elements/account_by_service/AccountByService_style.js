@@ -10,6 +10,8 @@ export const Wrapper = styled.div`
   background-color: white;
   flex-direction: column;
   border-radius: 1em;
+
+  box-shadow: 1px 1px 5px #aaa;
 `;
 
 export const Title = styled.h1`

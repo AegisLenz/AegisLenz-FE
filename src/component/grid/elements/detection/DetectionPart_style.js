@@ -11,6 +11,8 @@ export const Wrapper = styled.div`
   flex-direction: column;
   border-radius: 1em;
   background-color: white;
+
+  box-shadow: 1px 1px 5px #333;
 `;
 
 export const Title = styled.h1`
