@@ -2,38 +2,50 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
   z-index: 200;
-  position: ${({ isOpen }) => (isOpen ? "fixed" : "absolute")};
-  width: ${({ sizeFull }) => (sizeFull ? "100%" : "46.3vw")};
-  height: auto;
-  top: ${({ isOpen }) => (isOpen ? "9vh" : "0")};
-  left: ${({ isOpen, sizeFull }) =>
-    sizeFull ? "0" : isOpen ? "5.8vw" : "0.8vw"};
+
+  margin: 0 0.5%;
+
+  width: 99%;
+  height: ${({ isOpen }) => (isOpen ? "99%" : "80%")};
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const ChatBox = styled.div`
   z-index: 201;
   position: relative;
-  background-color: #cccccc;
-  margin-top: ${({ isOpen }) => (isOpen ? "1vh" : "1.5vh")};
-  border-radius: ${({ isOpen }) => (isOpen ? "2em" : "20em")};
-  height: ${({ isOpen }) => (isOpen ? "88vh" : "5vh")};
+  border-radius: 2em;
+
+  height: 99%;
+  width: 100%;
+
   overflow: hidden;
   transition: margin-top 0.6s ease,
     ${({ isOpen }) =>
       isOpen
         ? "height 0.6s ease" // Oppen
         : "height 0.6s ease, border-radius 0.3s ease 0.6s"}; // Close
-  box-shadow: 1px 1px 3px 1px #999999;
+
+  background-color: #cccccc;
+  box-shadow: 1px 1px 3px #888;
+
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-direction: column;
 `;
 
 export const ChatInputWrapper = styled.div`
   z-index: 202;
-  position: absolute;
-  bottom: 0.5vh;
+
   width: 96%;
-  height: 100%;
-  max-height: 4vh;
-  margin-left: 2%;
+  transition: all ease 0.7s;
+  height: ${({ isOpen }) => (isOpen ? "4%" : "100%")};
+
+  padding: ${({ isOpen }) => (isOpen ? "1%" : "0")} 2%;
+
   display: flex;
   justify-content: space-between;
 `;
@@ -52,28 +64,45 @@ export const AiIcon = styled.button`
   transition: all ease 0.3s;
 `;
 
-export const ChatInput = styled.input`
+export const Input = styled.div`
   z-index: 203;
-  font-size: 110%;
-  border-radius: ${({ isFull }) => (isFull ? "0" : "10em")};
   height: 100%;
   width: ${({ isFull }) => (isFull ? "90%" : "86%")};
   max-width: 88%;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+`;
+export const ChatInput = styled.input`
+  z-index: 203;
+  font-size: 110%;
+
+  height: 100%;
+  width: 100%;
+
   border: none;
-  overflow: hidden;
-  transition: all ease 0.3s;
+
   padding: ${({ isFull }) => (isFull ? "0" : "0 0 0 2%")};
-  background-color: ${({ isOpen }) => (isOpen ? "#D9D9D9" : "transparent")};
-  box-shadow: ${({ isOpen }) => (isOpen ? "1px 1px 2px 1px #999999" : "none")};
+  background-color: transparent;
 
   &:focus {
     outline: none;
   }
-  &::placeholder {
-    font-weight: 700;
+  &:focus + label,
+  &:valid + label {
+    opacity: 1;
+    transform: translate(0, -120%);
   }
 `;
-
+export const InputUnderbar = styled.div`
+  width: 100%;
+  height: 2px;
+  margin-left: ${({ isFull }) => (isFull ? "0" : "1%")};
+  transition: all ease 0.3s;
+  background-color: ${({ isOpen }) => (isOpen ? "#104f55" : "")};
+`;
 export const ToggleButton = styled.button`
   z-index: 204;
   display: ${({ sizeFull }) => (sizeFull ? "none" : "block")};

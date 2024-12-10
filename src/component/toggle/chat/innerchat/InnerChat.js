@@ -20,11 +20,11 @@ const InnerChat = ({ isOpen, isFull, chatData, addExample, SuggestData }) => {
   const [bookmarkedMessages, setBookmarkedMessages] = useState({});
 
   // 데이터가 업데이트될 때마다 스크롤을 아래로 이동
-  useEffect(() => {
-    if (chatEndRef.current) {
-      chatEndRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [chatData]);
+  // useEffect(() => {
+  //   if (chatEndRef.current) {
+  //     chatEndRef.current.scrollIntoView({ behavior: "smooth" });
+  //   }
+  // }, [chatData]);
 
   //북마크
   const AddBookmark = (text, index) => {

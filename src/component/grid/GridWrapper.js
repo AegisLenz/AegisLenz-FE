@@ -6443,9 +6443,11 @@ const Grid = ({
   const [isChattoggleOpen, setChatToggle] = useState(false);
   const [isFilterOpen, setFilter] = useState(false);
   const [markData, setMarkData] = useState(MarkData || []);
-  const [rowHeight, setrowHeight] = useState(window.screen.height);
+  const [rowHeight, setrowHeight] = useState(window.innerHeight);
   const [width, setwidth] = useState(window.innerWidth);
-  const [zoomLevel, setZoomLevel] = useState(getZoomLevel());
+  const [scrollPosition, setScrollPosition] = useState(0);
+
+  // const [zoomLevel, setZoomLevel] = useState(getZoomLevel());
   const [promptSession, setPromptSession] = useState("");
   const [ReportData, setReportData] = useState("");
   const [FillterOFF, setFillterOFF] = useState(isFillterOFF);
@@ -6499,48 +6501,38 @@ const Grid = ({
     setFilter(true);
   };
 
-  function getZoomLevel() {
-    const Level = window.screen.height * 0.005;
-    return Level;
-  }
-
-  //줌레벨 변화감지
-  useEffect(() => {
-    const handleResize = () => {
-      const newZoomLevel = getZoomLevel();
-      if (newZoomLevel !== zoomLevel) {
-        setZoomLevel(newZoomLevel);
-      }
-      setrowHeight(window.screen.height);
-      setwidth(window.innerWidth);
-      setGridLayout((prevLayout) =>
-        prevLayout.map((item) =>
-          item.i === "chat" ? { ...item, h: zoomLevel } : item
-        )
-      );
-      setGridLayout((prevLayout) =>
-        prevLayout.map((item) =>
-          item.i === "filter" ? { ...item, h: zoomLevel } : item
-        )
-      );
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    // 컴포넌트가 언마운트될 때 이벤트 리스너 제거
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, [zoomLevel]);
-
   const InitLayout = useMemo(
     () => [
+      {
+        i: "scroll",
+        x: 0,
+        y: 0,
+        w: 47,
+        h: 0,
+        isResizable: false,
+      },
       {
         i: "chat",
         x: 0,
         y: 0,
         w: 47,
-        h: zoomLevel,
+        h: 4,
+        content: (
+          <ChatToggle
+            isChattoggleOpen={isChattoggleOpen}
+            ChatToggleButton={ChatToggleButton}
+            setChatToggleOpen={setChatToggleOpen}
+            sizeFull={false}
+            SideContent={SideContent} //오른쪽 On/Off
+            markData={setMarkDataFunc} //오른쪽에 띄울 데이터
+            promptIndex={false}
+            promptSession={promptSession !== "" ? promptSession : "Grid"}
+            getPromptSession={getPromptSession}
+            getReportData={getReportData}
+            setESREsultData={getESResultData}
+            setDBREsultData={getDBResultData}
+          />
+        ),
         isResizable: false,
       },
       {
@@ -6548,7 +6540,7 @@ const Grid = ({
         x: 0,
         y: 0,
         w: 47,
-        h: zoomLevel,
+        h: 4,
         isResizable: false,
       },
       {
@@ -6556,7 +6548,7 @@ const Grid = ({
         x: 47,
         y: 0,
         w: 47,
-        h: 10,
+        h: 9,
         content: <AccountCount />,
         isResizable: true,
       },
@@ -6565,7 +6557,7 @@ const Grid = ({
         x: 0,
         y: 11,
         w: 33,
-        h: 6,
+        h: 8,
         content: <Score />,
         isResizable: true,
       },
@@ -6574,7 +6566,7 @@ const Grid = ({
         x: 0,
         y: 16,
         w: 33,
-        h: 11,
+        h: 10,
         content: <DailyInsight />,
         isResizable: true,
       },
@@ -6583,7 +6575,7 @@ const Grid = ({
         x: 33,
         y: 12,
         w: 14,
-        h: 17,
+        h: 18,
         content: <AccountByService />,
         isResizable: true,
       },
@@ -6610,7 +6602,7 @@ const Grid = ({
         x: 47,
         y: 10,
         w: 47,
-        h: 18,
+        h: 17,
         content: <AccountStatus data={DBResultData} GenDetailData={() => {}} />,
         isResizable: true,
       },
@@ -6619,30 +6611,12 @@ const Grid = ({
         x: 47,
         y: 28,
         w: 47,
-        h: 18,
+        h: 17,
         content: <EC2Status GenDetailData={() => {}} />,
         isResizable: true,
       },
-      // {
-      //   i: "Report",
-      //   x: 47,
-      //   y: 0,
-      //   w: 47,
-      //   h: 30,
-      //   content: <Report data={ReportData} />,
-      //   isResizable: true,
-      // },
-      // {
-      //   i: "ShowPolicy",
-      //   x: 47,
-      //   y: 30,
-      //   w: 47,
-      //   h: 30,
-      //   content: <ShowPolicy />,
-      //   isResizable: true,
-      // },
     ],
-    [zoomLevel, DBResultData]
+    [DBResultData, isChattoggleOpen]
   );
 
   // 초기 레이아웃 설정
@@ -6766,15 +6740,10 @@ const Grid = ({
       setGridLayout((prevLayout) =>
         prevLayout.map((item) =>
           item.i === "chat"
-            ? item
-            : item.x >= 47
+            ? { ...item, h: 84 }
+            : item.x >= 47 || item.i === "scroll"
             ? { ...item, w: item.w }
             : { ...item, x: item.x + 47, w: item.w }
-        )
-      );
-      setGridLayout((prevLayout) =>
-        prevLayout.map((item) =>
-          item.i === "filter" ? { ...item, h: 1.5 * zoomLevel } : item
         )
       );
     } else {
@@ -6782,7 +6751,31 @@ const Grid = ({
         setGridLayout(InitLayout);
       }
     }
-  }, [isChattoggleOpen, InitLayout, markData, zoomLevel]);
+  }, [isChattoggleOpen, InitLayout, markData]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      if (isChattoggleOpen) {
+        setGridLayout((prevLayout) =>
+          prevLayout.map((item) =>
+            item.i === "scroll"
+              ? {
+                  ...item,
+                  h: scrollY / (window.innerHeight / 50),
+                }
+              : item
+          )
+        );
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   return (
     <S.Wrapper>
@@ -6791,43 +6784,15 @@ const Grid = ({
         getPromptSession={getPromptSession}
         InAlert={InAlert}
       />
-      {!isChatOFF ? (
-        <ChatToggle
-          isChattoggleOpen={isChattoggleOpen}
-          ChatToggleButton={ChatToggleButton}
-          setChatToggleOpen={setChatToggleOpen}
-          sizeFull={false}
-          SideContent={SideContent} //오른쪽 On/Off
-          markData={setMarkDataFunc} //오른쪽에 띄울 데이터
-          promptIndex={false}
-          promptSession={promptSession !== "" ? promptSession : "Grid"}
-          getPromptSession={getPromptSession}
-          getReportData={getReportData}
-          setESREsultData={getESResultData}
-          setDBREsultData={getDBResultData}
-        />
-      ) : (
-        ""
-      )}
-      {FillterOFF ? (
-        ""
-      ) : (
-        <FilterToggle
-          isFilterOpen={isFilterOpen}
-          isChattoggleOpen={isChattoggleOpen}
-          FilterToggleButton={FilterToggleButton}
-          setFilterOpen={setFilterOpen}
-          ismarkData={markData.length > 0}
-        />
-      )}
       <GridLayout
         layout={gridLayout.map((item) => ({
           ...item,
           isResizable: isEditOn && item.isResizable,
         }))}
-        cols={94}
-        rowHeight={rowHeight * 0.01}
-        width={width * 0.945}
+        cols={95} // column 수를 95개로 설정
+        rowHeight={window.innerHeight * 0.01}
+        width={width * 0.95} // width를 95%로 설정
+        height={window.innerHeight * 0.92} // height를 92%로 설정
         draggableHandle=".grid-item"
         style={{ backgroundColor: "transparent" }}
       >

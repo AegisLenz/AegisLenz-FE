@@ -8,7 +8,7 @@ const Top = () => {
     navigate("/", { state: { isChatOpen: false } }); // 강제로 상태 전달
   };
 
-  const SignInHandleClick = () => {
+  const LoginHandleClick = () => {
     navigate("/User", { state: { Sign: false } }); // 강제로 상태 전달
   };
   const SignUpHandleClick = () => {
@@ -19,8 +19,8 @@ const Top = () => {
     <S.Wrapper>
       <S.Title onClick={handleClick}>AegisLenz</S.Title>
       <S.Icon></S.Icon>
-      <S.Login onClick={SignInHandleClick}>Sign in</S.Login>
-      <S.Login onClick={SignUpHandleClick}>Sign up</S.Login>
+      <S.Login onClick={LoginHandleClick}>Login</S.Login>
+      <S.Login onClick={SignUpHandleClick}>Sign in</S.Login>
     </S.Wrapper>
   );
 };

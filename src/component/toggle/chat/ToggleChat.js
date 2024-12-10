@@ -6364,25 +6364,28 @@ const ToggleChat = ({
 
   return (
     <S.Wrapper isOpen={isChattoggleOpen} sizeFull={sizeFull}>
-      <InnerChat
+      {/* <InnerChat
         isOpen={isChattoggleOpen}
         isFull={sizeFull}
         chatData={ChatData}
         addExample={addExample}
         SuggestData={SuggestData}
-      />
+      /> */}
       <S.ChatBox isOpen={isChattoggleOpen}>
-        <S.ChatInputWrapper>
+        <S.ChatInputWrapper isOpen={isChattoggleOpen}>
           <S.AiIcon sizeFull={sizeFull} />
-          <S.ChatInput
-            value={inputValue}
-            onFocus={setChatToggleOpen}
-            onChange={(e) => setInputValue(e.target.value)}
-            isOpen={isChattoggleOpen}
-            isFull={sizeFull}
-            onKeyDown={handleKeyDown}
-            placeholder="여기에 질문을 쳐보세요.."
-          />
+          <S.Input>
+            <S.ChatInput
+              value={inputValue}
+              onFocus={setChatToggleOpen}
+              onChange={(e) => setInputValue(e.target.value)}
+              isOpen={isChattoggleOpen}
+              isFull={sizeFull}
+              onKeyDown={handleKeyDown}
+              placeholder="질문을 입력해 주세요"
+            />
+            <S.InputUnderbar isOpen={isChattoggleOpen} />
+          </S.Input>
           <S.SendButton
             isOpen={isChattoggleOpen}
             sizeFull={sizeFull}
