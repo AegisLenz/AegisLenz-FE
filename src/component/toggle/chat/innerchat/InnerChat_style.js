@@ -15,9 +15,9 @@ export const Wrapper = styled.div`
   z-index: 203;
   width: 100%;
 
-  /* top: ${({ isFull }) => (isFull ? "-79vh" : "0")}; */
+  top: ${({ isFull }) => (isFull ? "5%" : "1vw")};
   position: absolute;
-  height: ${({ isOpen, isFull }) => (isOpen ? "83vh" : "0")};
+  height: ${({ isOpen, isFull }) => (isOpen || isFull ? "82vh" : "0")};
   overflow: hidden;
 `;
 
@@ -30,7 +30,7 @@ export const InnerWrapper = styled.div`
   bottom: 0vh;
 
   border-radius: 1em;
-  padding: 0 5% 0 5%;
+  padding: 5% 5% 0 5%;
 
   display: flex;
   flex-direction: column;
@@ -75,8 +75,6 @@ export const CancleBookMark = styled.svg`
   background-repeat: no-repeat;
   background-size: 60%;
 
-  position: absolute;
-
   right: 0;
 
   width: 2vw;
@@ -100,14 +98,15 @@ export const MessageBubble = styled.div`
     isUser ? "0.5em 0 0.5em 0.5em" : "0 0.5em 0.5em 0.5em"};
   position: relative;
 
-  margin-bottom: 3%;
+  margin-bottom: 4%;
   margin-top: ${({ isFirst }) => (isFirst ? "2.5vw" : "0")};
   padding: 1%;
 
   align-self: ${({ isUser }) => (isUser ? "flex-end" : "flex-start")};
 
   max-width: 60%;
-  min-width: ${({ isStart }) => (isStart ? "40%" : "")};
+  min-width: ${({ isStart, isBookmark }) =>
+    isStart || isBookmark ? "40%" : ""};
 
   font-weight: 500;
   color: ${({ isUser }) => (isUser ? "#121212" : "#ffffff")};
@@ -116,7 +115,6 @@ export const MessageBubble = styled.div`
   box-shadow: 1px 1px 1px 0 #aaaaaa;
 
   animation: ${slideUp} 0.3s ease;
-
   transition: ${({ isOpen }) =>
     isOpen ? "opacity ease 0.6s 0.6s" : "opacity ease 0.6s"};
 
@@ -131,10 +129,10 @@ export const MessageBubble = styled.div`
 
     position: absolute;
     display: block;
-    right: -1vw;
-    top: -4vh;
-    width: 2vw;
-    height: 2vw;
+    right: -1.5vw;
+    top: -2vh;
+    width: 1.5vw;
+    height: 1.5vw;
   }`
       : `  &::before {
     content: "";
@@ -145,10 +143,10 @@ export const MessageBubble = styled.div`
 
     position: absolute;
     display: block;
-    left: -1vw;
-    top: -4vh;
-    width: 2vw;
-    height: 2vw;
+    left: -1.5vw;
+    top: -2vh;
+    width: 1.5vw;
+    height: 1.5vw;
   }`};
 `;
 

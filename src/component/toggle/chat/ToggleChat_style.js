@@ -6,7 +6,8 @@ export const Wrapper = styled.div`
   margin: 0 0.5%;
 
   width: 99%;
-  height: ${({ isOpen }) => (isOpen ? "99%" : "80%")};
+  height: ${({ isOpen, sizeFull }) =>
+    sizeFull ? "5%" : isOpen ? "99%" : "80%"};
 
   display: flex;
   justify-content: center;

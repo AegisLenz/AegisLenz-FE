@@ -1,6 +1,6 @@
-const GetAllPrompt = async () => {
+const GetBookmark = async () => {
   try {
-    const response = await fetch(`/server/api/v1/prompt/`, {
+    const response = await fetch(`/server/api/v1/users/bookmark`, {
       method: "GET",
     });
     if (!response.ok) {
@@ -14,4 +14,4 @@ const GetAllPrompt = async () => {
   }
 };
 
-export default GetAllPrompt;
+export default GetBookmark;

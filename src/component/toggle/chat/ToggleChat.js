@@ -6114,18 +6114,20 @@ const ToggleChat = ({
   sizeFull,
   markData,
   promptSession,
-  promptIndex,
-  getPromptSession,
   getReportData,
   setESREsultData,
   setDBREsultData,
+  promptIndex,
+  type,
 }) => {
   const [inputValue, setInputValue] = useState("");
 
-  const [session, setSession] = useState();
+  const [session, setSession] = useState("");
 
   const [ChatData, setChatData] = useState([]);
   const [SuggestData, setSuggestData] = useState([]);
+
+  const [isDataLoaded, setIsDataLoaded] = useState(false); // useEffect 완료 상태 관리
 
   // const [ESResult, setESResult] = useState([]);
   // const [DBResult, setDBResult] = useState([]);
@@ -6137,64 +6139,86 @@ const ToggleChat = ({
   //   }
   // }, [ESResult, DBResult]);
 
-  //이전 대화 기록 불러오기
   useEffect(() => {
-    const fetchPromptsContents = async () => {
+    const fetchData = async () => {
       try {
-        let session = "";
-        if (promptSession) {
-          session = promptSession;
-        } else {
-          if (promptIndex.length !== 0) {
-            session = promptIndex[0];
+        // 세션 관리
+        const fetchPromptsContents = async () => {
+          if (promptSession) {
+            setSession(promptSession);
           } else {
-            const NewSession = await CreateSession();
-            session = NewSession.prompt_session_id;
-            getPromptSession(NewSession.prompt_session_id);
+            if (session === "" || session === undefined) {
+              if (type === "grid") {
+                const NewSession = await CreateSession();
+                setSession(NewSession.prompt_session_id);
+              }
+              if (type === "prompt") {
+                if (promptIndex.length !== 0) {
+                  setSession(promptIndex[0]);
+                } else {
+                  console.log("no session");
+                }
+              }
+            }
           }
+        };
+
+        // 대화 불러오기
+        const fetchPrevChat = async (Session) => {
+          if (Session !== "") {
+            const data = await GetPromptContents(Session);
+            if (data.chats !== null) {
+              setChatData(data.chats);
+            }
+            if (data.report !== null) {
+              getReportData(data.report);
+            }
+            if (
+              data.init_recommend_questions !== null &&
+              data.init_recommend_questions.length !== 0
+            ) {
+              setSuggestData(data.init_recommend_questions);
+              setChatData((prev) => [
+                ...prev,
+                {
+                  text: "다음 입력하실 질문을 예측해 봤습니다.",
+                  isUser: false,
+                  isFirst: true,
+                  isStart: true,
+                },
+              ]);
+            } else {
+              setSuggestData([]);
+              setChatData((prev) => [
+                ...prev,
+                {
+                  text: "무엇을 도와드릴까요?\n\n",
+                  isUser: false,
+                  isBookmark: true,
+                },
+              ]);
+            }
+          }
+        };
+
+        // 순차적으로 실행
+        await fetchPromptsContents();
+        if (session) {
+          await fetchPrevChat(session);
         }
 
-        if (promptSession === "Grid") {
-          const NewSession = await CreateSession();
-          session = NewSession.prompt_session_id;
-          getPromptSession(NewSession.prompt_session_id);
-        }
-
-        if (session !== "") {
-          setSession(session);
-          const data = await GetPromptContents(session);
-          if (data.chats !== null) {
-            setChatData(data.chats);
-          }
-          if (data.report !== null) {
-            getReportData(data.report);
-          }
-          if (
-            data.init_recommend_questions !== null &&
-            data.init_recommend_questions.length !== 0
-          ) {
-            setSuggestData(data.init_recommend_questions);
-            setChatData((prev) => [
-              ...prev,
-              {
-                text: "다음 입력하실 질문을 예측해 봤습니다.",
-                isUser: false,
-                isFirst: true,
-                isStart: true,
-              },
-            ]);
-          } else {
-            setSuggestData([]);
-          }
-        }
-      } catch (e) {
-        console.log(e.message);
-        throw e;
+        setIsDataLoaded(true); // 데이터 로딩 완료 상태 업데이트
+      } catch (error) {
+        console.error("Error during fetching data:", error);
+        setIsDataLoaded(true); // 실패 시에도 완료 상태로 업데이트
       }
     };
-    fetchPromptsContents();
+
+    //실행
+    fetchData();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [promptSession, session]);
+  }, [getReportData, promptSession, session, type]);
 
   useEffect(() => {
     if (ChatData.length === 0) {
@@ -6238,6 +6262,14 @@ const ToggleChat = ({
         },
       ]);
     }
+    setChatData((prev) => [
+      ...prev,
+      {
+        text: "무엇을 도와드릴까요?\n\n",
+        isUser: false,
+        isBookmark: true,
+      },
+    ]);
   };
 
   const handleRecommendQuestionsChunk = (data) => {
@@ -6282,16 +6314,22 @@ const ToggleChat = ({
 
   // API 호출 및 데이터 처리
   const SendMessage = async (inputValue, session) => {
-    if (!session) {
-      console.error("Session 값이 정의되지 않았습니다.");
+    setChatData((prev) => prev.filter((msg) => !msg.isBookmark));
+    if (!isDataLoaded) {
+      console.error(
+        "데이터가 아직 로드되지 않았습니다. 잠시 후 다시 시도하세요."
+      );
       return;
     }
-
+    if (!session) {
+      console.error("Session 값이 없습니다.");
+      return;
+    }
     setChatData((prev) => [
       ...prev,
       { text: "", isUser: false, isStreem: true },
     ]);
-    const messageIndex = ChatData.length + 1; // 새로 추가할 요소의 인덱스
+    const messageIndex = ChatData.length; // 새로 추가할 요소의 인덱스
 
     try {
       // Prompthook 호출 시 스트림 데이터 처리 콜백 전달
@@ -6364,40 +6402,46 @@ const ToggleChat = ({
 
   return (
     <S.Wrapper isOpen={isChattoggleOpen} sizeFull={sizeFull}>
-      {/* <InnerChat
-        isOpen={isChattoggleOpen}
-        isFull={sizeFull}
-        chatData={ChatData}
-        addExample={addExample}
-        SuggestData={SuggestData}
-      /> */}
-      <S.ChatBox isOpen={isChattoggleOpen}>
-        <S.ChatInputWrapper isOpen={isChattoggleOpen}>
-          <S.AiIcon sizeFull={sizeFull} />
-          <S.Input>
-            <S.ChatInput
-              value={inputValue}
-              onFocus={setChatToggleOpen}
-              onChange={(e) => setInputValue(e.target.value)}
-              isOpen={isChattoggleOpen}
-              isFull={sizeFull}
-              onKeyDown={handleKeyDown}
-              placeholder="질문을 입력해 주세요"
-            />
-            <S.InputUnderbar isOpen={isChattoggleOpen} />
-          </S.Input>
-          <S.SendButton
+      {!setIsDataLoaded ? (
+        "로딩중"
+      ) : (
+        <>
+          <InnerChat
             isOpen={isChattoggleOpen}
-            sizeFull={sizeFull}
-            onClick={handleSendMessage}
+            isFull={sizeFull}
+            chatData={ChatData}
+            addExample={addExample}
+            SuggestData={SuggestData}
           />
-          <S.ToggleButton
-            onClick={ChatToggleButton}
-            isOpen={isChattoggleOpen}
-            sizeFull={sizeFull}
-          />
-        </S.ChatInputWrapper>
-      </S.ChatBox>
+          <S.ChatBox isOpen={isChattoggleOpen}>
+            <S.ChatInputWrapper isOpen={isChattoggleOpen}>
+              <S.AiIcon sizeFull={sizeFull} />
+              <S.Input>
+                <S.ChatInput
+                  value={inputValue}
+                  onFocus={setChatToggleOpen}
+                  onChange={(e) => setInputValue(e.target.value)}
+                  isOpen={isChattoggleOpen}
+                  isFull={sizeFull}
+                  onKeyDown={handleKeyDown}
+                  placeholder="질문을 입력해 주세요"
+                />
+                <S.InputUnderbar isOpen={isChattoggleOpen} />
+              </S.Input>
+              <S.SendButton
+                isOpen={isChattoggleOpen}
+                sizeFull={sizeFull}
+                onClick={handleSendMessage}
+              />
+              <S.ToggleButton
+                onClick={ChatToggleButton}
+                isOpen={isChattoggleOpen}
+                sizeFull={sizeFull}
+              />
+            </S.ChatInputWrapper>
+          </S.ChatBox>
+        </>
+      )}
     </S.Wrapper>
   );
 };

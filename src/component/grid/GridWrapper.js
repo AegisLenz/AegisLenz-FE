@@ -1,7 +1,6 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useRef } from "react";
 import GridLayout from "react-grid-layout";
 import "react-grid-layout/css/styles.css";
-import "react-resizable/css/styles.css";
 import Alert from "../alert/Alert";
 import ChatToggle from "../toggle/chat/ToggleChat";
 import FilterToggle from "../toggle/filter/Filter";
@@ -6441,16 +6440,9 @@ const Grid = ({
   setMarkDataFunc,
 }) => {
   const [isChattoggleOpen, setChatToggle] = useState(false);
-  const [isFilterOpen, setFilter] = useState(false);
   const [markData, setMarkData] = useState(MarkData || []);
-  const [rowHeight, setrowHeight] = useState(window.innerHeight);
-  const [width, setwidth] = useState(window.innerWidth);
-  const [scrollPosition, setScrollPosition] = useState(0);
-
-  // const [zoomLevel, setZoomLevel] = useState(getZoomLevel());
   const [promptSession, setPromptSession] = useState("");
   const [ReportData, setReportData] = useState("");
-  const [FillterOFF, setFillterOFF] = useState(isFillterOFF);
 
   const [ESResultData, setESREsultData] = useState(testlogdata || []);
   const [DBResultData, setDBREsultData] = useState(testAccount || []);
@@ -6460,7 +6452,6 @@ const Grid = ({
     if (location.state && location.state.isChatOpen !== undefined) {
       setMarkData([]);
       setChatToggle(location.state.isChatOpen);
-      setFillterOFF(false);
     }
   }, [location.state]);
 
@@ -6479,7 +6470,6 @@ const Grid = ({
   const ChatToggleButton = () => {
     if (isChattoggleOpen) {
       setMarkData([]);
-      setFillterOFF(false);
     } else {
       setMarkData(MarkData);
     }
@@ -6491,14 +6481,6 @@ const Grid = ({
   };
   const InAlert = () => {
     setMarkData(["Report", "ShowPolicy", "ShowLog", "AttackVisualGraph"]);
-    setFillterOFF(true);
-  };
-  const FilterToggleButton = () => {
-    setFilter((prev) => !prev);
-  };
-
-  const setFilterOpen = () => {
-    setFilter(true);
   };
 
   const InitLayout = useMemo(
@@ -6507,278 +6489,292 @@ const Grid = ({
         i: "scroll",
         x: 0,
         y: 0,
-        w: 47,
+        w: 50,
         h: 0,
-        isResizable: false,
       },
       {
         i: "chat",
         x: 0,
         y: 0,
-        w: 47,
-        h: 4,
-        content: (
-          <ChatToggle
-            isChattoggleOpen={isChattoggleOpen}
-            ChatToggleButton={ChatToggleButton}
-            setChatToggleOpen={setChatToggleOpen}
-            sizeFull={false}
-            SideContent={SideContent} //오른쪽 On/Off
-            markData={setMarkDataFunc} //오른쪽에 띄울 데이터
-            promptIndex={false}
-            promptSession={promptSession !== "" ? promptSession : "Grid"}
-            getPromptSession={getPromptSession}
-            getReportData={getReportData}
-            setESREsultData={getESResultData}
-            setDBREsultData={getDBResultData}
-          />
-        ),
+        w: 50,
+        h: 7,
         isResizable: false,
       },
       {
         i: "filter",
         x: 0,
         y: 0,
-        w: 47,
-        h: 4,
+        w: 50,
+        h: 15,
+        content: <FilterToggle />,
         isResizable: false,
       },
       {
         i: "AccountCount",
-        x: 47,
+        x: 50,
         y: 0,
-        w: 47,
-        h: 9,
+        w: 50,
+        h: 15,
         content: <AccountCount />,
-        isResizable: true,
       },
       {
         i: "Score",
         x: 0,
-        y: 11,
+        y: 23,
         w: 33,
-        h: 8,
+        h: 15,
         content: <Score />,
-        isResizable: true,
       },
       {
         i: "DailyInsight",
         x: 0,
-        y: 16,
+        y: 35,
         w: 33,
-        h: 10,
+        h: 22,
         content: <DailyInsight />,
-        isResizable: true,
       },
       {
         i: "AccountByService",
         x: 33,
-        y: 12,
-        w: 14,
-        h: 18,
+        y: 23,
+        w: 17,
+        h: 37,
         content: <AccountByService />,
-        isResizable: true,
       },
       {
         i: "NeedCheck",
         x: 0,
-        y: 25,
+        y: 65,
         w: 20,
-        h: 17,
+        h: 37,
         content: <NeedCheck />,
-        isResizable: true,
       },
       {
         i: "Detection",
         x: 20,
-        y: 25,
-        w: 27,
-        h: 17,
+        y: 65,
+        w: 30,
+        h: 37,
         content: <Detection />,
-        isResizable: true,
       },
       {
         i: "AccountStatus",
-        x: 47,
-        y: 10,
-        w: 47,
-        h: 17,
+        x: 50,
+        y: 0,
+        w: 50,
+        h: 40,
         content: <AccountStatus data={DBResultData} GenDetailData={() => {}} />,
-        isResizable: true,
       },
       {
         i: "EC2Status",
-        x: 47,
-        y: 28,
-        w: 47,
-        h: 17,
+        x: 50,
+        y: 0,
+        w: 50,
+        h: 36,
         content: <EC2Status GenDetailData={() => {}} />,
-        isResizable: true,
       },
     ],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [DBResultData, isChattoggleOpen]
   );
 
   // 초기 레이아웃 설정
-  const [gridLayout, setGridLayout] = useState(InitLayout);
+  const [gridLayout, setGridLayout] = useState(
+    InitLayout.map((item) => ({
+      ...item,
+      h: item.h * 0.9, // 비율에 따라 높이 조정
+    }))
+  );
+  const [width, setGridWidth] = useState(window.innerWidth);
 
-  // markData 없데이트 시에
-  useEffect(() => {
-    // MarkData가 업데이트될 때 markData를 업데이트
-    if (MarkData.length > 0) {
-      setMarkData(MarkData);
-    }
-  }, [MarkData]);
-
-  // markData가 존재할 때
-  useEffect(() => {
-    if (markData && markData.length > 0) {
-      let currentX = 0;
-      let currentY = 0;
-      let maxRowHeight = 0; // 현재 행에서 가장 큰 높이
-
-      // 필터링하면서 x값과 y값을 계산
-      const filteredLayout = InitLayout.filter((item) =>
-        markData.includes(item.i)
-      ).map((item) => {
-        // 다음 줄로 넘기기 조건: w값의 합이 50을 초과하면 줄을 바꿈
-        if (currentX + item.w > 50) {
-          currentX = 0; // x를 0으로 초기화
-          currentY += maxRowHeight; // y를 가장 큰 높이만큼 증가
-          maxRowHeight = 0; // 새로운 행에서 가장 큰 높이를 다시 0으로 초기화
-        }
-
-        const layoutItem = {
-          ...item,
-          x: currentX, // x 값을 설정
-          y: currentY, // y 값을 설정
-        };
-
-        currentX += item.w; // 현재 x 값을 w만큼 증가
-        maxRowHeight = Math.max(maxRowHeight, item.h); // 행에서 가장 큰 높이를 저장
-
-        return layoutItem;
-      });
-
-      setGridLayout(filteredLayout);
-      if (markData.includes("ShowLog")) {
-        setGridLayout((prev) => [
-          ...prev,
-          {
-            i: "ShowLog",
-            x: 47,
-            y: 55,
-            w: 47,
-            h: 40,
-            content: <ShowLog Data={ESResultData} />,
-            isResizable: true,
-          },
-        ]);
-      }
-      if (markData.includes("Report")) {
-        setGridLayout((prev) => [
-          ...prev,
-          {
-            i: "Report",
-            x: 47,
-            y: 0,
-            w: 47,
-            h: 20,
-            content: <Report data={ReportData} />,
-            isResizable: true,
-          },
-        ]);
-      }
-      if (markData.includes("ShowPolicy")) {
-        setGridLayout((prev) => [
-          ...prev,
-          {
-            i: "ShowPolicy",
-            x: 47,
-            y: 50,
-            w: 47,
-            h: 25,
-            content: <ShowPolicy />,
-            isResizable: true,
-          },
-        ]);
-      }
-      if (markData.includes("AttackVisualGraph")) {
-        setGridLayout((prev) => [
-          ...prev,
-          {
-            i: "AttackVisualGraph",
-            x: 47,
-            y: 30,
-            w: 47,
-            h: 20,
-            content: <AttackVisualGraph />,
-            isResizable: true,
-          },
-        ]);
-      }
-    } else {
-      setGridLayout(InitLayout);
-    }
-    if (!isChatOFF && isFillterOFF && !isChattoggleOpen) {
-      setGridLayout(InitLayout);
-    }
-  }, [
-    InitLayout,
-    markData,
-    MarkData,
-    isChattoggleOpen,
-    isFillterOFF,
-    isChatOFF,
-    ReportData,
-    ESResultData,
-  ]);
-
-  // 토글 오픈
-  useEffect(() => {
-    if (isChattoggleOpen) {
-      setGridLayout((prevLayout) =>
-        prevLayout.map((item) =>
-          item.i === "chat"
-            ? { ...item, h: 84 }
-            : item.x >= 47 || item.i === "scroll"
-            ? { ...item, w: item.w }
-            : { ...item, x: item.x + 47, w: item.w }
-        )
-      );
-    } else {
-      if (markData.length < 0) {
-        setGridLayout(InitLayout);
-      }
-    }
-  }, [isChattoggleOpen, InitLayout, markData]);
+  const wrapperRef = useRef(null); // Wrapper를 참조할 ref
+  const [initHeight] = useState(window.innerHeight);
+  const [ratio, setratio] = useState(0.9);
 
   useEffect(() => {
+    const calculateRowHeight = () => {
+      if (wrapperRef.current) {
+        const wrapperHeight = wrapperRef.current.offsetHeight; // Wrapper의 높이를 가져옴
+        const rows = 100; // 원하는 행 개수 (임의 설정)
+        const chagedHeight = wrapperHeight / rows;
+        const ratio = (chagedHeight / initHeight / 9) * 950;
+        setratio(ratio);
+      }
+      setGridWidth(window.innerWidth);
+    };
     const handleScroll = () => {
-      const scrollY = window.scrollY;
+      const scrollTop = window.scrollY;
+      const calculatedHeight = scrollTop * 0.09; // 스크롤에 따른 높이 계산
       if (isChattoggleOpen) {
-        setGridLayout((prevLayout) =>
-          prevLayout.map((item) =>
-            item.i === "scroll"
-              ? {
-                  ...item,
-                  h: scrollY / (window.innerHeight / 50),
-                }
-              : item
+        setGridLayout((prev) =>
+          prev.map((item) =>
+            item.i === "scroll" ? { ...item, h: calculatedHeight } : item
           )
         );
       }
     };
 
+    calculateRowHeight(); // 초기 계산
+
+    window.addEventListener("resize", calculateRowHeight); // 리사이즈 이벤트 추가
     window.addEventListener("scroll", handleScroll);
 
     return () => {
+      window.removeEventListener("resize", calculateRowHeight); // 이벤트 제거
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [initHeight, isChattoggleOpen]);
+
+  // markData 없데이트 시에
+  // useEffect(() => {
+  //   // MarkData가 업데이트될 때 markData를 업데이트
+  //   if (MarkData.length > 0) {
+  //     setMarkData(MarkData);
+  //   }
+  // }, [MarkData]);
+
+  // markData가 존재할 때
+  // useEffect(() => {
+  //   if (markData && markData.length > 0) {
+  // let currentX = 0;
+  // let currentY = 0;
+  // let maxRowHeight = 0; // 현재 행에서 가장 큰 높이
+  // // 필터링하면서 x값과 y값을 계산
+  // const filteredLayout = InitLayout.filter((item) =>
+  //   markData.includes(item.i)
+  // ).map((item) => {
+  //   // 다음 줄로 넘기기 조건: w값의 합이 50을 초과하면 줄을 바꿈
+  //   if (currentX + item.w > 50) {
+  //     currentX = 0; // x를 0으로 초기화
+  //     currentY += maxRowHeight; // y를 가장 큰 높이만큼 증가
+  //     maxRowHeight = 0; // 새로운 행에서 가장 큰 높이를 다시 0으로 초기화
+  //   }
+  //   const layoutItem = {
+  //     ...item,
+  //     x: currentX, // x 값을 설정
+  //     y: currentY, // y 값을 설정
+  //   };
+  //   currentX += item.w; // 현재 x 값을 w만큼 증가
+  //   maxRowHeight = Math.max(maxRowHeight, item.h); // 행에서 가장 큰 높이를 저장
+  //   return layoutItem;
+  // });
+  // setGridLayout(filteredLayout);
+  // if (markData.includes("ShowLog")) {
+  //   setGridLayout((prev) => [
+  //     ...prev,
+  //     {
+  //       i: "ShowLog",
+  //       x: 47,
+  //       y: 55,
+  //       w: 47,
+  //       h: 40,
+  //       content: <ShowLog Data={ESResultData} />,
+  //
+  //     },
+  //   ]);
+  // }
+  // if (markData.includes("Report")) {
+  //   setGridLayout((prev) => [
+  //     ...prev,
+  //     {
+  //       i: "Report",
+  //       x: 47,
+  //       y: 0,
+  //       w: 47,
+  //       h: 20,
+  //       content: <Report data={ReportData} />,
+  //
+  //     },
+  //   ]);
+  // }
+  // if (markData.includes("ShowPolicy")) {
+  //   setGridLayout((prev) => [
+  //     ...prev,
+  //     {
+  //       i: "ShowPolicy",
+  //       x: 47,
+  //       y: 50,
+  //       w: 47,
+  //       h: 25,
+  //       content: <ShowPolicy />,
+  //
+  //     },
+  //   ]);
+  // }
+  // if (markData.includes("AttackVisualGraph")) {
+  //   setGridLayout((prev) => [
+  //     ...prev,
+  //     {
+  //       i: "AttackVisualGraph",
+  //       x: 47,
+  //       y: 30,
+  //       w: 47,
+  //       h: 20,
+  //       content: <AttackVisualGraph />,
+  //
+  //     },
+  //   ]);
+  // }
+  // } else {
+  //   setGridLayout(InitLayout);
+  // }
+  // if (!isChatOFF && isFillterOFF && !isChattoggleOpen) {
+  //   setGridLayout(InitLayout);
+  // }
+  // }, [
+  //   InitLayout,
+  //   markData,
+  //   MarkData,
+  //   isChattoggleOpen,
+  //   isFillterOFF,
+  //   isChatOFF,
+  //   ReportData,
+  //   ESResultData,
+  // ]);
+
+  // 토글 오픈
+  useEffect(() => {
+    if (isChattoggleOpen) {
+      setGridLayout((prevLayout) =>
+        prevLayout.map((item) => {
+          const initItem = InitLayout.find((init) => init.i === item.i);
+          if (initItem) {
+            return {
+              ...item,
+              h:
+                item.i === "chat"
+                  ? wrapperRef.current.offsetHeight * 0.09
+                  : initItem.h * ratio,
+              x:
+                item.x >= 47 || item.i === "scroll" || item.i === "chat"
+                  ? item.x
+                  : item.x + 50,
+            };
+          }
+          return item;
+        })
+      );
+    } else {
+      if (markData.length < 0) {
+        setGridLayout(
+          InitLayout.map((item) => ({
+            ...item,
+            h: item.h * ratio, // h 값을 비율에 따라 수정
+          }))
+        );
+      } else {
+        setGridLayout(
+          InitLayout.map((item) => ({
+            ...item,
+            h: item.h * ratio, // h 값을 비율에 따라 수정
+          }))
+        );
+      }
+    }
+  }, [isChattoggleOpen, InitLayout, markData, ratio]);
 
   return (
-    <S.Wrapper>
+    <S.Wrapper ref={wrapperRef}>
       <Alert
         setChatToggleOpen={setChatToggleOpen}
         getPromptSession={getPromptSession}
@@ -6789,21 +6785,32 @@ const Grid = ({
           ...item,
           isResizable: isEditOn && item.isResizable,
         }))}
-        cols={95} // column 수를 95개로 설정
-        rowHeight={window.innerHeight * 0.01}
-        width={width * 0.95} // width를 95%로 설정
-        height={window.innerHeight * 0.92} // height를 92%로 설정
+        cols={100}
+        rowHeight={initHeight / 1000}
+        width={width * 0.94}
         draggableHandle=".grid-item"
         style={{ backgroundColor: "transparent" }}
       >
         {gridLayout.map((item) => (
           <S.GridElement key={item.i}>
-            {item.content}
-            {item.i !== "chat" && item.i !== "filter" && (
-              <S.MoveAreaInGrid
-                className={isEditOn ? "grid-item" : ""}
-                isEditOn={isEditOn}
+            {item.i === "chat" ? (
+              <ChatToggle
+                isChattoggleOpen={isChattoggleOpen}
+                ChatToggleButton={ChatToggleButton}
+                setChatToggleOpen={setChatToggleOpen}
+                sizeFull={false}
+                SideContent={SideContent} //오른쪽 On/Off
+                markData={setMarkDataFunc} //오른쪽에 띄울 데이터
+                promptIndex={false}
+                promptSession={promptSession !== "" ? promptSession : ""}
+                getPromptSession={() => {}}
+                getReportData={getReportData}
+                setESREsultData={getESResultData}
+                setDBREsultData={getDBResultData}
+                type={"grid"}
               />
+            ) : (
+              item.content
             )}
           </S.GridElement>
         ))}

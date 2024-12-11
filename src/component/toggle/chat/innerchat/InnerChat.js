@@ -1,6 +1,8 @@
 import * as S from "./InnerChat_style";
 import React, { useEffect, useRef, useState } from "react";
 import { Loading } from "../../loading/loading";
+import GetBookmark from "../../../hook/bookmark/GetBookmark";
+import CreateBookmark from "../../../hook/bookmark/CreateBookmark";
 
 // const ExampleQ = [
 //   "Dashboard에서 오늘 하루 봐야 될 것들 모두 보여줘",
@@ -8,30 +10,46 @@ import { Loading } from "../../loading/loading";
 //   "example 질문",
 //   "Bookmark 된 질문",
 // ];
-const BookMarkQ = [
-  "이번주 공격으로 접속된 IP 알려줘",
-  "Bookmark 된 질문2",
-  "Bookmark 된 질문3",
-];
 
 const InnerChat = ({ isOpen, isFull, chatData, addExample, SuggestData }) => {
   const chatEndRef = useRef(null);
   const [OpenQueries, setOpenQueries] = useState({});
   const [bookmarkedMessages, setBookmarkedMessages] = useState({});
+  const [bookmark, setBookmark] = useState([]);
+
+  const FetchBookmark = async () => {
+    const Bookmark = await GetBookmark();
+    setBookmark(Bookmark.bookmarks);
+  };
+  // 북마크 가지고 오기
+  useEffect(() => {
+    FetchBookmark();
+  }, []);
 
   // 데이터가 업데이트될 때마다 스크롤을 아래로 이동
-  // useEffect(() => {
-  //   if (chatEndRef.current) {
-  //     chatEndRef.current.scrollIntoView({ behavior: "smooth" });
-  //   }
-  // }, [chatData]);
+  useEffect(() => {
+    if (chatEndRef.current) {
+      chatEndRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+      });
+    }
+  }, [chatData]);
 
   //북마크
-  const AddBookmark = (text, index) => {
-    setBookmarkedMessages((prev) => ({
-      ...prev,
-      [index]: !prev[index], // 현재 상태의 반대로 토글
-    }));
+  const AddBookmark = async (text, index) => {
+    if (!bookmarkedMessages[index]) {
+      await CreateBookmark(text);
+      setBookmarkedMessages((prev) => ({
+        ...prev,
+        [index]: true, // 현재 상태의 반대로 토글
+      }));
+
+      FetchBookmark();
+    }
+  };
+  const DelBookmark = async (index) => {
+    console.log(index);
   };
 
   const toggleQuery = (index) => {
@@ -53,6 +71,7 @@ const InnerChat = ({ isOpen, isFull, chatData, addExample, SuggestData }) => {
               isFull={isFull}
               isFirst={message.isFirst}
               isStart={message.isStart}
+              isBookmark={message.isBookmark}
             >
               {message.isUser || message.role === "user" ? (
                 <S.Bookmark
@@ -85,14 +104,18 @@ const InnerChat = ({ isOpen, isFull, chatData, addExample, SuggestData }) => {
               </S.ExampleArea>
 
               <S.ExampleArea>
-                {(message.isFirst || message.isStart) && <p>북마크된 질문</p>}
-                {(message.isFirst || message.isStart) &&
-                  Array.isArray(BookMarkQ) &&
-                  BookMarkQ.map((item) => (
+                {message.isBookmark && <p>북마크된 질문</p>}
+                {message.isBookmark &&
+                  Array.isArray(bookmark) &&
+                  bookmark.map((item) => (
                     <S.Example
                       onClick={(item) => addExample(item.target.textContent)}
                     >
-                      <S.CancleBookMark />
+                      <S.CancleBookMark
+                        onClick={() => {
+                          DelBookmark(index);
+                        }}
+                      />
                       {item}
                     </S.Example>
                   ))}

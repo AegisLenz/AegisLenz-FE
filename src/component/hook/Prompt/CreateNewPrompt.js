@@ -6,9 +6,8 @@ const CreatePrompt = async () => {
     if (!response.ok) {
       throw new Error(`Error: ${response.status}`);
     }
-
-    const Data = await response.json();
-    return Data;
+    const Session = await response.json();
+    return Session;
   } catch (e) {
     // console.log(e);
     throw e;

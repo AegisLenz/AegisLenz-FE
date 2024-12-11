@@ -52,7 +52,7 @@ const Alert = ({ setChatToggleOpen, getPromptSession, InAlert }) => {
   }, [isHoverIcon, isHoverIndex]);
 
   return (
-    <S.FixedWrapper isHovered={isOpen}>
+    <S.FixedWrapper ishovered={isOpen || undefined}>
       {/* AlertData가 있을 때만 AlertIcon을 보여줌 */}
       {AlertData.length > 0 && (
         <S.AlertIconWrapper
