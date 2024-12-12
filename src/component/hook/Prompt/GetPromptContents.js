@@ -1,4 +1,5 @@
 const GetPromptContents = async (promptSession) => {
+  console.log("session= " + promptSession);
   if (promptSession !== "") {
     try {
       const response = await fetch(`/server/api/v1/prompt/${promptSession}`, {

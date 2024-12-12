@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Loading } from "../../loading/loading";
 import GetBookmark from "../../../hook/bookmark/GetBookmark";
 import CreateBookmark from "../../../hook/bookmark/CreateBookmark";
+import DelBookmarkHook from "../../../hook/bookmark/DelBookmark";
 
 // const ExampleQ = [
 //   "Dashboard에서 오늘 하루 봐야 될 것들 모두 보여줘",
@@ -49,7 +50,8 @@ const InnerChat = ({ isOpen, isFull, chatData, addExample, SuggestData }) => {
     }
   };
   const DelBookmark = async (index) => {
-    console.log(index);
+    await DelBookmarkHook(index);
+    FetchBookmark();
   };
 
   const toggleQuery = (index) => {
@@ -106,17 +108,17 @@ const InnerChat = ({ isOpen, isFull, chatData, addExample, SuggestData }) => {
               <S.ExampleArea>
                 {message.isBookmark && <p>북마크된 질문</p>}
                 {message.isBookmark &&
-                  Array.isArray(bookmark) &&
+                  // Array.isArray(bookmark) &&
                   bookmark.map((item) => (
                     <S.Example
                       onClick={(item) => addExample(item.target.textContent)}
                     >
                       <S.CancleBookMark
                         onClick={() => {
-                          DelBookmark(index);
+                          DelBookmark(item.bookmark_id);
                         }}
                       />
-                      {item}
+                      {item.question}
                     </S.Example>
                   ))}
               </S.ExampleArea>

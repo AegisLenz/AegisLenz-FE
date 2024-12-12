@@ -6624,11 +6624,11 @@ const Grid = ({
     calculateRowHeight(); // 초기 계산
 
     window.addEventListener("resize", calculateRowHeight); // 리사이즈 이벤트 추가
-    window.addEventListener("scroll", handleScroll);
+    // window.addEventListener("scroll", handleScroll);
 
     return () => {
       window.removeEventListener("resize", calculateRowHeight); // 이벤트 제거
-      window.removeEventListener("scroll", handleScroll);
+      // window.removeEventListener("scroll", handleScroll);
     };
   }, [initHeight, isChattoggleOpen]);
 

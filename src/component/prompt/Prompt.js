@@ -3,7 +3,6 @@ import * as S from "./Prompt_style";
 import PromptIndex from "./prompt_index/PromptIndex";
 import Chat from "../toggle/chat/ToggleChat";
 import PromptContent from "./prompt_content/PromptContent";
-import CreateSession from "../hook/Prompt/CreateNewPrompt";
 
 const Prompt = () => {
   const [isSideIndex, setSideIndex] = useState(true);
@@ -38,11 +37,6 @@ const Prompt = () => {
     }
   };
 
-  const MakeNewSession = async () => {
-    const NewSession = await CreateSession();
-    setPromptSession(NewSession);
-  };
-
   useEffect(() => {
     if (isSideIndex) {
       setChatWidth((props) => props - 20);
@@ -66,7 +60,6 @@ const Prompt = () => {
       <PromptIndex
         SideIndex={SideIndex}
         isSideIndex={isSideIndex}
-        MakeNewSession={MakeNewSession}
         setIndex={setIndex}
         getPromptSession={getPromptSession}
       />
