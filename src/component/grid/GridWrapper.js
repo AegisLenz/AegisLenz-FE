@@ -6480,7 +6480,14 @@ const Grid = ({
     setChatToggle(true);
   };
   const InAlert = () => {
-    setMarkData(["Report", "ShowPolicy", "ShowLog", "AttackVisualGraph"]);
+    setMarkData([
+      "scroll",
+      "chat",
+      "Report",
+      "ShowPolicy",
+      "ShowLog",
+      "AttackVisualGraph",
+    ]);
   };
 
   const InitLayout = useMemo(
@@ -6626,111 +6633,107 @@ const Grid = ({
   }, [initHeight, isChattoggleOpen]);
 
   // markData 없데이트 시에
-  // useEffect(() => {
-  //   // MarkData가 업데이트될 때 markData를 업데이트
-  //   if (MarkData.length > 0) {
-  //     setMarkData(MarkData);
-  //   }
-  // }, [MarkData]);
+  useEffect(() => {
+    // MarkData가 업데이트될 때 markData를 업데이트
+    if (MarkData.length > 0) {
+      setMarkData(MarkData);
+    }
+  }, [MarkData]);
 
   // markData가 존재할 때
-  // useEffect(() => {
-  //   if (markData && markData.length > 0) {
-  // let currentX = 0;
-  // let currentY = 0;
-  // let maxRowHeight = 0; // 현재 행에서 가장 큰 높이
-  // // 필터링하면서 x값과 y값을 계산
-  // const filteredLayout = InitLayout.filter((item) =>
-  //   markData.includes(item.i)
-  // ).map((item) => {
-  //   // 다음 줄로 넘기기 조건: w값의 합이 50을 초과하면 줄을 바꿈
-  //   if (currentX + item.w > 50) {
-  //     currentX = 0; // x를 0으로 초기화
-  //     currentY += maxRowHeight; // y를 가장 큰 높이만큼 증가
-  //     maxRowHeight = 0; // 새로운 행에서 가장 큰 높이를 다시 0으로 초기화
-  //   }
-  //   const layoutItem = {
-  //     ...item,
-  //     x: currentX, // x 값을 설정
-  //     y: currentY, // y 값을 설정
-  //   };
-  //   currentX += item.w; // 현재 x 값을 w만큼 증가
-  //   maxRowHeight = Math.max(maxRowHeight, item.h); // 행에서 가장 큰 높이를 저장
-  //   return layoutItem;
-  // });
-  // setGridLayout(filteredLayout);
-  // if (markData.includes("ShowLog")) {
-  //   setGridLayout((prev) => [
-  //     ...prev,
-  //     {
-  //       i: "ShowLog",
-  //       x: 47,
-  //       y: 55,
-  //       w: 47,
-  //       h: 40,
-  //       content: <ShowLog Data={ESResultData} />,
-  //
-  //     },
-  //   ]);
-  // }
-  // if (markData.includes("Report")) {
-  //   setGridLayout((prev) => [
-  //     ...prev,
-  //     {
-  //       i: "Report",
-  //       x: 47,
-  //       y: 0,
-  //       w: 47,
-  //       h: 20,
-  //       content: <Report data={ReportData} />,
-  //
-  //     },
-  //   ]);
-  // }
-  // if (markData.includes("ShowPolicy")) {
-  //   setGridLayout((prev) => [
-  //     ...prev,
-  //     {
-  //       i: "ShowPolicy",
-  //       x: 47,
-  //       y: 50,
-  //       w: 47,
-  //       h: 25,
-  //       content: <ShowPolicy />,
-  //
-  //     },
-  //   ]);
-  // }
-  // if (markData.includes("AttackVisualGraph")) {
-  //   setGridLayout((prev) => [
-  //     ...prev,
-  //     {
-  //       i: "AttackVisualGraph",
-  //       x: 47,
-  //       y: 30,
-  //       w: 47,
-  //       h: 20,
-  //       content: <AttackVisualGraph />,
-  //
-  //     },
-  //   ]);
-  // }
-  // } else {
-  //   setGridLayout(InitLayout);
-  // }
-  // if (!isChatOFF && isFillterOFF && !isChattoggleOpen) {
-  //   setGridLayout(InitLayout);
-  // }
-  // }, [
-  //   InitLayout,
-  //   markData,
-  //   MarkData,
-  //   isChattoggleOpen,
-  //   isFillterOFF,
-  //   isChatOFF,
-  //   ReportData,
-  //   ESResultData,
-  // ]);
+  useEffect(() => {
+    if (markData && markData.length > 0) {
+      let currentX = 0;
+      let currentY = 0;
+      let maxRowHeight = 0; // 현재 행에서 가장 큰 높이
+      // 필터링하면서 x값과 y값을 계산
+      const filteredLayout = InitLayout.filter((item) =>
+        markData.includes(item.i)
+      ).map((item) => {
+        // 다음 줄로 넘기기 조건: w값의 합이 50을 초과하면 줄을 바꿈
+        if (currentX + item.w > 50) {
+          currentX = 0; // x를 0으로 초기화
+          currentY += maxRowHeight; // y를 가장 큰 높이만큼 증가
+          maxRowHeight = 0; // 새로운 행에서 가장 큰 높이를 다시 0으로 초기화
+        }
+        const layoutItem = {
+          ...item,
+          x: currentX, // x 값을 설정
+          y: currentY, // y 값을 설정
+        };
+        currentX += item.w; // 현재 x 값을 w만큼 증가
+        maxRowHeight = Math.max(maxRowHeight, item.h); // 행에서 가장 큰 높이를 저장
+        return layoutItem;
+      });
+      setGridLayout(filteredLayout);
+      if (markData.includes("ShowLog")) {
+        setGridLayout((prev) => [
+          ...prev,
+          {
+            i: "ShowLog",
+            x: 50,
+            y: 55,
+            w: 50,
+            h: 40,
+            content: <ShowLog Data={ESResultData} />,
+          },
+        ]);
+      }
+      if (markData.includes("Report")) {
+        setGridLayout((prev) => [
+          ...prev,
+          {
+            i: "Report",
+            x: 50,
+            y: 0,
+            w: 50,
+            h: 20,
+            content: <Report data={ReportData} />,
+          },
+        ]);
+      }
+      if (markData.includes("ShowPolicy")) {
+        setGridLayout((prev) => [
+          ...prev,
+          {
+            i: "ShowPolicy",
+            x: 50,
+            y: 50,
+            w: 50,
+            h: 25,
+            content: <ShowPolicy />,
+          },
+        ]);
+      }
+      if (markData.includes("AttackVisualGraph")) {
+        setGridLayout((prev) => [
+          ...prev,
+          {
+            i: "AttackVisualGraph",
+            x: 50,
+            y: 30,
+            w: 50,
+            h: 40,
+            content: <AttackVisualGraph />,
+          },
+        ]);
+      }
+    } else {
+      setGridLayout(InitLayout);
+    }
+    if (!isChatOFF && isFillterOFF && !isChattoggleOpen) {
+      setGridLayout(InitLayout);
+    }
+  }, [
+    InitLayout,
+    markData,
+    MarkData,
+    isChattoggleOpen,
+    isFillterOFF,
+    isChatOFF,
+    ReportData,
+    ESResultData,
+  ]);
 
   // 토글 오픈
   useEffect(() => {

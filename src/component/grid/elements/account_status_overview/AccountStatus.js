@@ -2,11 +2,7 @@ import * as S from "./AccountStatus_styel";
 import { useState } from "react";
 import Dropdown from "../../../toggle/dropdown/DropDown";
 
-const type = {
-  0: ["Privileges", "#6A4FA3"],
-  1: ["Dev", "#216261"],
-  2: ["3rd", "#CD62B0"],
-};
+const type = ["#6A4FA3", "#216261", "#CD62B0"];
 
 const filterOptions = [
   { label: "== none ==", value: "none" },
