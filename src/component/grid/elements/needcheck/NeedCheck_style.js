@@ -15,14 +15,15 @@ export const Title = styled.h2`
   position: absolute;
   top: 0;
   color: #104f55;
-  width: 100%;
+  width: 94%;
   height: 6vh;
-  left: 0;
   font-size: 130%;
   padding: 0 3% 0 3%;
   margin: 0 0 1% 0;
-  align-items: left;
-  align-content: center;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 export const ContentArea = styled.div`
   position: absolute;

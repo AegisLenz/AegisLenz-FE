@@ -21,7 +21,7 @@ export const Title = styled.h2`
   left: 0;
   font-size: 130%;
   padding: 0 3% 0 3%;
-  margin: 1% 0 1% 0;
+  margin: 0;
   align-items: left;
   align-content: center;
 `;

@@ -22,8 +22,10 @@ export const Title = styled.h1`
   font-size: 130%;
   margin: 0% 0 1% 0;
   padding: 0;
+
+  display: flex;
+  justify-content: center;
   align-items: center;
-  align-content: center;
 `;
 
 export const Content = styled.div`
