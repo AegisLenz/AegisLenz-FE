@@ -16,7 +16,7 @@ export const Title = styled.h2`
   top: 0;
   color: #104f55;
   width: 100%;
-  height: 20%;
+  height: 6vh;
   left: 0;
   font-size: 130%;
   padding: 0 3% 0 3%;

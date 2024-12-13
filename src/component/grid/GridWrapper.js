@@ -6505,17 +6505,34 @@ const Grid = ({
         y: 0,
         w: 50,
         h: 7,
+        content: (
+          <ChatToggle
+            isChattoggleOpen={isChattoggleOpen}
+            ChatToggleButton={ChatToggleButton}
+            setChatToggleOpen={setChatToggleOpen}
+            sizeFull={false}
+            SideContent={SideContent} //오른쪽 On/Off
+            markData={setMarkDataFunc} //오른쪽에 띄울 데이터
+            promptIndex={false}
+            promptSession={promptSession !== "" ? promptSession : ""}
+            getPromptSession={() => {}}
+            getReportData={getReportData}
+            setESREsultData={getESResultData}
+            setDBREsultData={getDBResultData}
+            type={"grid"}
+          />
+        ),
         isResizable: false,
       },
-      {
-        i: "filter",
-        x: 0,
-        y: 0,
-        w: 50,
-        h: 15,
-        content: <FilterToggle />,
-        isResizable: false,
-      },
+      // {
+      //   i: "filter",
+      //   x: 0,
+      //   y: 0,
+      //   w: 50,
+      //   h: 15,
+      //   content: <FilterToggle />,
+      //   isResizable: false,
+      // },
       {
         i: "AccountCount",
         x: 50,
@@ -6624,11 +6641,11 @@ const Grid = ({
     calculateRowHeight(); // 초기 계산
 
     window.addEventListener("resize", calculateRowHeight); // 리사이즈 이벤트 추가
-    // window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll);
 
     return () => {
       window.removeEventListener("resize", calculateRowHeight); // 이벤트 제거
-      // window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, [initHeight, isChattoggleOpen]);
 
@@ -6796,25 +6813,7 @@ const Grid = ({
       >
         {gridLayout.map((item) => (
           <S.GridElement key={item.i}>
-            {item.i === "chat" ? (
-              <ChatToggle
-                isChattoggleOpen={isChattoggleOpen}
-                ChatToggleButton={ChatToggleButton}
-                setChatToggleOpen={setChatToggleOpen}
-                sizeFull={false}
-                SideContent={SideContent} //오른쪽 On/Off
-                markData={setMarkDataFunc} //오른쪽에 띄울 데이터
-                promptIndex={false}
-                promptSession={promptSession !== "" ? promptSession : ""}
-                getPromptSession={() => {}}
-                getReportData={getReportData}
-                setESREsultData={getESResultData}
-                setDBREsultData={getDBResultData}
-                type={"grid"}
-              />
-            ) : (
-              item.content
-            )}
+            {item.i === "chat" ? item.content : item.content}
           </S.GridElement>
         ))}
       </GridLayout>

@@ -14,7 +14,7 @@ export const Wrapper = styled.div`
 export const TopPart = styled.div`
   position: relative;
   width: 94%;
-  height: 15%;
+  height: 6vh;
 
   display: flex;
   justify-content: space-between;

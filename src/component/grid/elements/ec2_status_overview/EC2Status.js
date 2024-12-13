@@ -1,36 +1,8 @@
 import * as S from "./EC2Status_styel";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Dropdown from "../../../toggle/dropdown/DropDown";
-
-const testData = [
-  {
-    InstanceId: "i-0414709f97c9f57ab",
-    InstanceType: "m4.xlarge",
-    LaunchTime: "2024-10-28 05:18:07+00:00",
-    State: "stopped",
-    Arn: "arn:aws:ec2:us-east-1:713881791527:instance/i-0414709f97c9f57ab",
-    PublicIpAddress: "23.23.93.131",
-    PrivateIpAddress: "172.31.31.6",
-    VpcId: "vpc-0dbe0a6580324b276",
-    SubnetId: "subnet-07fd226de3eb38cff",
-    SecurityGroups: [
-      {
-        GroupId: "sg-003e38535e03835b8",
-        GroupName: "default",
-      },
-      {
-        GroupId: "sg-aege",
-        GroupName: "2222",
-      },
-    ],
-    Tags: [
-      {
-        Key: "Name",
-        Value: "AegisLenz-ELK",
-      },
-    ],
-  },
-];
+import getEC2 from "../../../hook/users/GetEC2";
+import Loading2 from "../../../toggle/loading2/loading2";
 
 const filterOptions = [
   { label: "== none ==", value: "none" },
@@ -51,15 +23,34 @@ const StateColorTable = {
 };
 
 const EC2Status = ({ GenDetailData }) => {
+  const [data, setData] = useState([]);
+
   const [searchTerm, setSearchTerm] = useState("");
   const [filterCategory, setFilterCategory] = useState("none");
-  const [filteredData, setFilteredData] = useState(testData);
+  const [filteredData, setFilteredData] = useState(data);
+  const [nowloading, setnowloading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setnowloading(true);
+      try {
+        const GetData = await getEC2();
+        console.log(GetData.EC2);
+        setData(GetData.EC2);
+      } catch (e) {
+        console.log(e);
+      } finally {
+        setnowloading(false);
+      }
+    };
+    fetchData();
+  }, []);
 
   const handleSearch = (e) => {
     const value = e.target.value.toLowerCase();
     setSearchTerm(value);
 
-    const filtered = testData.filter((instance) => {
+    const filtered = data.filter((instance) => {
       switch (filterCategory) {
         case "none":
           return instance;
@@ -89,7 +80,7 @@ const EC2Status = ({ GenDetailData }) => {
   const resetSearch = () => {
     setSearchTerm("");
     setFilterCategory("none");
-    setFilteredData(testData);
+    setFilteredData(data);
   };
 
   return (
@@ -109,7 +100,7 @@ const EC2Status = ({ GenDetailData }) => {
             value={searchTerm}
             onChange={handleSearch}
           />
-          <S.InitButton onClick={resetSearch}>Reset</S.InitButton>
+          <S.InitButton onClick={handleSearch}>Reset</S.InitButton>
         </S.FilterWrapper>
       </S.Title>
       <S.TableWrapper>
@@ -123,28 +114,32 @@ const EC2Status = ({ GenDetailData }) => {
             <S.Td>Public IP Address</S.Td>
             <S.Td>Private IP Address</S.Td>
           </S.Thead>
-          <S.Tbody>
-            {filteredData.map((item) => (
-              <S.Tr
-                key={item.InstanceId}
-                onClick={() => GenDetailData(item, "ec2")}
-              >
-                <S.Td>
-                  <S.StatusIcon color={StateColorTable[item.State]} />
-                </S.Td>
-                <S.Td>{item.Tags[0]?.Value}</S.Td>
-                <S.Td>{item.Arn}</S.Td>
-                <S.Td>{item.InstanceId}</S.Td>
-                <S.Td>
-                  {item.SecurityGroups.map((obj, idx) => (
-                    <li key={idx}>{obj.GroupId}</li>
-                  ))}
-                </S.Td>
-                <S.Td>{item.PublicIpAddress}</S.Td>
-                <S.Td>{item.PrivateIpAddress}</S.Td>
-              </S.Tr>
-            ))}
-          </S.Tbody>
+          {nowloading ? (
+            <Loading2 />
+          ) : (
+            <S.Tbody>
+              {data.map((item) => (
+                <S.Tr
+                  key={item.InstanceId}
+                  onClick={() => GenDetailData(item, "ec2")}
+                >
+                  <S.Td>
+                    <S.StatusIcon color={StateColorTable[item.State]} />
+                  </S.Td>
+                  <S.Td>{item.Tags[0].Value}</S.Td>
+                  <S.Td>{item.IamInstanceProfile.Arn}</S.Td>
+                  <S.Td>{item.IamInstanceProfile.Id}</S.Td>
+                  <S.Td>
+                    {item.SecurityGroups.map((item) => (
+                      <li>{item.GroupId}</li>
+                    ))}
+                  </S.Td>
+                  <S.Td>{item.PublicIpAddress}</S.Td>
+                  <S.Td>{item.PrivateIpAddress}</S.Td>
+                </S.Tr>
+              ))}
+            </S.Tbody>
+          )}
         </S.Table>
       </S.TableWrapper>
     </S.Wrapper>

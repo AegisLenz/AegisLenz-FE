@@ -19,7 +19,7 @@ export const Title = styled.h2`
   top: 0;
   color: #104f55;
   width: 97%;
-  height: 19%;
+  height: 6vh;
   left: 0;
   font-size: 130%;
   padding-left: 3%;
@@ -30,9 +30,12 @@ export const Title = styled.h2`
 
 export const ContentArea = styled.div`
   position: absolute;
-  top: 18%;
+  top: 6vh;
   width: 100%;
-  height: 80%;
+  height: calc(98% - 6vh);
+
+  overflow-y: auto;
+
   display: flex;
   justify-content: center;
   align-items: center;

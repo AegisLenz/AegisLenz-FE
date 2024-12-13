@@ -22,7 +22,10 @@ const Alert = ({ setChatToggleOpen, getPromptSession, InAlert }) => {
   }, []);
 
   const handleAlertBubbleClick = (e) => {
-    getPromptSession(e.prompt_session_id);
+    if (e.prompt_session_id !== undefined) {
+      getPromptSession(e.prompt_session_id);
+    }
+
     setIsOpen(false);
     setChatToggleOpen(true);
     InAlert();

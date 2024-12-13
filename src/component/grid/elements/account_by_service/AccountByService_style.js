@@ -18,9 +18,9 @@ export const Title = styled.h1`
   position: absolute;
   top: 0;
   color: #104f55;
-  height: 15%;
+  height: 6vh;
   font-size: 130%;
-  margin: 0% 0 1% 0;
+  margin: 0% 0% 1% 0%;
   align-items: center;
   align-content: center;
 `;
