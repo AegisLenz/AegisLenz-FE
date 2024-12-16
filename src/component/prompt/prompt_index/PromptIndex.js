@@ -1,43 +1,45 @@
 import * as S from "./PromptIndex_style";
 import GetAllPrompt from "../../hook/Prompt/GetAllPrompt";
-import CreatePrompt from "../../hook/Prompt/CreateNewPrompt";
+import CreateSession from "../../hook/Prompt/CreateNewPrompt";
 import { useState, useEffect } from "react";
+import Loading2 from "../../toggle/loading2/loading2";
 
-const Prompt = ({
-  SideIndex,
-  isSideIndex,
-  getPromptSession,
-  getPromptIndex,
-}) => {
+const Prompt = ({ SideIndex, isSideIndex, getPromptSession, setIndex }) => {
   const [prompts, setPrompts] = useState([]);
-  // eslint-disable-next-line no-unused-vars
   const [loading, setLoading] = useState(true);
   // eslint-disable-next-line no-unused-vars
   const [error, setError] = useState(null);
 
-  const fetchPrompts = async () => {
-    try {
-      const data = await GetAllPrompt();
-      const prompt_ids = data.prompt_ids.slice().reverse();
-      setPrompts(prompt_ids);
-      getPromptIndex(prompt_ids);
-    } catch (e) {
-      setError(e.message);
-    } finally {
-      setLoading(false);
-    }
+  const MakeNewSession = async () => {
+    const NewSession = await CreateSession();
+    getPromptSession(NewSession);
   };
 
   useEffect(() => {
+    const fetchPrompts = async () => {
+      try {
+        const data = await GetAllPrompt();
+        const prompt_ids = data.prompts.slice().reverse();
+        setPrompts(prompt_ids);
+        setIndex(prompt_ids);
+      } catch (e) {
+        setError(e.message);
+      } finally {
+        setLoading(false);
+      }
+    };
     fetchPrompts();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const CreateNewPrompt = async () => {
-    const promptIndex = await CreatePrompt();
-
-    getPromptSession(promptIndex.prompt_session_id);
-    fetchPrompts();
+  const RefetchPrompts = async () => {
+    try {
+      const Refetchdata = await GetAllPrompt();
+      const prompt_ids = Refetchdata.prompts.slice().reverse();
+      setPrompts(prompt_ids);
+    } catch (e) {
+      setError(e.message);
+    }
   };
 
   return (
@@ -57,20 +59,29 @@ const Prompt = ({
             path={"/icon/double_arrow.svg"}
           />
           <S.SideInnerToggle
-            onClick={() => CreateNewPrompt()}
+            onClick={() => {
+              MakeNewSession();
+              RefetchPrompts();
+            }}
             path={"/icon/add_page.svg"}
           />
         </S.TopArea>
         <S.ContentsArea>
-          {prompts.map((prompt, index) => (
+          {prompts.map((item) => (
             <S.Content
-              key={index}
+              key={item.prompt_id}
               onClick={() => {
-                getPromptSession(prompt);
+                getPromptSession(item.prompt_id);
               }}
             >
-              <S.ContetnsDate>{"2024-10-15"}</S.ContetnsDate>
-              <S.ContentsTitle>{prompt}</S.ContentsTitle>
+              {loading ? (
+                <Loading2 />
+              ) : (
+                <>
+                  <S.ContetnsDate>{item.prompt_updated_at}</S.ContetnsDate>
+                  <S.ContentsTitle>{item.prompt_title}</S.ContentsTitle>
+                </>
+              )}
             </S.Content>
           ))}
         </S.ContentsArea>

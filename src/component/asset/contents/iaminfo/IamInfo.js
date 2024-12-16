@@ -26,8 +26,8 @@ const IamInfo = ({ data }) => {
       <S.SubTitle>
         AttachedPolicies:
         <ul>
-          {data.AttachedPolicies.map((policy, index) => (
-            <li key={index}>{policy}</li>
+          {data.AttachedPolicies.map((item) => (
+            <li>{item.PolicyName}</li>
           ))}
         </ul>
       </S.SubTitle>

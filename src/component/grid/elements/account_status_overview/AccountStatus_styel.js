@@ -12,6 +12,7 @@ export const Wrapper = styled.div`
   flex-direction: column;
 
   border-radius: 1em;
+  box-shadow: 1px 1px 5px #aaa;
 `;
 export const Title = styled.h2`
   z-index: 202;
@@ -19,7 +20,7 @@ export const Title = styled.h2`
   top: 0;
   color: #104f55;
   width: 94%;
-  height: 19%;
+  height: 6vh;
   left: 0;
   font-size: 130%;
   padding: 0 3% 0 3%;
@@ -131,14 +132,15 @@ export const Td = styled.td`
   white-space: nowrap;
   overflow-x: visible;
 
-  p{
+  p {
     white-space: pre-wrap;
   }
 `;
 export const StatusIcon = styled.div`
   width: 100%;
   height: 1.5em;
-  background-image: url(${({ type }) => type ? "/icon/check.svg" : "/icon/alert.svg"});
+  background-image: url(${({ type }) =>
+    type ? "/icon/check.svg" : "/icon/alert.svg"});
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;

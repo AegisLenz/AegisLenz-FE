@@ -10,15 +10,17 @@ export const Wrapper = styled.div`
   background-color: white;
   flex-direction: column;
   border-radius: 1em;
+
+  box-shadow: 1px 1px 5px #aaa;
 `;
 
 export const Title = styled.h1`
   position: absolute;
   top: 0;
   color: #104f55;
-  height: 15%;
+  height: 6vh;
   font-size: 130%;
-  margin: 0% 0 1% 0;
+  margin: 0% 0% 1% 0%;
   align-items: center;
   align-content: center;
 `;

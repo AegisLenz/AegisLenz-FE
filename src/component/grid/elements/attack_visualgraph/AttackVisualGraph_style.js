@@ -6,11 +6,12 @@ export const Wrapper = styled.div`
   height: 100%;
   background-color: white;
   border-radius: 1em;
+  box-shadow: 1px 1px 5px #aaa;
 `;
 export const TopPart = styled.div`
   position: relative;
   width: 100%;
-  height: 15%;
+  height: 7vh;
 
   display: flex;
   justify-content: space-between;

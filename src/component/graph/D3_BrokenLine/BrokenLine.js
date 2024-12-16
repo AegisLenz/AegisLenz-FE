@@ -2,13 +2,16 @@ import React, { useEffect, useRef } from "react";
 import * as d3 from "d3";
 import * as S from "./BrokenLine_style";
 
-const LineChart = ({ data }) => {
+const LineChart = ({ data, onHover }) => {
   const svgRef = useRef();
 
   useEffect(() => {
     const margin = { top: 20, right: 30, bottom: 30, left: 40 },
       width = 500 - margin.left - margin.right,
       height = 300 - margin.top - margin.bottom;
+
+    // Clear previous SVG elements
+    d3.select(svgRef.current).selectAll("*").remove();
 
     const svg = d3
       .select(svgRef.current)
@@ -21,12 +24,59 @@ const LineChart = ({ data }) => {
       .append("g")
       .attr("transform", `translate(${margin.left},${margin.top})`);
 
+    // Add defs for gradients
+    const defs = svg.append("defs");
+
+    // Traffic gradient
+    const trafficGradient = defs
+      .append("linearGradient")
+      .attr("id", "traffic-gradient")
+      .attr("x1", "0%")
+      .attr("y1", "0%")
+      .attr("x2", "0%")
+      .attr("y2", "100%");
+
+    trafficGradient
+      .append("stop")
+      .attr("offset", "0%")
+      .attr("stop-color", "#104F55");
+
+    trafficGradient
+      .append("stop")
+      .attr("offset", "100%")
+      .attr("stop-color", "white");
+
+    // Attack gradient
+    const attackGradient = defs
+      .append("linearGradient")
+      .attr("id", "attack-gradient")
+      .attr("x1", "0%")
+      .attr("y1", "0%")
+      .attr("x2", "0%")
+      .attr("y2", "100%");
+
+    attackGradient
+      .append("stop")
+      .attr("offset", "0%")
+      .attr("stop-color", "#FF5733");
+
+    attackGradient
+      .append("stop")
+      .attr("offset", "100%")
+      .attr("stop-color", "white");
+
+    // X-axis
     const x = d3
       .scalePoint()
       .domain(data.map((d) => d.month))
       .range([0, width]);
 
-    const y = d3.scaleLinear().domain([0, 100]).range([height, 0]);
+    // Y-axis
+    const yMax = Math.max(
+      d3.max(data, (d) => d.traffic),
+      d3.max(data, (d) => d.attack)
+    );
+    const y = d3.scaleLinear().domain([0, yMax]).range([height, 0]);
 
     svg
       .append("g")
@@ -35,71 +85,61 @@ const LineChart = ({ data }) => {
 
     svg.append("g").call(d3.axisLeft(y));
 
-    const line = d3
-      .line()
+    // Traffic area
+    const trafficArea = d3
+      .area()
       .x((d) => x(d.month))
-      .y((d) => y(d.traffic));
-
-    const line2 = d3
-      .line()
-      .x((d) => x(d.month))
-      .y((d) => y(d.attack));
-
-    const defs = svg.append("defs");
-
-    const gradient = defs
-      .append("linearGradient")
-      .attr("id", "gradient")
-      .attr("x1", "0%")
-      .attr("y1", "0%")
-      .attr("x2", "0%")
-      .attr("y2", "100%");
-
-    gradient.append("stop").attr("offset", "0%").attr("stop-color", "#104F55"); // 위쪽 진한 파란색
-
-    gradient.append("stop").attr("offset", "100%").attr("stop-color", "white"); // 아래쪽 투명
+      .y0(height)
+      .y1((d) => y(d.traffic));
 
     svg
       .append("path")
       .datum(data)
-      .attr("fill", "url(#gradient)") // 그라데이션 적용
-      .attr(
-        "d",
-        d3
-          .area()
-          .x((d) => x(d.month))
-          .y0(height)
-          .y1((d) => y(d.traffic))
-      );
+      .attr("fill", "url(#traffic-gradient)")
+      .attr("d", trafficArea);
+
+    // Attack area
+    const attackArea = d3
+      .area()
+      .x((d) => x(d.month))
+      .y0(height)
+      .y1((d) => y(d.attack));
+
+    svg
+      .append("path")
+      .datum(data)
+      .attr("fill", "url(#attack-gradient)")
+      .attr("d", attackArea);
+
+    // Traffic line
+    const trafficLine = d3
+      .line()
+      .x((d) => x(d.month))
+      .y((d) => y(d.traffic));
+
     svg
       .append("path")
       .datum(data)
       .attr("fill", "none")
       .attr("stroke", "#104F55")
       .attr("stroke-width", 2)
-      .attr("d", line);
+      .attr("d", trafficLine);
 
-    svg
-      .append("path")
-      .datum(data)
-      .attr("fill", "url(#gradient)")
-      .attr(
-        "d",
-        d3
-          .area()
-          .x((d) => x(d.month))
-          .y0(height)
-          .y1((d) => y(d.attack))
-      );
+    // Attack line
+    const attackLine = d3
+      .line()
+      .x((d) => x(d.month))
+      .y((d) => y(d.attack));
 
     svg
       .append("path")
       .datum(data)
       .attr("fill", "none")
-      .attr("stroke", "#689D8C")
+      .attr("stroke", "#FF5733")
       .attr("stroke-width", 2)
-      .attr("d", line2);
+      .attr("d", attackLine);
 
+    // Circles for traffic
     svg
       .selectAll("circle.traffic")
       .data(data)
@@ -109,10 +149,14 @@ const LineChart = ({ data }) => {
       .attr("cx", (d) => x(d.month))
       .attr("cy", (d) => y(d.traffic))
       .attr("r", 4)
-      .attr("fill", "white") // 내부를 비우는 설정
-      .attr("stroke", "#104F55") // 외곽선 색상 설정
-      .attr("stroke-width", 2); // 외곽선 두께 설정
+      .attr("fill", "white")
+      .attr("stroke", "#104F55")
+      .attr("stroke-width", 2)
+      .style("cursor", "pointer")
+      .on("mouseover", (event, d) => onHover(d)) // Mouse over event
+      .on("mouseout", () => onHover(null)); // Mouse out event
 
+    // Circles for attack
     svg
       .selectAll("circle.attack")
       .data(data)
@@ -122,10 +166,13 @@ const LineChart = ({ data }) => {
       .attr("cx", (d) => x(d.month))
       .attr("cy", (d) => y(d.attack))
       .attr("r", 4)
-      .attr("fill", "white") // 내부를 비우는 설정
-      .attr("stroke", "#689D8C") // 외곽선 색상 설정
-      .attr("stroke-width", 2); // 외곽선 두께 설정
-  }, [data]);
+      .attr("fill", "white")
+      .attr("stroke", "#FF5733")
+      .attr("stroke-width", 2)
+      .style("cursor", "pointer")
+      .on("mouseover", (event, d) => onHover(d)) // Mouse over event
+      .on("mouseout", () => onHover(null)); // Mouse out event
+  }, [data, onHover]);
 
   return (
     <S.ChartWrapper>
@@ -136,7 +183,7 @@ const LineChart = ({ data }) => {
           <S.LegendTitle>Traffic</S.LegendTitle>
         </S.LegentBox>
         <S.LegentBox>
-          <S.LegentBox style={{ backgroundColor: "#689D8C" }} />
+          <S.LegentBox style={{ backgroundColor: "#FF5733" }} />
           <S.LegendTitle>Attack</S.LegendTitle>
         </S.LegentBox>
       </S.Legend>

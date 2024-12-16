@@ -22,7 +22,10 @@ const Alert = ({ setChatToggleOpen, getPromptSession, InAlert }) => {
   }, []);
 
   const handleAlertBubbleClick = (e) => {
-    getPromptSession(e.prompt_session_id);
+    if (e.prompt_session_id !== undefined) {
+      getPromptSession(e.prompt_session_id);
+    }
+
     setIsOpen(false);
     setChatToggleOpen(true);
     InAlert();
@@ -34,25 +37,25 @@ const Alert = ({ setChatToggleOpen, getPromptSession, InAlert }) => {
   const [isHoverIndex, setIsHoverIndex] = useState(false); // Hover 상태
   const [isHoverIcon, setIsHoverIcon] = useState(false);
 
-  useEffect(() => {
-    let timeoutId;
+  // useEffect(() => {
+  //   let timeoutId;
 
-    if (isHoverIcon || isHoverIndex) {
-      setIsOpen(true);
-    } else {
-      timeoutId = setTimeout(() => {
-        setIsOpen(false);
-      }, 2000); // 1초 딜레이
-    }
-    return () => {
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
-    };
-  }, [isHoverIcon, isHoverIndex]);
+  //   if (isHoverIcon || isHoverIndex) {
+  //     setIsOpen(true);
+  //   } else {
+  //     timeoutId = setTimeout(() => {
+  //       setIsOpen(false);
+  //     }, 2000); // 1초 딜레이
+  //   }
+  //   return () => {
+  //     if (timeoutId) {
+  //       clearTimeout(timeoutId);
+  //     }
+  //   };
+  // }, [isHoverIcon, isHoverIndex]);
 
   return (
-    <S.FixedWrapper isHovered={isOpen}>
+    <S.FixedWrapper ishovered={isOpen || undefined}>
       {/* AlertData가 있을 때만 AlertIcon을 보여줌 */}
       {AlertData.length > 0 && (
         <S.AlertIconWrapper

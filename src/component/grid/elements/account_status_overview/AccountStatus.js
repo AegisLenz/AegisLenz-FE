@@ -1,12 +1,10 @@
 import * as S from "./AccountStatus_styel";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Dropdown from "../../../toggle/dropdown/DropDown";
+import GetIAM from "../../../hook/users/GetIAM";
+import Loading2 from "../../../toggle/loading2/loading2";
 
-const type = {
-  0: ["Privileges", "#6A4FA3"],
-  1: ["Dev", "#216261"],
-  2: ["3rd", "#CD62B0"],
-};
+const type = ["#6A4FA3", "#216261", "#CD62B0"];
 
 const filterOptions = [
   { label: "== none ==", value: "none" },
@@ -18,10 +16,25 @@ const filterOptions = [
   { label: "Type", value: "Type" },
 ];
 
-const AccountStatus = ({ GenDetailData, data }) => {
+const AccountStatus = ({ GenDetailData }) => {
+  const [data, setData] = useState([]);
+
   const [searchTerm, setSearchTerm] = useState("");
   const [filterCategory, setFilterCategory] = useState("none");
   const [filteredData, setFilteredData] = useState(data);
+  const [nowloading, setnowloading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setnowloading(true);
+      const GetData = await GetIAM();
+      console.log(GetData.IAMUser);
+      setData(GetData.IAMUser);
+      setnowloading(false);
+    };
+
+    fetchData();
+  }, []);
 
   const handleSearch = (e) => {
     const value = e.target.value.toLowerCase();
@@ -94,34 +107,38 @@ const AccountStatus = ({ GenDetailData, data }) => {
             <S.Td>Type</S.Td>
           </S.Thead>
           <S.Tbody>
-            {filteredData.map((row, index) => (
-              <S.Tr
-                key={index}
-                type={true}
-                onClick={() => GenDetailData(row, "iam")}
-              >
-                <S.Td>
-                  <S.StatusIcon type={true} />
-                </S.Td>
-                <S.Td>{row.UserName}</S.Td>
-                <S.Td>{row.AccessKeysLastUsed[0]?.LastUsedDate || "N/A"}</S.Td>
-                <S.Td>
-                  <p>
-                    {row.AttachedPolicies.length > 0
-                      ? row.AttachedPolicies.join("\n")
-                      : "No Policies"}
-                  </p>
-                </S.Td>
-                <S.Td>{row.UserId}</S.Td>
-                <S.Td>
-                  <S.TypeIconWrapper>
-                    <S.TypeIcon color={type[index % 3][1]}>
-                      {type[index % 3][0]}
-                    </S.TypeIcon>
-                  </S.TypeIconWrapper>
-                </S.Td>
-              </S.Tr>
-            ))}
+            {nowloading ? (
+              <Loading2 />
+            ) : (
+              data.map((row, index) => (
+                <S.Tr
+                  key={index}
+                  type={true}
+                  onClick={() => GenDetailData(row, "iam")}
+                >
+                  <S.Td>
+                    <S.StatusIcon type={true} />
+                  </S.Td>
+                  <S.Td>{row.UserName}</S.Td>
+                  <S.Td>
+                    {row.AccessKeysLastUsed[0]?.LastUsedDate || "N/A"}
+                  </S.Td>
+                  <S.Td>
+                    {row.AttachedPolicies.map((item) => (
+                      <li>{item.PolicyName}</li>
+                    ))}
+                  </S.Td>
+                  <S.Td>{row.UserId}</S.Td>
+                  <S.Td>
+                    <S.TypeIconWrapper>
+                      <S.TypeIcon color={type[index % 3][1]}>
+                        {type[index % 3][0]}
+                      </S.TypeIcon>
+                    </S.TypeIconWrapper>
+                  </S.Td>
+                </S.Tr>
+              ))
+            )}
           </S.Tbody>
         </S.Table>
       </S.TableWrapper>

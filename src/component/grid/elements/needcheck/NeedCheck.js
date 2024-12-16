@@ -1,21 +1,33 @@
 import * as S from "./NeedCheck_style";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import Loading2 from "../../../toggle/loading2/loading2";
+import Getdata from "../../../hook/dashboard/GetNeedCheck";
 
 const NeedCheck = () => {
-  // eslint-disable-next-line no-unused-vars
-  const [innerContents, setInnerContents] = useState([
-    "Certify or restrict AWS Compute with permissions like ListBucket and GetObject to avoid recon and data exfiltration by a threat actor (Sonrai-113)\nAWSLambda: TableauReports",
-    "Update AWS Roles with resource restrictions to limit ability to discover all buckets and read all data (Sonrai-137)\nRole: sonrai-Carleton-Collector-Dev",
-    "Remove Role that is unused which allows access (trust) from an External/3rd Party (Sonrai-1262)\nRole: sonrai-saas-dev-demosix",
-  ]);
+  const [innerContents, setInnerContents] = useState([]);
+  const [nowloading, setNowloading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setNowloading(true);
+      const data = await Getdata();
+      setInnerContents(data.report_check);
+      setNowloading(false);
+    };
+    fetchData();
+  }, []);
 
   return (
     <S.Wrapper>
-      <S.Title>Need Check</S.Title>
+      <S.Title>Report Summary</S.Title>
       <S.ContentArea>
-        {innerContents.map((content, index) => (
-          <S.Content key={index}>{content}</S.Content>
-        ))}
+        {nowloading || innerContents.length === 0 ? (
+          <Loading2 />
+        ) : (
+          innerContents.map((index, content) => (
+            <S.Content key={index}>{content}</S.Content>
+          ))
+        )}
       </S.ContentArea>
     </S.Wrapper>
   );

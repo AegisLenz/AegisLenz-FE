@@ -14,13 +14,13 @@ const Inneriam = ({ data, DataType }) => {
           <Ec2Info data={data} />
         );
       case "Checklist":
-        return <div>Checklist</div>;
+        return <IamInfo data={data} />;
       case "Configuration Log":
-        return <div>Log</div>;
+        return <IamInfo data={data} />;
       case "Policies":
-        return <div>policies</div>;
+        return <IamInfo data={data} />;
       case "Resource Permissions":
-        return <div>Permissions</div>;
+        return <IamInfo data={data} />;
       default:
         return null;
     }

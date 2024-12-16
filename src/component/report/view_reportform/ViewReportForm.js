@@ -1,27 +1,42 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import * as S from "./ViewReportForm_style";
+import Loading2 from "../../toggle/loading2/loading2";
+import GetFormReport from "../../hook/report/GeForm";
 
 const ViewReportForm = () => {
-  // eslint-disable-next-line no-unused-vars
-  const [Index, setIndex] = useState([
-    "보고서 형식 제목이 여기에 이렇게..",
-    "보고서 형식 제목이...",
-    "보고서 형식 제목이 여기에 이렇게..",
-    "보고서 형식 제목이...",
-  ]);
+  const [Index, setIndex] = useState([]);
+  const [nowIndexLoad, setnowIndexLoad] = useState(true);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      setnowIndexLoad(true);
+      try {
+        const Data = await GetFormReport();
+        setIndex(Data.report_template_ids);
+      } catch (e) {
+        console.log(e);
+      } finally {
+        setnowIndexLoad(false);
+      }
+    };
+    fetchData();
+  });
   return (
     <S.Wrapper>
       <S.IndexWrapper>
         <S.IndexHead>
           <h1>Report Index</h1>
         </S.IndexHead>
-        {Index.map((prompt, index) => (
-          <S.IndexBubble key={index}>
-            <S.IndexDate>{"2024-10-15"}</S.IndexDate>
-            <S.IndexTitle>{prompt}</S.IndexTitle>
-          </S.IndexBubble>
-        ))}
+        {nowIndexLoad || Index.length === 0 || Index === undefined ? (
+          <Loading2 />
+        ) : (
+          Index.map((prompt, index) => (
+            <S.IndexBubble key={index}>
+              <S.IndexDate>{"2024-10-15"}</S.IndexDate>
+              <S.IndexTitle>{prompt}</S.IndexTitle>
+            </S.IndexBubble>
+          ))
+        )}
       </S.IndexWrapper>
       <S.ContentWrapper>
         <S.ContentSelectWrapper>

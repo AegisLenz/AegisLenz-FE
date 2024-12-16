@@ -2,12 +2,15 @@ import React, { useRef, useEffect, useState } from "react";
 import * as d3 from "d3";
 import * as S from "./D3_Pie_style";
 
-const DonutChart = ({ data, setSubTitleValueProps }) => {
+const DonutChart = ({ data, setSubTitleValueProps, total }) => {
   const svgRef = useRef();
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   const [hoveredIndex, setHoveredIndex] = useState(null); // hover 상태를 관리하는 상태 추가
-  const totalAccount = data.reduce((sum, item) => sum + item.value, 0);
-  const [Account, setAccount] = useState(totalAccount);
+  const [Account, setAccount] = useState(total);
+
+  useEffect(() => {
+    setAccount(total);
+  }, [total]);
 
   useEffect(() => {
     const container = svgRef.current.parentElement;
@@ -74,7 +77,7 @@ const DonutChart = ({ data, setSubTitleValueProps }) => {
             }} // hover 시 해당 인덱스 설정
             onMouseLeave={() => {
               setHoveredIndex(null);
-              setAccount(totalAccount);
+              setAccount(total);
             }} // hover 해제 시 null로 설정
           >
             {d.label}

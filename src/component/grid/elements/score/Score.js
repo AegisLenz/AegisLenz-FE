@@ -3,7 +3,7 @@ import { useState } from "react";
 
 const Score = () => {
   // eslint-disable-next-line
-  const [Score, setScore] = useState(90);
+  const [Score, setScore] = useState(88.5);
 
   const colors = [
     "#104F55",

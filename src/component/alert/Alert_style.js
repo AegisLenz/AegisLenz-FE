@@ -27,7 +27,7 @@ export const FixedWrapper = styled.div`
 
   width: 20vw;
   height: 100vh;
-  right: ${(props) => (props.isHovered ? "0" : "-20vw")};
+  right: ${({ ishovered }) => (ishovered ? "0" : "-20vw")};
   transition: right 0.3s ease;
 
   box-shadow: 1px 0 5px #333;

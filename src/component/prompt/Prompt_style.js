@@ -11,7 +11,7 @@ export const Wrapper = styled.div`
   margin: 0;
   display: flex;
   flex-direction: row;
-  align-items:center;
+  align-items: center;
 `;
 export const ChatAreaWrapper = styled.div`
   position: absolute;
@@ -26,14 +26,20 @@ export const ChatAreaWrapper = styled.div`
 export const ChatArea = styled.div`
   position: relative;
   z-index: 200;
+  height: 100%;
   width: ${({ isSideOpen, isSideContent }) =>
     isSideOpen ? "90%" : isSideContent ? "80%" : "50%"};
-  bottom: 10%;
   transition: all ease 0.3s;
+
+  margin-bottom: 2%;
+
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
 `;
 
 export const OuterToggleArea = styled.div`
-  position:absolute;
+  position: absolute;
   right: ${({ isSideToggle }) => (isSideToggle ? "0" : "1vw")};
   transition: all ease 0.3s;
 `;

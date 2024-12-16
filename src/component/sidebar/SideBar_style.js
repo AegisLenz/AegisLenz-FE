@@ -21,6 +21,7 @@ export const Wrapper = styled.div`
     width: 15vw;
   }
 `;
+
 export const Icon = styled.img`
   margin: 15%;
   width: 2vw;
