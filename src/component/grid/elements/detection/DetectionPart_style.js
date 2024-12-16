@@ -5,7 +5,7 @@ export const Wrapper = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   background-color: white;
   flex-direction: column;
@@ -27,7 +27,14 @@ export const Title = styled.h1`
   justify-content: center;
   align-items: center;
 `;
-
+export const ContentWrapper = styled.div`
+  top: 5vh;
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  width: 90%;
+  height: 90%;
+`;
 export const Content = styled.div`
   display: flex;
   justify-content: center;
@@ -35,7 +42,27 @@ export const Content = styled.div`
 
   margin: 2% 2% 5% 2%;
 
-  width: 100%;
+  width: 65%;
   height: auto;
   overflow-y: auto;
+`;
+export const Monthly = styled.div`
+  width: 35%;
+  height: 90%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: #ddd;
+  box-shadow: 1px 1px 3px #aaa;
+
+  border-radius: 1em;
+
+  h3 {
+    text-align: center;
+  }
+  /* p {
+    text-align: center;
+  } */
 `;

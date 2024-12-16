@@ -8,11 +8,11 @@ const Risk = () => {
   const indexWrapperRefs = useRef([]); // 각 IndexWrapper 참조 배열
   const [dimensions, setDimensions] = useState({});
 
-  const Data = {
+  const [Data, setData] = useState({
     MFA_not_enabled_for_root_user: ["Information", "Debug"],
     MFA_not_enabled_for_users: ["Notice", "Error"],
     default_security_groups_allow_traffic: ["Warning"],
-  };
+  });
 
   // 각 IndexWrapper의 크기를 동적으로 계산
   useEffect(() => {
@@ -42,8 +42,8 @@ const Risk = () => {
   const grids = Object.entries(Data).map(([key, values], idx) => (
     <S.IndexWrapper key={key}>
       <S.CountWrapper>
-        <h1>{values.length}</h1> {/* 해당 항목의 데이터 개수를 출력 */}
         <p>{key}</p>
+        <h1>{values.length}</h1> {/* 해당 항목의 데이터 개수를 출력 */}
       </S.CountWrapper>
       <S.Index
         ref={(el) => (indexWrapperRefs.current[idx] = el)} // 각 Wrapper를 refs 배열에 저장

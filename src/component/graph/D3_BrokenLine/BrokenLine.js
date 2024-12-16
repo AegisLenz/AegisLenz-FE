@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import * as d3 from "d3";
 import * as S from "./BrokenLine_style";
 
-const LineChart = ({ data }) => {
+const LineChart = ({ data, onHover }) => {
   const svgRef = useRef();
 
   useEffect(() => {
@@ -151,7 +151,10 @@ const LineChart = ({ data }) => {
       .attr("r", 4)
       .attr("fill", "white")
       .attr("stroke", "#104F55")
-      .attr("stroke-width", 2);
+      .attr("stroke-width", 2)
+      .style("cursor", "pointer")
+      .on("mouseover", (event, d) => onHover(d)) // Mouse over event
+      .on("mouseout", () => onHover(null)); // Mouse out event
 
     // Circles for attack
     svg
@@ -165,8 +168,11 @@ const LineChart = ({ data }) => {
       .attr("r", 4)
       .attr("fill", "white")
       .attr("stroke", "#FF5733")
-      .attr("stroke-width", 2);
-  }, [data]);
+      .attr("stroke-width", 2)
+      .style("cursor", "pointer")
+      .on("mouseover", (event, d) => onHover(d)) // Mouse over event
+      .on("mouseout", () => onHover(null)); // Mouse out event
+  }, [data, onHover]);
 
   return (
     <S.ChartWrapper>

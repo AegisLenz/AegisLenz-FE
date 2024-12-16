@@ -46,17 +46,20 @@ export const SubContent = styled.div`
   width: 98%;
   background: linear-gradient(to right, #2f878f, #2d3c7d);
   border-radius: 1em;
-  justify-content: right;
   position: relative;
   overflow-y: auto;
   overflow-x: hidden;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 `;
 
 export const Content = styled.div`
   width: 89%;
   align-content: left;
   color: white;
-  font-size: 80%;
+  font-size: 0.9em;
   font-weight: 400;
   margin: 2% 0 3% 10%;
 
@@ -64,9 +67,9 @@ export const Content = styled.div`
     content: "";
     display: block;
     position: absolute;
-    left: 9%;
-    width: 12%;
-    height: 12%;
+    left: 1.1vw;
+    width: 1.5vw;
+    height: 1.5vw;
     background-image: url("/icon/Daily_Arrow.svg");
     background-size: contain;
     background-repeat: no-repeat;

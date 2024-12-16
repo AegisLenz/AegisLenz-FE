@@ -37,22 +37,22 @@ const Alert = ({ setChatToggleOpen, getPromptSession, InAlert }) => {
   const [isHoverIndex, setIsHoverIndex] = useState(false); // Hover 상태
   const [isHoverIcon, setIsHoverIcon] = useState(false);
 
-  useEffect(() => {
-    let timeoutId;
+  // useEffect(() => {
+  //   let timeoutId;
 
-    if (isHoverIcon || isHoverIndex) {
-      setIsOpen(true);
-    } else {
-      timeoutId = setTimeout(() => {
-        setIsOpen(false);
-      }, 2000); // 1초 딜레이
-    }
-    return () => {
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
-    };
-  }, [isHoverIcon, isHoverIndex]);
+  //   if (isHoverIcon || isHoverIndex) {
+  //     setIsOpen(true);
+  //   } else {
+  //     timeoutId = setTimeout(() => {
+  //       setIsOpen(false);
+  //     }, 2000); // 1초 딜레이
+  //   }
+  //   return () => {
+  //     if (timeoutId) {
+  //       clearTimeout(timeoutId);
+  //     }
+  //   };
+  // }, [isHoverIcon, isHoverIndex]);
 
   return (
     <S.FixedWrapper ishovered={isOpen || undefined}>

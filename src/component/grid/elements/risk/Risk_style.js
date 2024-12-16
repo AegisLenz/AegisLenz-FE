@@ -57,7 +57,7 @@ export const IndexWrapper = styled.div`
 `;
 
 export const CountWrapper = styled.div`
-  width: 50%;
+  width: 60%;
   height: 100%;
 
   display: flex;
@@ -71,11 +71,11 @@ export const CountWrapper = styled.div`
     color: black;
     padding: 0;
     margin: 0 0 2% 0;
-    width: 50%;
+    width: 30%;
     text-align: center;
   }
   p {
-    width: 30%;
+    width: 50%;
     color: black;
 
     padding: 0 10%;
@@ -90,7 +90,7 @@ export const CountWrapper = styled.div`
   }
 `;
 export const Index = styled.div`
-  width: 70%;
+  width: 40%;
   min-height: 100%;
   overflow-y: auto;
 
