@@ -19,7 +19,7 @@ const Prompt = ({ SideIndex, isSideIndex, getPromptSession, setIndex }) => {
     const fetchPrompts = async () => {
       try {
         const data = await GetAllPrompt();
-        const prompt_ids = data.prompts.slice().reverse();
+        const prompt_ids = data.prompts.slice();
         setPrompts(prompt_ids);
         setIndex(prompt_ids);
       } catch (e) {
@@ -35,7 +35,7 @@ const Prompt = ({ SideIndex, isSideIndex, getPromptSession, setIndex }) => {
   const RefetchPrompts = async () => {
     try {
       const Refetchdata = await GetAllPrompt();
-      const prompt_ids = Refetchdata.prompts.slice().reverse();
+      const prompt_ids = Refetchdata.prompts.slice();
       setPrompts(prompt_ids);
     } catch (e) {
       setError(e.message);

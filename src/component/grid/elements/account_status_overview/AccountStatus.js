@@ -16,11 +16,26 @@ const filterOptions = [
   { label: "Type", value: "Type" },
 ];
 
+// 가장 최근 날짜를 반환하는 함수
+const getMostRecentDate = (passwordLastUsed, accessKeysLastUsed) => {
+  const passwordDate = passwordLastUsed
+    ? new Date(passwordLastUsed)
+    : new Date(0); // 기본값: 과거 시간
+  const accessKeyDate = accessKeysLastUsed?.[0]
+    ? new Date(accessKeysLastUsed[0])
+    : new Date(0);
+
+  return passwordDate > accessKeyDate
+    ? passwordLastUsed
+    : accessKeysLastUsed?.[0];
+};
+
 const AccountStatus = ({ GenDetailData }) => {
   const [data, setData] = useState([]);
 
   const [searchTerm, setSearchTerm] = useState("");
   const [filterCategory, setFilterCategory] = useState("none");
+  // eslint-disable-next-line no-unused-vars
   const [filteredData, setFilteredData] = useState(data);
   const [nowloading, setnowloading] = useState(true);
 
@@ -28,7 +43,6 @@ const AccountStatus = ({ GenDetailData }) => {
     const fetchData = async () => {
       setnowloading(true);
       const GetData = await GetIAM();
-      console.log(GetData.IAMUser);
       setData(GetData.IAMUser);
       setnowloading(false);
     };
@@ -121,7 +135,10 @@ const AccountStatus = ({ GenDetailData }) => {
                   </S.Td>
                   <S.Td>{row.UserName}</S.Td>
                   <S.Td>
-                    {row.AccessKeysLastUsed[0]?.LastUsedDate || "N/A"}
+                    {getMostRecentDate(
+                      row.PasswordLastUsed,
+                      row.AccessKeysLastUsed[0]?.LastUsedDate
+                    ) || "N/A"}
                   </S.Td>
                   <S.Td>
                     {row.AttachedPolicies.map((item) => (

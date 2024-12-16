@@ -209,7 +209,6 @@ const ViewReport = () => {
   const rootRef = useRef(null); // React 18 createRoot instance 저장
 
   useEffect(() => {
-    console.log(content);
     if (content !== "" && content !== undefined) {
       if (!rootRef.current && containerRef.current) {
         // React 18의 createRoot 초기화

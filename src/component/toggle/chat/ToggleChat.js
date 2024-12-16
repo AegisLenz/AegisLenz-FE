@@ -6129,15 +6129,8 @@ const ToggleChat = ({
 
   const [isDataLoaded, setIsDataLoaded] = useState(false); // useEffect 완료 상태 관리
 
-  // const [ESResult, setESResult] = useState([]);
-  // const [DBResult, setDBResult] = useState([]);
-
-  //ESResult, DBResult에 따라 markData수정
-  // useEffect(() => {
-  //   if (ESResult && DBResult) {
-  //     markData();
-  //   }
-  // }, [ESResult, DBResult]);
+  const [ESResult, setESResult] = useState([]);
+  const [DBResult, setDBResult] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -6146,20 +6139,16 @@ const ToggleChat = ({
         const fetchPromptsContents = async () => {
           if (promptSession) {
             setSession(promptSession);
-          } else {
-            if (session === "" || session === undefined) {
-              if (type === "grid") {
-                const NewSession = await CreateSession();
-                setSession(NewSession.prompt_session_id);
-              }
-              if (type === "prompt") {
-                if (promptIndex.length !== 0) {
-                  setSession(promptIndex[0]);
-                } else {
-                  console.log("no session");
-                }
-              }
-            }
+            // } else {
+
+            //     if (type === "prompt") {
+            //       if (promptIndex.length !== 0) {
+            //         setSession(promptIndex[0]);
+            //       } else {
+            //         console.log("no session");
+            //       }
+            //     }
+            //   }
           }
         };
 
@@ -6203,8 +6192,8 @@ const ToggleChat = ({
 
         // 순차적으로 실행
         await fetchPromptsContents();
-        if (session) {
-          await fetchPrevChat(session);
+        if (promptSession) {
+          await fetchPrevChat(promptSession);
         }
 
         setIsDataLoaded(true); // 데이터 로딩 완료 상태 업데이트
@@ -6216,9 +6205,7 @@ const ToggleChat = ({
 
     //실행
     fetchData();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [getReportData, promptSession, session, type]);
+  }, [getReportData, promptIndex, promptSession, type]);
 
   useEffect(() => {
     if (ChatData.length === 0) {
@@ -6228,10 +6215,21 @@ const ToggleChat = ({
           text: "안녕하세요! AegisLenz의 사용자 도우미 Aegis입니다!\n무엇을 도와드릴까요?",
           isUser: false,
           isFirst: true,
+          isBookmark: true,
         },
       ]);
     }
   }, [ChatData]);
+
+  const handleMarkData = (data) => {
+    if (data && data.length > 0) {
+      const Arraydata = [...new Set([...data, "scroll", "chat"])];
+      const transformedData = Arraydata.map((item) => item.replace(/'/g, '"'));
+      console.log(transformedData);
+      markData(transformedData);
+    } else {
+    }
+  };
 
   const handleStreamData = (currentText, index) => {
     // 특정 인덱스의 메시지를 업데이트
@@ -6287,12 +6285,11 @@ const ToggleChat = ({
       updatedChatData[index].isESQuery = data;
       return updatedChatData;
     });
-    markData(["ShowLog"]);
-    setESREsultData(testdata);
   };
   const handleESResult = (data) => {
     if (data.length !== 0) {
       setESREsultData(data);
+      console.log(data);
     }
   };
   const handleDBQuery = (data, index) => {
@@ -6302,14 +6299,11 @@ const ToggleChat = ({
       updatedChatData[index].isDBQuery = data;
       return updatedChatData;
     });
-    markData(["AccountStatus"]);
-    setDBREsultData(testAccountData);
   };
   const handleDBResult = (data) => {
-    // if (data.length !== 0) {
-    //   setDBREsultData(data);
-    //   console.log(data);
-    // }
+    if (data.length !== 0) {
+      setDBREsultData(data);
+    }
   };
 
   // API 호출 및 데이터 처리
@@ -6321,21 +6315,36 @@ const ToggleChat = ({
       );
       return;
     }
-    if (!session) {
-      console.error("Session 값이 없습니다.");
-      return;
-    }
+
     setChatData((prev) => [
       ...prev,
       { text: "", isUser: false, isStreem: true },
     ]);
     const messageIndex = ChatData.length; // 새로 추가할 요소의 인덱스
+    if (!session) {
+      // session이 빈 문자열 또는 undefined일 경우
+      if (type === "grid") {
+        try {
+          const NewSession = await CreateSession();
+          setSession(NewSession.prompt_session_id);
 
+          // session 업데이트 후 실행을 보장
+          session = NewSession.prompt_session_id;
+        } catch (error) {
+          console.error("새 세션 생성 중 오류 발생:", error);
+          return; // 에러 발생 시 Prompthook 호출 중단
+        }
+      } else {
+        console.error("유효한 세션이 필요합니다.");
+        return; // session이 필수라면 추가 실행 중단
+      }
+    }
     try {
       // Prompthook 호출 시 스트림 데이터 처리 콜백 전달
       await Prompthook(
         inputValue,
         session,
+        (data) => handleMarkData(data),
         (currentText) => handleStreamData(currentText, messageIndex),
         (finalText) => handleStreamComplete(finalText, messageIndex),
         handleRecommendQuestionsChunk,
@@ -6358,7 +6367,7 @@ const ToggleChat = ({
   };
 
   // 토글에 데이터 입력
-  const handleSendMessage = () => {
+  const handleSendMessage = async () => {
     if (inputValue.trim() === "") return; // 빈 입력 방지
 
     // 현재 입력값 추가

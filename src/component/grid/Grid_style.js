@@ -17,6 +17,20 @@ export const GridElement = styled.div`
   position: fixed;
   overflow: hidden;
 
+  box-shadow: 1px 1px 3px #aaa;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+export const GridElementNoBoxShadow = styled.div`
+  z-index: 102;
+  transition: all ease 0.7s;
+  border-radius: 1em;
+
+  position: fixed;
+  overflow: hidden;
+
   display: flex;
   justify-content: center;
   align-items: center;

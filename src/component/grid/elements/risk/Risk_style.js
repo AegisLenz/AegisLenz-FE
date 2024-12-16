@@ -105,7 +105,7 @@ export const Label = styled.div`
   margin: 3px;
   border-radius: 4px;
   color: white;
-  background-color: ${({ color }) => color || "#007bff"}; /* Default to blue */
+  background-color: ${({ color }) => color || "#104f55"};
   font-size: 0.9em;
   text-align: center;
 `;

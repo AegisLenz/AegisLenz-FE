@@ -35,7 +35,6 @@ const EC2Status = ({ GenDetailData }) => {
       setnowloading(true);
       try {
         const GetData = await getEC2();
-        console.log(GetData.EC2);
         setData(GetData.EC2);
       } catch (e) {
         console.log(e);

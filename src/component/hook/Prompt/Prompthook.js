@@ -2,6 +2,7 @@
 const Prompthook = async (
   userInput,
   session,
+  handleMarkData,
   handleStreamData,
   handleStreamComplete,
   handleRecommendQuestionsChunk,
@@ -40,8 +41,12 @@ const Prompthook = async (
           // console.log(line);
           if (line.trim()) {
             try {
+              console.log(line);
               const parsedLine = JSON.parse(line); // JSON 데이터로 파싱
               switch (parsedLine.type) {
+                case "Dashboard":
+                  handleMarkData(parsedLine.data);
+                  break;
                 case "ESQuery":
                   // ESQuery 처리
                   // console.log("ESQuery:", parsedLine.data);
@@ -54,8 +59,8 @@ const Prompthook = async (
                   break;
                 case "ESResult":
                   // ESResult 처리
-                  // console.log("ESResult:", parsedLine);
-                  handleESResult(parsedLine.data);
+                  console.log("ESResult:", parsedLine.data);
+                  // handleESResult(parsedLine.data);
                   break;
                 case "DBResult":
                   // ESResult 처리
@@ -70,6 +75,8 @@ const Prompthook = async (
                 case "RecommendQuestions":
                   // 추천 질문을 처리
                   handleRecommendQuestionsChunk(parsedLine.data);
+                  break;
+                case null:
                   break;
                 default:
                   if (parsedLine.status !== "complete") {
