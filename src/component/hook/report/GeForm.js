@@ -1,6 +1,6 @@
-const GetAllReport = async () => {
+const GetFormReport = async () => {
   try {
-    const response = await fetch(`/server/api/v1/report/?user_id=1`, {
+    const response = await fetch(`/server/api/v1/report/template/?user_id=1`, {
       method: "GET",
     });
     if (!response.ok) {
@@ -14,4 +14,4 @@ const GetAllReport = async () => {
   }
 };
 
-export default GetAllReport;
+export default GetFormReport;

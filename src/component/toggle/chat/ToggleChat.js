@@ -6225,7 +6225,7 @@ const ToggleChat = ({
       setChatData((prev) => [
         ...prev,
         {
-          text: "안녕하세요! AegisLenz의 사용자 도우미 Aegis입니다!\n무엇을 도와드릴까요?\n\n저는 이런 질문들을 도와드릴 수 있어요!\n\n",
+          text: "안녕하세요! AegisLenz의 사용자 도우미 Aegis입니다!\n무엇을 도와드릴까요?",
           isUser: false,
           isFirst: true,
         },

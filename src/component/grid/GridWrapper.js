@@ -18,6 +18,7 @@ import {
   ShowPolicy,
   ShowLog,
   AttackVisualGraph,
+  Risk,
 } from "./elements";
 import * as S from "./Grid_style";
 
@@ -6548,6 +6549,14 @@ const Grid = ({
         w: 33,
         h: 15,
         content: <Score />,
+      },
+      {
+        i: "Risk",
+        x: 0,
+        y: 35,
+        w: 33,
+        h: 30,
+        content: <Risk />,
       },
       {
         i: "DailyInsight",

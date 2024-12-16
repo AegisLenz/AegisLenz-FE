@@ -1,8 +1,11 @@
-const GetAllReport = async () => {
+const GetReport = async (report_id) => {
   try {
-    const response = await fetch(`/server/api/v1/report/?user_id=1`, {
-      method: "GET",
-    });
+    const response = await fetch(
+      `/server/api/v1/report/${report_id}?user_id=1`,
+      {
+        method: "GET",
+      }
+    );
     if (!response.ok) {
       throw new Error(`Error: ${response.status}`);
     }
@@ -14,4 +17,4 @@ const GetAllReport = async () => {
   }
 };
 
-export default GetAllReport;
+export default GetReport;
