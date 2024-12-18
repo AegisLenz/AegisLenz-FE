@@ -11,6 +11,7 @@ const Prompthook = async (
   handleDBQuery,
   handleDBResult
 ) => {
+  console.log("ph" + session);
   try {
     const url = `/server/api/v1/prompt/${session}/chat`;
     const response = await fetch(url, {
@@ -64,8 +65,8 @@ const Prompthook = async (
                   break;
                 case "DBResult":
                   // ESResult 처리
-                  // console.log("DBResult:", parsedLine.data);
-                  handleDBResult(parsedLine.data);
+                  console.log("DBResult:", parsedLine.data);
+                  // handleDBResult(parsedLine.data);
                   break;
                 case "Summary":
                   // Summary 데이터를 누적

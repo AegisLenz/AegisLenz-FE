@@ -12,7 +12,6 @@ import {
   AccountStatus,
   DailyInsight,
   Detection,
-  // eslint-disable-next-line no-unused-vars
   EC2Status,
   NeedCheck,
   Report,
@@ -6443,10 +6442,14 @@ const Grid = ({
 }) => {
   const [isChattoggleOpen, setChatToggle] = useState(false);
   const [markData, setMarkData] = useState(MarkData || []);
+  // eslint-disable-next-line no-unused-vars
   const [promptSession, setPromptSession] = useState("");
+  // eslint-disable-next-line no-unused-vars
   const [ReportData, setReportData] = useState("");
 
+  // eslint-disable-next-line no-unused-vars
   const [ESResultData, setESREsultData] = useState(testlogdata || []);
+  // eslint-disable-next-line no-unused-vars
   const [DBResultData, setDBREsultData] = useState(testAccount || []);
   const location = useLocation();
 
@@ -6457,15 +6460,15 @@ const Grid = ({
     }
   }, [location.state]);
 
-  const getESResultData = (value) => {
-    setESREsultData(value);
-  };
-  const getDBResultData = (value) => {
-    setDBREsultData(value);
-  };
-  const getReportData = (value) => {
-    setReportData(value);
-  };
+  // const getESResultData = (value) => {
+  //   setESREsultData(value);
+  // };
+  // const getDBResultData = (value) => {
+  //   setDBREsultData(value);
+  // };
+  // const getReportData = (value) => {
+  //   setReportData(value);
+  // };
   const getPromptSession = (value) => {
     setPromptSession(value);
   };
@@ -6563,16 +6566,16 @@ const Grid = ({
       },
       {
         i: "NeedCheck",
-        x: 37,
+        x: 30,
         y: 50,
-        w: 30,
+        w: 37,
         h: 33,
       },
       {
         i: "Detection",
         x: 0,
         y: 40,
-        w: 37,
+        w: 30,
         h: 33,
       },
       {

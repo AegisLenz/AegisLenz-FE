@@ -6117,7 +6117,7 @@ const ToggleChat = ({
   getReportData,
   setESREsultData,
   setDBREsultData,
-  promptIndex,
+  getPromptSession,
   type,
 }) => {
   const [inputValue, setInputValue] = useState("");
@@ -6139,16 +6139,9 @@ const ToggleChat = ({
         const fetchPromptsContents = async () => {
           if (promptSession) {
             setSession(promptSession);
-            // } else {
-
-            //     if (type === "prompt") {
-            //       if (promptIndex.length !== 0) {
-            //         setSession(promptIndex[0]);
-            //       } else {
-            //         console.log("no session");
-            //       }
-            //     }
-            //   }
+          }
+          if (type === "prompt" && promptSession === "") {
+            setSession("");
           }
         };
 
@@ -6188,11 +6181,14 @@ const ToggleChat = ({
               ]);
             }
           }
+          if (promptSession === "") {
+            setChatData([]);
+          }
         };
 
         // 순차적으로 실행
         await fetchPromptsContents();
-        if (promptSession) {
+        if (promptSession || promptSession === "") {
           await fetchPrevChat(promptSession);
         }
 
@@ -6205,7 +6201,7 @@ const ToggleChat = ({
 
     //실행
     fetchData();
-  }, [getReportData, promptIndex, promptSession, type]);
+  }, [getReportData, promptSession, type]);
 
   useEffect(() => {
     if (ChatData.length === 0) {
@@ -6223,11 +6219,21 @@ const ToggleChat = ({
 
   const handleMarkData = (data) => {
     if (data && data.length > 0) {
-      const Arraydata = [...new Set([...data, "scroll", "chat"])];
-      const transformedData = Arraydata.map((item) => item.replace(/'/g, '"'));
-      console.log(transformedData);
-      markData(transformedData);
-    } else {
+      if (type === "grid") {
+        const Arraydata = [...new Set([...data, "scroll", "chat"])];
+        const transformedData = Arraydata.map((item) =>
+          item.replace(/'/g, '"')
+        );
+        console.log(transformedData);
+        markData(transformedData);
+      } else {
+        const Arraydata = data;
+        const transformedData = Arraydata.map((item) =>
+          item.replace(/'/g, '"')
+        );
+        console.log(transformedData);
+        markData(transformedData);
+      }
     }
   };
 
@@ -6321,22 +6327,17 @@ const ToggleChat = ({
       { text: "", isUser: false, isStreem: true },
     ]);
     const messageIndex = ChatData.length; // 새로 추가할 요소의 인덱스
-    if (!session) {
+    if (!session || session === "") {
       // session이 빈 문자열 또는 undefined일 경우
-      if (type === "grid") {
-        try {
-          const NewSession = await CreateSession();
-          setSession(NewSession.prompt_session_id);
+      try {
+        const NewSession = await CreateSession();
+        setSession(NewSession.prompt_session_id);
 
-          // session 업데이트 후 실행을 보장
-          session = NewSession.prompt_session_id;
-        } catch (error) {
-          console.error("새 세션 생성 중 오류 발생:", error);
-          return; // 에러 발생 시 Prompthook 호출 중단
-        }
-      } else {
-        console.error("유효한 세션이 필요합니다.");
-        return; // session이 필수라면 추가 실행 중단
+        // session 업데이트 후 실행을 보장
+        session = NewSession.prompt_session_id;
+      } catch (error) {
+        console.error("새 세션 생성 중 오류 발생:", error);
+        return; // 에러 발생 시 Prompthook 호출 중단
       }
     }
     try {
@@ -6384,9 +6385,21 @@ const ToggleChat = ({
     // 입력 초기화
     setInputValue("");
   };
+  const [isComposing, setIsComposing] = useState(false);
+
+  // IME 입력 시작
+  const handleCompositionStart = () => {
+    setIsComposing(true);
+  };
+
+  // IME 입력 종료
+  const handleCompositionEnd = () => {
+    setIsComposing(false);
+  };
+
   // 엔터로 값 집어넣기
   const handleKeyDown = (e) => {
-    if (e.key === "Enter") {
+    if (e.key === "Enter" && !isComposing) {
       handleSendMessage();
     }
   };
@@ -6430,9 +6443,11 @@ const ToggleChat = ({
                   value={inputValue}
                   onFocus={setChatToggleOpen}
                   onChange={(e) => setInputValue(e.target.value)}
+                  onCompositionStart={handleCompositionStart}
+                  onCompositionEnd={handleCompositionEnd}
+                  onKeyDown={handleKeyDown}
                   isOpen={isChattoggleOpen}
                   isFull={sizeFull}
-                  onKeyDown={handleKeyDown}
                   placeholder="질문을 입력해 주세요"
                 />
                 <S.InputUnderbar isOpen={isChattoggleOpen} />

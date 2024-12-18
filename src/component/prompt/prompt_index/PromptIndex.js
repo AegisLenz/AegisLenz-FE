@@ -1,19 +1,20 @@
 import * as S from "./PromptIndex_style";
 import GetAllPrompt from "../../hook/Prompt/GetAllPrompt";
-import CreateSession from "../../hook/Prompt/CreateNewPrompt";
 import { useState, useEffect } from "react";
 import Loading2 from "../../toggle/loading2/loading2";
 
-const Prompt = ({ SideIndex, isSideIndex, getPromptSession, setIndex }) => {
+const Prompt = ({
+  SideIndex,
+  isSideIndex,
+  getPromptSession,
+  setIndex,
+  promptSession,
+  MakeNewSession,
+}) => {
   const [prompts, setPrompts] = useState([]);
   const [loading, setLoading] = useState(true);
   // eslint-disable-next-line no-unused-vars
   const [error, setError] = useState(null);
-
-  const MakeNewSession = async () => {
-    const NewSession = await CreateSession();
-    getPromptSession(NewSession);
-  };
 
   useEffect(() => {
     const fetchPrompts = async () => {
@@ -30,7 +31,7 @@ const Prompt = ({ SideIndex, isSideIndex, getPromptSession, setIndex }) => {
     };
     fetchPrompts();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [promptSession]);
 
   const RefetchPrompts = async () => {
     try {
