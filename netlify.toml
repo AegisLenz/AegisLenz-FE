@@ -1,0 +1,5 @@
+[[redirects]]
+  from = "/server/*"  # React 애플리케이션이 요청하는 엔드포인트
+  to = "http://203.252.213.209:4040/:splat"  # 실제 API 서버 주소
+  status = 200
+  force = true
