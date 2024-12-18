@@ -35,7 +35,6 @@ const AccountStatus = ({ GenDetailData }) => {
 
   const [searchTerm, setSearchTerm] = useState("");
   const [filterCategory, setFilterCategory] = useState("none");
-  // eslint-disable-next-line no-unused-vars
   const [filteredData, setFilteredData] = useState(data);
   const [nowloading, setnowloading] = useState(true);
 
@@ -123,6 +122,38 @@ const AccountStatus = ({ GenDetailData }) => {
           <S.Tbody>
             {nowloading ? (
               <Loading2 />
+            ) : filteredData.length > 0 ? (
+              filteredData.map((row, index) => (
+                <S.Tr
+                  key={index}
+                  type={true}
+                  onClick={() => GenDetailData(row, "iam")}
+                >
+                  <S.Td>
+                    <S.StatusIcon type={true} />
+                  </S.Td>
+                  <S.Td>{row.UserName}</S.Td>
+                  <S.Td>
+                    {getMostRecentDate(
+                      row.PasswordLastUsed,
+                      row.AccessKeysLastUsed[0]?.LastUsedDate
+                    ) || "N/A"}
+                  </S.Td>
+                  <S.Td>
+                    {row.AttachedPolicies.map((item) => (
+                      <li>{item.PolicyName}</li>
+                    ))}
+                  </S.Td>
+                  <S.Td>{row.UserId}</S.Td>
+                  <S.Td>
+                    <S.TypeIconWrapper>
+                      <S.TypeIcon color={type[index % 3][1]}>
+                        {type[index % 3][0]}
+                      </S.TypeIcon>
+                    </S.TypeIconWrapper>
+                  </S.Td>
+                </S.Tr>
+              ))
             ) : (
               data.map((row, index) => (
                 <S.Tr
