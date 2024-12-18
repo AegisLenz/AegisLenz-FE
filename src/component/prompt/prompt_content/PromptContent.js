@@ -15,6 +15,7 @@ const PromptContent = ({ isSideContent, MarkData, SideContent }) => {
             isChatOFF={true}
             isFillterOFF={true}
             isEditOn={false}
+            type={"prompt"}
           />
         ) : (
           ""

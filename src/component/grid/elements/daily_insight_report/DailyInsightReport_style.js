@@ -48,11 +48,11 @@ export const SubContent = styled.div`
   border-radius: 1em;
   position: relative;
   overflow-y: auto;
-  overflow-x: hidden;
 
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
+  align-items: center;
 `;
 
 export const Content = styled.div`
@@ -61,9 +61,9 @@ export const Content = styled.div`
   color: white;
   font-size: 0.9em;
   font-weight: 400;
-  margin: 2% 0 3% 10%;
+  margin: 2%;
 
-  &::before {
+  /* &::before {
     content: "";
     display: block;
     position: absolute;
@@ -74,5 +74,5 @@ export const Content = styled.div`
     background-size: contain;
     background-repeat: no-repeat;
     transform: translateX(-50%);
-  }
+  } */
 `;

@@ -69,7 +69,7 @@ export const ContentSelectTitle = styled.div`
   margin: 1% 0 0 1%;
 
   width: 98%;
-  height: 10%;
+  height: 8%;
 `;
 export const ContentSelect = styled.div`
   width: 96%;
@@ -79,25 +79,73 @@ export const ContentSelect = styled.div`
 
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
 `;
 
 export const InputWrapper = styled.div`
-  input {
-    margin: 1%;
+  position: relative;
+  width: 100%;
+  height: 10%;
+
+  border-bottom: 2px solid #333;
+  box-shadow: 0px 5px 5px -8px #333;
+
+  margin-bottom: 2%;
+  padding-bottom: 1%;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+`;
+export const TextInput = styled.input`
+  width: 80%;
+  height: 96%;
+
+  border: none;
+  background-color: transparent;
+
+  margin-left: 1%;
+  font-size: 1em;
+
+  &:focus {
+    outline: none;
   }
 `;
-export const RadioButtonWrapper = styled.label`
-  display: flex;
-  align-items: center;
+// 스위치 Wrapper
+export const SwitchWrapper = styled.label`
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 26px;
 
+  margin-right: 1%;
+`;
+
+// 스위치 스타일
+export const SwitchSlider = styled.span`
+  position: absolute;
   cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: ${(props) => (props.checked ? "#2196F3" : "#ccc")};
+  transition: 0.4s;
+  border-radius: 26px;
 
-  input {
-    margin: 1%;
-  }
-
-  &:hover {
-    color: #104f55;
+  &::before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 4px;
+    bottom: 3px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+    transform: ${(props) =>
+      props.checked ? "translateX(24px)" : "translateX(0)"};
   }
 `;
 

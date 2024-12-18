@@ -54,8 +54,10 @@ export const Monthly = styled.div`
   justify-content: center;
   align-items: center;
 
-  background-color: #ddd;
+  background-color: #104f55;
   box-shadow: 1px 1px 3px #aaa;
+
+  color: white;
 
   border-radius: 1em;
 

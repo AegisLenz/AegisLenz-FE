@@ -7,6 +7,17 @@ const ViewReportForm = () => {
   const [Index, setIndex] = useState([]);
   const [nowIndexLoad, setnowIndexLoad] = useState(true);
 
+  // 스위치 상태를 저장하는 배열
+  const [toggles, setToggles] = useState([
+    false, // 공격자 정보
+    false, // 공격 이벤트 정리
+    false, // 공격 대상 (리소스)
+    false, // 공격 유형
+    false, // 로그 포함하기
+    false, // 공격근거 포함하기
+    false, // 결과요약 포함하기
+  ]);
+
   useEffect(() => {
     const fetchData = async () => {
       setnowIndexLoad(true);
@@ -20,7 +31,15 @@ const ViewReportForm = () => {
       }
     };
     fetchData();
-  });
+  }, []);
+
+  // 토글 상태 변경 함수
+  const handleToggle = (index) => {
+    setToggles((prevToggles) =>
+      prevToggles.map((toggle, i) => (i === index ? !toggle : toggle))
+    );
+  };
+
   return (
     <S.Wrapper>
       <S.IndexWrapper>
@@ -43,41 +62,48 @@ const ViewReportForm = () => {
           <S.ContentSelectTitle>
             <h1>Form Edit</h1>
           </S.ContentSelectTitle>
+
           <S.ContentSelect>
             <S.InputWrapper>
-              제목 :
-              <input
+              보고서 제목 :
+              <S.TextInput
                 type="text"
                 placeholder="입력하지 않으면 자동으로 생성됩니다."
-              ></input>
+              ></S.TextInput>
             </S.InputWrapper>
-            <S.InputWrapper>
-              날짜 :
-              <input
-                type="text"
-                placeholder="입력하지 않으면 생성 당시 날짜가 사용됩니다."
-              ></input>
-            </S.InputWrapper>
-            <S.RadioButtonWrapper>
-              <input type="checkbox" name="options1" value="option1" />
-              로그 포함하기
-            </S.RadioButtonWrapper>
-            <S.RadioButtonWrapper>
-              <input type="checkbox" name="options2" value="option2" />
-              공격근거 포함하기
-            </S.RadioButtonWrapper>
-            <S.RadioButtonWrapper>
-              <input type="checkbox" name="options3" value="option3" />
-              결과요약 포함하기
-            </S.RadioButtonWrapper>
+            {/* <S.InputWrapper>
+              날짜와 시간 :<input type="date"></input>
+              <input type="date"></input>
+            </S.InputWrapper> */}
+            {[
+              "공격자 정보",
+              "공격 이벤트 정리",
+              "공격 대상 (리소스)",
+              "공격 유형 (Tatic, Technique)",
+              "로그 포함하기",
+              "공격근거 포함하기",
+              "결과요약 포함하기",
+            ].map((label, index) => (
+              <S.InputWrapper key={index}>
+                <S.SwitchWrapper>
+                  <S.SwitchSlider
+                    checked={toggles[index]}
+                    onClick={() => handleToggle(index)}
+                  />
+                </S.SwitchWrapper>
+                {label}
+              </S.InputWrapper>
+            ))}
           </S.ContentSelect>
         </S.ContentSelectWrapper>
         <S.ContentPromptWrapper>
           <S.ContentPromptTitle>
             <h1>Prompt</h1>
           </S.ContentPromptTitle>
-          <S.ContentPromptInnerText>test</S.ContentPromptInnerText>
-          <S.SaveButton onClick={() => {}}>Save</S.SaveButton>
+          <S.ContentPromptInnerText>
+            아직 지원되지 않는 기능입니다.
+          </S.ContentPromptInnerText>
+          <S.SaveButton onClick={() => console.log(toggles)}>Save</S.SaveButton>
         </S.ContentPromptWrapper>
       </S.ContentWrapper>
     </S.Wrapper>

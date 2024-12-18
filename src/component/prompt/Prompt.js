@@ -10,16 +10,12 @@ const Prompt = () => {
   const [ChatWidth, setChatWidth] = useState(47);
   const [Chatleft, setChatleft] = useState(20);
   const [MarkData, setMarkData] = useState([]);
-  const [promptIndex, setPromptIndex] = useState([]);
   const [promptSession, setPromptSession] = useState("");
 
   const getPromptSession = (value) => {
     if (value) {
       setPromptSession(value);
     }
-  };
-  const setIndex = (value) => {
-    setPromptIndex(value);
   };
 
   const setMarkDataFunc = (value) => {
@@ -35,6 +31,9 @@ const Prompt = () => {
     if (MarkData.length !== 0) {
       setSideContent(value);
     }
+  };
+  const MakeNewSession = () => {
+    setPromptSession("");
   };
 
   useEffect(() => {
@@ -60,8 +59,9 @@ const Prompt = () => {
       <PromptIndex
         SideIndex={SideIndex}
         isSideIndex={isSideIndex}
-        setIndex={setIndex}
         getPromptSession={getPromptSession}
+        MakeNewSession={MakeNewSession}
+        promptSession={promptSession}
       />
       <S.ChatAreaWrapper
         ChatWidth={ChatWidth + "vw"}
@@ -75,7 +75,6 @@ const Prompt = () => {
             SideContent={SideContent} //오른쪽 On/Off
             markData={setMarkDataFunc} //오른쪽에 띄울 데이터
             getPromptSession={getPromptSession}
-            promptIndex={promptIndex}
             type={"prompt"}
           />
         </S.ChatArea>
