@@ -31,11 +31,10 @@ export const Title = styled.h2`
   align-content: center;
 `;
 export const ContentWrapper = styled.div`
-  position: absolute;
-  top: 6vh;
-
   width: 100%;
-  height: 100%;
+  height: calc(100%-6vh);
+
+  margin-top: 6vh;
 
   display: flex;
   justify-content: center;
