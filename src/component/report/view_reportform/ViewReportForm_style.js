@@ -84,8 +84,7 @@ export const ContentSelect = styled.div`
 
 export const InputWrapper = styled.div`
   position: relative;
-  width: 100%;
-  height: 10%;
+  width: 50%;
 
   border-bottom: 2px solid #333;
   box-shadow: 0px 5px 5px -8px #333;
@@ -94,6 +93,7 @@ export const InputWrapper = styled.div`
   padding-bottom: 1%;
 
   display: flex;
+  flex-wrap: wrap;
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
@@ -111,6 +111,12 @@ export const TextInput = styled.input`
   &:focus {
     outline: none;
   }
+`;
+export const Input = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
 `;
 // 스위치 Wrapper
 export const SwitchWrapper = styled.label`

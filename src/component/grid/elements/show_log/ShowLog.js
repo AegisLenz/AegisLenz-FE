@@ -33,8 +33,6 @@ const ShowLog = ({ Data }) => {
     }
   };
 
-  // const []
-
   return (
     <S.Wrapper>
       <S.Title>
