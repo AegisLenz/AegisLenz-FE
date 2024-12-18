@@ -8,7 +8,7 @@ const filterOptions = [
   { label: "== none ==", value: "none" },
   { label: "Instance ID", value: "InstanceId" },
   { label: "State", value: "State" },
-  { label: "Name", value: "Tags" },
+  { label: "Name", value: "Name" },
   { label: "Public IP Address", value: "PublicIpAddress" },
   { label: "Private IP Address", value: "PrivateIpAddress" },
 ];
@@ -57,7 +57,7 @@ const EC2Status = ({ GenDetailData }) => {
           return instance.InstanceId.toLowerCase().includes(value);
         case "State":
           return instance.State.toLowerCase().includes(value);
-        case "Tags":
+        case "Name":
           return instance.Tags[0]?.Value.toLowerCase().includes(value);
         case "PublicIpAddress":
           return (
@@ -99,7 +99,7 @@ const EC2Status = ({ GenDetailData }) => {
             value={searchTerm}
             onChange={handleSearch}
           />
-          <S.InitButton onClick={handleSearch}>Reset</S.InitButton>
+          <S.InitButton onClick={resetSearch}>Reset</S.InitButton>
         </S.FilterWrapper>
       </S.Title>
       <S.TableWrapper>
@@ -117,26 +117,47 @@ const EC2Status = ({ GenDetailData }) => {
             <Loading2 />
           ) : (
             <S.Tbody>
-              {data.map((item) => (
-                <S.Tr
-                  key={item.InstanceId}
-                  onClick={() => GenDetailData(item, "ec2")}
-                >
-                  <S.Td>
-                    <S.StatusIcon color={StateColorTable[item.State]} />
-                  </S.Td>
-                  <S.Td>{item.Tags[0].Value}</S.Td>
-                  <S.Td>{item.IamInstanceProfile.Arn}</S.Td>
-                  <S.Td>{item.IamInstanceProfile.Id}</S.Td>
-                  <S.Td>
-                    {item.SecurityGroups.map((item) => (
-                      <li>{item.GroupId}</li>
-                    ))}
-                  </S.Td>
-                  <S.Td>{item.PublicIpAddress}</S.Td>
-                  <S.Td>{item.PrivateIpAddress}</S.Td>
-                </S.Tr>
-              ))}
+              {filteredData.lignth >= 0
+                ? filteredData.map((item) => (
+                    <S.Tr
+                      key={item.InstanceId}
+                      onClick={() => GenDetailData(item, "ec2")}
+                    >
+                      <S.Td>
+                        <S.StatusIcon color={StateColorTable[item.State]} />
+                      </S.Td>
+                      <S.Td>{item.Tags[0].Value}</S.Td>
+                      <S.Td>{item.IamInstanceProfile.Arn}</S.Td>
+                      <S.Td>{item.IamInstanceProfile.Id}</S.Td>
+                      <S.Td>
+                        {item.SecurityGroups.map((item) => (
+                          <li>{item.GroupId}</li>
+                        ))}
+                      </S.Td>
+                      <S.Td>{item.PublicIpAddress}</S.Td>
+                      <S.Td>{item.PrivateIpAddress}</S.Td>
+                    </S.Tr>
+                  ))
+                : data.map((item) => (
+                    <S.Tr
+                      key={item.InstanceId}
+                      onClick={() => GenDetailData(item, "ec2")}
+                    >
+                      <S.Td>
+                        <S.StatusIcon color={StateColorTable[item.State]} />
+                      </S.Td>
+                      <S.Td>{item.Tags[0].Value}</S.Td>
+                      <S.Td>{item.IamInstanceProfile.Arn}</S.Td>
+                      <S.Td>{item.IamInstanceProfile.Id}</S.Td>
+                      <S.Td>
+                        {item.SecurityGroups.map((item) => (
+                          <li>{item.GroupId}</li>
+                        ))}
+                      </S.Td>
+                      <S.Td>{item.PublicIpAddress}</S.Td>
+                      <S.Td>{item.PrivateIpAddress}</S.Td>
+                    </S.Tr>
+                  ))}
             </S.Tbody>
           )}
         </S.Table>

@@ -5,6 +5,7 @@ import GetPromptContents from "../../hook/Prompt/GetPromptContents";
 import Prompthook from "../../hook/Prompt/Prompthook";
 import CreateSession from "../../hook/Prompt/CreateNewPrompt";
 
+// eslint-disable-next-line no-unused-vars
 const testdata = [
   {
     eventVersion: "1.10",
@@ -6088,6 +6089,7 @@ const testdata = [
   },
 ];
 
+// eslint-disable-next-line no-unused-vars
 const testAccountData = [
   {
     UserName: "Wonje_Cha",
@@ -6128,8 +6130,9 @@ const ToggleChat = ({
   const [SuggestData, setSuggestData] = useState([]);
 
   const [isDataLoaded, setIsDataLoaded] = useState(false); // useEffect 완료 상태 관리
-
+  // eslint-disable-next-line no-unused-vars
   const [ESResult, setESResult] = useState([]);
+  // eslint-disable-next-line no-unused-vars
   const [DBResult, setDBResult] = useState([]);
 
   useEffect(() => {
