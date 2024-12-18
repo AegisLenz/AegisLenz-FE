@@ -10,4 +10,4 @@ export { default as Report } from "./report/Report";
 export { default as ShowPolicy } from "./show_policy/ShowPolicy";
 export { default as ShowLog } from "./show_log/ShowLog";
 export { default as AttackVisualGraph } from "./attack_visualgraph/AttackVisualGraph";
-export { default as Risk } from "./risk/Risk";
+export { default as Risks } from "./risk/Risk";

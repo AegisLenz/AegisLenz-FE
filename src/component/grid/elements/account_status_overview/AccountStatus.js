@@ -16,6 +16,20 @@ const filterOptions = [
   { label: "Type", value: "Type" },
 ];
 
+// 가장 최근 날짜를 반환하는 함수
+const getMostRecentDate = (passwordLastUsed, accessKeysLastUsed) => {
+  const passwordDate = passwordLastUsed
+    ? new Date(passwordLastUsed)
+    : new Date(0); // 기본값: 과거 시간
+  const accessKeyDate = accessKeysLastUsed?.[0]
+    ? new Date(accessKeysLastUsed[0])
+    : new Date(0);
+
+  return passwordDate > accessKeyDate
+    ? passwordLastUsed
+    : accessKeysLastUsed?.[0];
+};
+
 const AccountStatus = ({ GenDetailData }) => {
   const [data, setData] = useState([]);
 
@@ -28,7 +42,6 @@ const AccountStatus = ({ GenDetailData }) => {
     const fetchData = async () => {
       setnowloading(true);
       const GetData = await GetIAM();
-      console.log(GetData.IAMUser);
       setData(GetData.IAMUser);
       setnowloading(false);
     };
@@ -109,6 +122,38 @@ const AccountStatus = ({ GenDetailData }) => {
           <S.Tbody>
             {nowloading ? (
               <Loading2 />
+            ) : filteredData.length > 0 ? (
+              filteredData.map((row, index) => (
+                <S.Tr
+                  key={index}
+                  type={true}
+                  onClick={() => GenDetailData(row, "iam")}
+                >
+                  <S.Td>
+                    <S.StatusIcon type={true} />
+                  </S.Td>
+                  <S.Td>{row.UserName}</S.Td>
+                  <S.Td>
+                    {getMostRecentDate(
+                      row.PasswordLastUsed,
+                      row.AccessKeysLastUsed[0]?.LastUsedDate
+                    ) || "N/A"}
+                  </S.Td>
+                  <S.Td>
+                    {row.AttachedPolicies.map((item) => (
+                      <li>{item.PolicyName}</li>
+                    ))}
+                  </S.Td>
+                  <S.Td>{row.UserId}</S.Td>
+                  <S.Td>
+                    <S.TypeIconWrapper>
+                      <S.TypeIcon color={type[index % 3][1]}>
+                        {type[index % 3][0]}
+                      </S.TypeIcon>
+                    </S.TypeIconWrapper>
+                  </S.Td>
+                </S.Tr>
+              ))
             ) : (
               data.map((row, index) => (
                 <S.Tr
@@ -121,7 +166,10 @@ const AccountStatus = ({ GenDetailData }) => {
                   </S.Td>
                   <S.Td>{row.UserName}</S.Td>
                   <S.Td>
-                    {row.AccessKeysLastUsed[0]?.LastUsedDate || "N/A"}
+                    {getMostRecentDate(
+                      row.PasswordLastUsed,
+                      row.AccessKeysLastUsed[0]?.LastUsedDate
+                    ) || "N/A"}
                   </S.Td>
                   <S.Td>
                     {row.AttachedPolicies.map((item) => (

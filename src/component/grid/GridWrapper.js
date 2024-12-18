@@ -3,6 +3,7 @@ import GridLayout from "react-grid-layout";
 import "react-grid-layout/css/styles.css";
 import Alert from "../alert/Alert";
 import ChatToggle from "../toggle/chat/ToggleChat";
+// eslint-disable-next-line no-unused-vars
 import FilterToggle from "../toggle/filter/Filter";
 import { useLocation } from "react-router-dom";
 import {
@@ -18,7 +19,7 @@ import {
   ShowPolicy,
   ShowLog,
   AttackVisualGraph,
-  Risk,
+  Risks,
 } from "./elements";
 import * as S from "./Grid_style";
 
@@ -116,7 +117,6 @@ const testAccount = [
     LastUpdated: "2024-10-31T15:22:57.687Z",
   },
 ];
-
 const testlogdata = [
   {
     eventVersion: "1.10",
@@ -6432,20 +6432,17 @@ const testlogdata = [
   },
 ];
 
-const Grid = ({
-  isEditOn,
-  MarkData,
-  isChatOFF,
-  isFillterOFF,
-  SideContent,
-  setMarkDataFunc,
-}) => {
+const Grid = ({ isEditOn, MarkData }) => {
   const [isChattoggleOpen, setChatToggle] = useState(false);
   const [markData, setMarkData] = useState(MarkData || []);
+  // eslint-disable-next-line no-unused-vars
   const [promptSession, setPromptSession] = useState("");
+  // eslint-disable-next-line no-unused-vars
   const [ReportData, setReportData] = useState("");
 
+  // eslint-disable-next-line no-unused-vars
   const [ESResultData, setESREsultData] = useState(testlogdata || []);
+  // eslint-disable-next-line no-unused-vars
   const [DBResultData, setDBREsultData] = useState(testAccount || []);
   const location = useLocation();
 
@@ -6456,30 +6453,37 @@ const Grid = ({
     }
   }, [location.state]);
 
-  const getESResultData = (value) => {
-    setESREsultData(value);
-  };
-  const getDBResultData = (value) => {
-    setDBREsultData(value);
-  };
-  const getReportData = (value) => {
-    setReportData(value);
-  };
+  // const getESResultData = (value) => {
+  //   setESREsultData(value);
+  // };
+  // const getDBResultData = (value) => {
+  //   setDBREsultData(value);
+  // };
+  // const getReportData = (value) => {
+  //   setReportData(value);
+  // };
   const getPromptSession = (value) => {
     setPromptSession(value);
   };
+
   const ChatToggleButton = () => {
     if (isChattoggleOpen) {
       setMarkData([]);
     } else {
-      setMarkData(MarkData);
+      if (MarkData && MarkData.length > 0) {
+        setMarkData(MarkData);
+      }
     }
     setChatToggle((prev) => !prev);
   };
 
   const setChatToggleOpen = () => {
     setChatToggle(true);
+    if (MarkData && MarkData.length > 0) {
+      setMarkData(MarkData);
+    }
   };
+
   const InAlert = () => {
     setMarkData([
       "scroll",
@@ -6499,6 +6503,7 @@ const Grid = ({
         y: 0,
         w: 50,
         h: 0,
+        isResizable: false,
       },
       {
         i: "chat",
@@ -6506,23 +6511,6 @@ const Grid = ({
         y: 0,
         w: 50,
         h: 7,
-        content: (
-          <ChatToggle
-            isChattoggleOpen={isChattoggleOpen}
-            ChatToggleButton={ChatToggleButton}
-            setChatToggleOpen={setChatToggleOpen}
-            sizeFull={false}
-            SideContent={SideContent} //오른쪽 On/Off
-            markData={setMarkDataFunc} //오른쪽에 띄울 데이터
-            promptIndex={false}
-            promptSession={promptSession !== "" ? promptSession : ""}
-            getPromptSession={() => {}}
-            getReportData={getReportData}
-            setESREsultData={getESResultData}
-            setDBREsultData={getDBResultData}
-            type={"grid"}
-          />
-        ),
         isResizable: false,
       },
       // {
@@ -6540,7 +6528,6 @@ const Grid = ({
         y: 0,
         w: 50,
         h: 15,
-        content: <AccountCount />,
       },
       {
         i: "Score",
@@ -6548,15 +6535,13 @@ const Grid = ({
         y: 23,
         w: 30,
         h: 15,
-        content: <Score />,
       },
       {
-        i: "Risk",
+        i: "Risks",
         x: 30,
-        y: 0,
+        y: 10,
         w: 20,
         h: 45,
-        content: <Risk />,
       },
       {
         i: "DailyInsight",
@@ -6564,7 +6549,6 @@ const Grid = ({
         y: 35,
         w: 30,
         h: 30,
-        content: <DailyInsight />,
       },
       {
         i: "AccountByService",
@@ -6572,23 +6556,20 @@ const Grid = ({
         y: 0,
         w: 17,
         h: 37,
-        content: <AccountByService />,
       },
       {
         i: "NeedCheck",
-        x: 37,
+        x: 30,
         y: 50,
-        w: 30,
+        w: 37,
         h: 33,
-        content: <NeedCheck />,
       },
       {
         i: "Detection",
         x: 0,
         y: 40,
-        w: 37,
+        w: 30,
         h: 33,
-        content: <Detection />,
       },
       {
         i: "AccountStatus",
@@ -6596,7 +6577,6 @@ const Grid = ({
         y: 10,
         w: 33,
         h: 70,
-        content: <AccountStatus data={DBResultData} GenDetailData={() => {}} />,
       },
       // {
       //   i: "EC2Status",
@@ -6607,8 +6587,7 @@ const Grid = ({
       //   content: <EC2Status GenDetailData={() => {}} />,
       // },
     ],
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [DBResultData, isChattoggleOpen]
+    []
   );
 
   // 초기 레이아웃 설정
@@ -6632,13 +6611,19 @@ const Grid = ({
         const chagedHeight = wrapperHeight / rows;
         const ratio = (chagedHeight / initHeight / 9) * 950;
         setratio(ratio);
+        setGridLayout((prev) =>
+          prev.map((item) => ({
+            ...item,
+            h: item.h * ratio, // h 값을 비율에 따라 수정
+          }))
+        );
       }
       setGridWidth(window.innerWidth);
     };
     const handleScroll = () => {
-      const scrollTop = window.scrollY;
-      const calculatedHeight = scrollTop * 0.09; // 스크롤에 따른 높이 계산
       if (isChattoggleOpen) {
+        const scrollTop = window.scrollY;
+        const calculatedHeight = scrollTop * 0.09; // 스크롤에 따른 높이 계산
         setGridLayout((prev) =>
           prev.map((item) =>
             item.i === "scroll" ? { ...item, h: calculatedHeight } : item
@@ -6661,105 +6646,43 @@ const Grid = ({
   // markData 없데이트 시에
   useEffect(() => {
     // MarkData가 업데이트될 때 markData를 업데이트
-    if (MarkData.length > 0) {
+    if (MarkData && MarkData.length > 0) {
       setMarkData(MarkData);
     }
   }, [MarkData]);
 
-  // markData가 존재할 때
+  // markData로 필터링
   useEffect(() => {
     if (markData && markData.length > 0) {
-      let currentX = 0;
-      let currentY = 0;
-      let maxRowHeight = 0; // 현재 행에서 가장 큰 높이
-      // 필터링하면서 x값과 y값을 계산
-      const filteredLayout = InitLayout.filter((item) =>
-        markData.includes(item.i)
-      ).map((item) => {
-        // 다음 줄로 넘기기 조건: w값의 합이 50을 초과하면 줄을 바꿈
-        if (currentX + item.w > 50) {
-          currentX = 0; // x를 0으로 초기화
-          currentY += maxRowHeight; // y를 가장 큰 높이만큼 증가
-          maxRowHeight = 0; // 새로운 행에서 가장 큰 높이를 다시 0으로 초기화
+      const additionalLayouts = [];
+
+      const layoutMap = [
+        { i: "ShowLog", x: 50, y: 55, w: 50, h: 40 },
+        { i: "Report", x: 50, y: 0, w: 50, h: 20 },
+        { i: "ShowPolicy", x: 50, y: 50, w: 50, h: 25 },
+        { i: "AttackVisualGraph", x: 50, y: 30, w: 50, h: 40 },
+      ];
+
+      markData.forEach((item) => {
+        if (layoutMap[item]) {
+          additionalLayouts.push(layoutMap[item]);
         }
-        const layoutItem = {
-          ...item,
-          x: currentX, // x 값을 설정
-          y: currentY, // y 값을 설정
-        };
-        currentX += item.w; // 현재 x 값을 w만큼 증가
-        maxRowHeight = Math.max(maxRowHeight, item.h); // 행에서 가장 큰 높이를 저장
-        return layoutItem;
       });
-      setGridLayout(filteredLayout);
-      if (markData.includes("ShowLog")) {
-        setGridLayout((prev) => [
-          ...prev,
-          {
-            i: "ShowLog",
-            x: 50,
-            y: 55,
-            w: 50,
-            h: 40,
-            content: <ShowLog Data={ESResultData} />,
-          },
-        ]);
+
+      if (additionalLayouts.length > 0) {
+        setGridLayout((prev) => [...prev, ...additionalLayouts]);
       }
-      if (markData.includes("Report")) {
-        setGridLayout((prev) => [
-          ...prev,
-          {
-            i: "Report",
-            x: 50,
-            y: 0,
-            w: 50,
-            h: 20,
-            content: <Report data={ReportData} />,
-          },
-        ]);
-      }
-      if (markData.includes("ShowPolicy")) {
-        setGridLayout((prev) => [
-          ...prev,
-          {
-            i: "ShowPolicy",
-            x: 50,
-            y: 50,
-            w: 50,
-            h: 25,
-            content: <ShowPolicy />,
-          },
-        ]);
-      }
-      if (markData.includes("AttackVisualGraph")) {
-        setGridLayout((prev) => [
-          ...prev,
-          {
-            i: "AttackVisualGraph",
-            x: 50,
-            y: 30,
-            w: 50,
-            h: 40,
-            content: <AttackVisualGraph />,
-          },
-        ]);
+
+      if (markData.length > 0) {
+        setGridLayout((prev) =>
+          prev.filter((item) => markData.includes(item.i))
+        );
       }
     } else {
-      setGridLayout(InitLayout);
+      // 초기 레이아웃으로 복원
+      setGridLayout(InitLayout.map((item) => ({ ...item, h: item.h * ratio })));
     }
-    if (!isChatOFF && isFillterOFF && !isChattoggleOpen) {
-      setGridLayout(InitLayout);
-    }
-  }, [
-    InitLayout,
-    markData,
-    MarkData,
-    isChattoggleOpen,
-    isFillterOFF,
-    isChatOFF,
-    ReportData,
-    ESResultData,
-  ]);
+  }, [markData, InitLayout, ratio]);
 
   // 토글 오픈
   useEffect(() => {
@@ -6777,30 +6700,17 @@ const Grid = ({
               x:
                 item.x >= 47 || item.i === "scroll" || item.i === "chat"
                   ? item.x
-                  : item.x + 50,
+                  : item.i === "Risks"
+                  ? 80
+                  : 50,
+              w: 50,
             };
           }
           return item;
         })
       );
-    } else {
-      if (markData.length < 0) {
-        setGridLayout(
-          InitLayout.map((item) => ({
-            ...item,
-            h: item.h * ratio, // h 값을 비율에 따라 수정
-          }))
-        );
-      } else {
-        setGridLayout(
-          InitLayout.map((item) => ({
-            ...item,
-            h: item.h * ratio, // h 값을 비율에 따라 수정
-          }))
-        );
-      }
     }
-  }, [isChattoggleOpen, InitLayout, markData, ratio]);
+  }, [InitLayout, isChattoggleOpen, ratio]);
 
   return (
     <S.Wrapper ref={wrapperRef}>
@@ -6820,11 +6730,108 @@ const Grid = ({
         draggableHandle=".grid-item"
         style={{ backgroundColor: "transparent" }}
       >
-        {gridLayout.map((item) => (
-          <S.GridElement key={item.i}>
-            {item.i === "chat" ? item.content : item.content}
-          </S.GridElement>
-        ))}
+        {gridLayout.map((item) => {
+          switch (item.i) {
+            case "scroll":
+              return (
+                <S.GridElementNoBoxShadow
+                  key={item.i}
+                ></S.GridElementNoBoxShadow>
+              );
+            case "AccountByService":
+              return (
+                <S.GridElement key={item.i}>
+                  <AccountByService />
+                </S.GridElement>
+              );
+            case "AccountCount":
+              return (
+                <S.GridElementNoBoxShadow key={item.i}>
+                  <AccountCount />
+                </S.GridElementNoBoxShadow>
+              );
+            case "AccountStatus":
+              return (
+                <S.GridElement key={item.i}>
+                  <AccountStatus GenDetailData={() => {}} />
+                </S.GridElement>
+              );
+            case "DailyInsight":
+              return (
+                <S.GridElement key={item.i}>
+                  <DailyInsight />
+                </S.GridElement>
+              );
+            case "Detection":
+              return (
+                <S.GridElement key={item.i}>
+                  <Detection />
+                </S.GridElement>
+              );
+            case "EC2Status":
+              return (
+                <S.GridElement key={item.i}>
+                  <EC2Status />
+                </S.GridElement>
+              );
+            case "NeedCheck":
+              return (
+                <S.GridElement key={item.i}>
+                  <NeedCheck />
+                </S.GridElement>
+              );
+            case "Report":
+              return (
+                <S.GridElement key={item.i}>
+                  <Report data={ReportData} />
+                </S.GridElement>
+              );
+            case "Score":
+              return (
+                <S.GridElement key={item.i}>
+                  <Score />
+                </S.GridElement>
+              );
+            case "ShowPolicy":
+              return (
+                <S.GridElement key={item.i}>
+                  <ShowPolicy />
+                </S.GridElement>
+              );
+            case "ShowLog":
+              return (
+                <S.GridElement key={item.i}>
+                  <ShowLog Data={ESResultData} />
+                </S.GridElement>
+              );
+            case "AttackVisualGraph":
+              return (
+                <S.GridElement key={item.i}>
+                  <AttackVisualGraph />
+                </S.GridElement>
+              );
+            case "Risks":
+              return (
+                <S.GridElement key={item.i}>
+                  <Risks />
+                </S.GridElement>
+              );
+            case "chat":
+              return (
+                <S.GridElementNoBoxShadow key={item.i}>
+                  <ChatToggle
+                    markData={setMarkData}
+                    isChattoggleOpen={isChattoggleOpen}
+                    ChatToggleButton={ChatToggleButton}
+                    setChatToggleOpen={setChatToggleOpen}
+                    type={"grid"}
+                  />
+                </S.GridElementNoBoxShadow>
+              );
+            default:
+              return <div>Unknown Component</div>;
+          }
+        })}
       </GridLayout>
     </S.Wrapper>
   );

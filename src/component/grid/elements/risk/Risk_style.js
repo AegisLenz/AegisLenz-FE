@@ -13,6 +13,8 @@ export const Wrapper = styled.div`
   flex-direction: column;
   border-radius: 1em;
   box-shadow: 1px 1px 5px #333;
+
+  overflow-y: auto;
 `;
 
 export const Title = styled.h2`
@@ -29,53 +31,50 @@ export const Title = styled.h2`
   align-content: center;
 `;
 export const ContentWrapper = styled.div`
-  position: absolute;
-  top: 6vh;
-
-  overflow-y: auto;
-  overflow-x: hidden;
-
   width: 100%;
-  height: 100%;
+  height: calc(100%-6vh);
+
+  margin-top: 6vh;
 
   display: flex;
-  justify-content: flex-start;
-  align-items: center;
+  justify-content: center;
+  align-items: flex-start;
   flex-direction: column;
 `;
 
 export const IndexWrapper = styled.div`
-  width: 90%;
+  width: 95%;
   height: 13vh;
 
   border-top: 1px solid #333;
+  margin-left: 3%;
 
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   flex-direction: row;
 `;
 
 export const CountWrapper = styled.div`
-  width: 60%;
+  position: relative;
+  width: 8vw;
   height: 100%;
 
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   flex-direction: row;
 
   /* background-color: #104f55; */
 
   h1 {
+    width: 2vw;
     color: black;
     padding: 0;
-    margin: 0 0 2% 0;
-    width: 30%;
     text-align: center;
   }
   p {
-    width: 50%;
+    width: calc(6vw - 20%);
     color: black;
 
     padding: 0 10%;
@@ -90,14 +89,14 @@ export const CountWrapper = styled.div`
   }
 `;
 export const Index = styled.div`
-  width: 40%;
+  width: 7vw;
   min-height: 100%;
   overflow-y: auto;
 
   display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
 `;
 export const Label = styled.div`
   display: inline-block;
@@ -105,7 +104,7 @@ export const Label = styled.div`
   margin: 3px;
   border-radius: 4px;
   color: white;
-  background-color: ${({ color }) => color || "#007bff"}; /* Default to blue */
+  background-color: ${({ color }) => color || "#104f55"};
   font-size: 0.9em;
   text-align: center;
 `;
