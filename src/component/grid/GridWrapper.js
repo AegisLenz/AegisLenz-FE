@@ -6432,14 +6432,7 @@ const testlogdata = [
   },
 ];
 
-const Grid = ({
-  isEditOn,
-  MarkData,
-  isChatOFF,
-  isFillterOFF,
-  SideContent,
-  setMarkDataFunc,
-}) => {
+const Grid = ({ isEditOn, MarkData }) => {
   const [isChattoggleOpen, setChatToggle] = useState(false);
   const [markData, setMarkData] = useState(MarkData || []);
   // eslint-disable-next-line no-unused-vars
@@ -6760,7 +6753,7 @@ const Grid = ({
             case "AccountStatus":
               return (
                 <S.GridElement key={item.i}>
-                  <AccountStatus />
+                  <AccountStatus GenDetailData={() => {}} />
                 </S.GridElement>
               );
             case "DailyInsight":
