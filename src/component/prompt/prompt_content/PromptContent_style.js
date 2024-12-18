@@ -1,9 +1,8 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-  position:absolute;
-  top:0;
-
+  position: absolute;
+  top: 0;
 `;
 export const GridWrapper = styled.div`
   z-index: 100;
@@ -15,6 +14,7 @@ export const GridWrapper = styled.div`
   transition: all ease 0.3s;
   overflow-x: hidden;
   overflow-y: auto;
+
   box-shadow: inset 1px 0 2px 0 #888888;
   background-color: #cccccc;
 `;
@@ -23,6 +23,7 @@ export const SideInnerToggle = styled.div`
   width: 2vw;
   height: 2vw;
   margin-left: 2%;
+
   border-radius: 0.5em;
   transition: all ease 0.3s;
 

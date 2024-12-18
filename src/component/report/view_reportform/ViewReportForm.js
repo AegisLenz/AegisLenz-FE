@@ -71,29 +71,27 @@ const ViewReportForm = () => {
                 placeholder="입력하지 않으면 자동으로 생성됩니다."
               ></S.TextInput>
             </S.InputWrapper>
-            {/* <S.InputWrapper>
-              날짜와 시간 :<input type="date"></input>
-              <input type="date"></input>
-            </S.InputWrapper> */}
-            {[
-              "공격자 정보",
-              "공격 이벤트 정리",
-              "공격 대상 (리소스)",
-              "공격 유형 (Tatic, Technique)",
-              "로그 포함하기",
-              "공격근거 포함하기",
-              "결과요약 포함하기",
-            ].map((label, index) => (
-              <S.InputWrapper key={index}>
-                <S.SwitchWrapper>
-                  <S.SwitchSlider
-                    checked={toggles[index]}
-                    onClick={() => handleToggle(index)}
-                  />
-                </S.SwitchWrapper>
-                {label}
-              </S.InputWrapper>
-            ))}
+            <S.InputWrapper>
+              {[
+                "공격자 정보",
+                "공격 이벤트 정리",
+                "공격 대상 (리소스)",
+                "공격 유형 (Tatic, Technique)",
+                "로그 포함하기",
+                "공격근거 포함하기",
+                "결과요약 포함하기",
+              ].map((label, index) => (
+                <S.Input>
+                  <S.SwitchWrapper key={index}>
+                    <S.SwitchSlider
+                      checked={toggles[index]}
+                      onClick={() => handleToggle(index)}
+                    />
+                  </S.SwitchWrapper>
+                  <p>{label}</p>
+                </S.Input>
+              ))}
+            </S.InputWrapper>
           </S.ContentSelect>
         </S.ContentSelectWrapper>
         <S.ContentPromptWrapper>

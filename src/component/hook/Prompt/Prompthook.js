@@ -60,13 +60,13 @@ const Prompthook = async (
                   break;
                 case "ESResult":
                   // ESResult 처리
-                  console.log("ESResult:", parsedLine.data);
-                  // handleESResult(parsedLine.data);
+                  // console.log("ESResult:", parsedLine.data);
+                  handleESResult(parsedLine.data);
                   break;
                 case "DBResult":
                   // ESResult 처리
-                  console.log("DBResult:", parsedLine.data);
-                  // handleDBResult(parsedLine.data);
+                  // console.log("DBResult:", parsedLine.data);
+                  handleDBResult(parsedLine.data);
                   break;
                 case "Summary":
                   // Summary 데이터를 누적
