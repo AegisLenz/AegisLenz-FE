@@ -30,7 +30,7 @@ const getMostRecentDate = (passwordLastUsed, accessKeysLastUsed) => {
     : accessKeysLastUsed?.[0];
 };
 
-const AccountStatus = ({ GenDetailData }) => {
+const AccountStatus = ({ GenDetailData, Data }) => {
   const [data, setData] = useState([]);
 
   const [searchTerm, setSearchTerm] = useState("");
@@ -44,9 +44,11 @@ const AccountStatus = ({ GenDetailData }) => {
       const GetData = await GetIAM();
       setData(GetData.IAMUser);
       setnowloading(false);
+      GenDetailData(GetData.IAMUser[0], "iam");
     };
 
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleSearch = (e) => {

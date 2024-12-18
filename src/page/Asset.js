@@ -42,7 +42,6 @@ function Main() {
             isDetailData={isDetailData}
             onClick={() => {
               setDetail((prev) => !prev);
-              setDetailData({});
             }}
           />
           <S.SideWrapper openDetail={openDetail}>

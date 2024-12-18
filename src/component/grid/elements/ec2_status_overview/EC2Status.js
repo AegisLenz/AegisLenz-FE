@@ -36,6 +36,7 @@ const EC2Status = ({ GenDetailData }) => {
       try {
         const GetData = await getEC2();
         setData(GetData.EC2);
+        console.log(GetData);
       } catch (e) {
         console.log(e);
       } finally {
@@ -117,7 +118,7 @@ const EC2Status = ({ GenDetailData }) => {
             <Loading2 />
           ) : (
             <S.Tbody>
-              {filteredData.lignth >= 0
+              {filteredData.length > 0
                 ? filteredData.map((item) => (
                     <S.Tr
                       key={item.InstanceId}
@@ -126,16 +127,16 @@ const EC2Status = ({ GenDetailData }) => {
                       <S.Td>
                         <S.StatusIcon color={StateColorTable[item.State]} />
                       </S.Td>
-                      <S.Td>{item.Tags[0].Value}</S.Td>
-                      <S.Td>{item.IamInstanceProfile.Arn}</S.Td>
-                      <S.Td>{item.IamInstanceProfile.Id}</S.Td>
+                      <S.Td>{item.Tags[0]?.Value || "N/A"}</S.Td>
+                      <S.Td>{item.IamInstanceProfile?.Arn || "N/A"}</S.Td>
+                      <S.Td>{item.IamInstanceProfile?.Id || "N/A"}</S.Td>
                       <S.Td>
-                        {item.SecurityGroups.map((item) => (
-                          <li>{item.GroupId}</li>
+                        {item.SecurityGroups.map((group) => (
+                          <li key={group.GroupId}>{group.GroupId}</li>
                         ))}
                       </S.Td>
-                      <S.Td>{item.PublicIpAddress}</S.Td>
-                      <S.Td>{item.PrivateIpAddress}</S.Td>
+                      <S.Td>{item.PublicIpAddress || "N/A"}</S.Td>
+                      <S.Td>{item.PrivateIpAddress || "N/A"}</S.Td>
                     </S.Tr>
                   ))
                 : data.map((item) => (
@@ -146,16 +147,16 @@ const EC2Status = ({ GenDetailData }) => {
                       <S.Td>
                         <S.StatusIcon color={StateColorTable[item.State]} />
                       </S.Td>
-                      <S.Td>{item.Tags[0].Value}</S.Td>
-                      <S.Td>{item.IamInstanceProfile.Arn}</S.Td>
-                      <S.Td>{item.IamInstanceProfile.Id}</S.Td>
+                      <S.Td>{item.Tags[0]?.Value || "N/A"}</S.Td>
+                      <S.Td>{item.IamInstanceProfile?.Arn || "N/A"}</S.Td>
+                      <S.Td>{item.IamInstanceProfile?.Id || "N/A"}</S.Td>
                       <S.Td>
-                        {item.SecurityGroups.map((item) => (
-                          <li>{item.GroupId}</li>
+                        {item.SecurityGroups.map((group) => (
+                          <li key={group.GroupId}>{group.GroupId}</li>
                         ))}
                       </S.Td>
-                      <S.Td>{item.PublicIpAddress}</S.Td>
-                      <S.Td>{item.PrivateIpAddress}</S.Td>
+                      <S.Td>{item.PublicIpAddress || "N/A"}</S.Td>
+                      <S.Td>{item.PrivateIpAddress || "N/A"}</S.Td>
                     </S.Tr>
                   ))}
             </S.Tbody>

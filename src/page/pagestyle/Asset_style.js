@@ -43,7 +43,7 @@ export const IsometricToggle = styled.div`
   height: 2vw;
 
   right: ${({ openDetail }) => (openDetail ? "50vw" : "1vw")};
-  top: ${({ openDetail }) => (openDetail ? "1vh" : "46vh")};
+  top: 1vh;
   border-radius: 0.5em;
   transition: all ease 0.6s;
 

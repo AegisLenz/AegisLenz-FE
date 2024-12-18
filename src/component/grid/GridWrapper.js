@@ -32,7 +32,6 @@ const Grid = ({ isEditOn, MarkData, Gridtype }) => {
   const [ReportData, setReportData] = useState("");
 
   const [ESResultData, setESREsultData] = useState([]);
-  // eslint-disable-next-line no-unused-vars
   const [DBResultData, setDBREsultData] = useState([]);
   const location = useLocation();
 
@@ -45,9 +44,14 @@ const Grid = ({ isEditOn, MarkData, Gridtype }) => {
 
   const getESResultData = (value) => {
     setESREsultData(value);
+    console.log(value);
   };
   const getDBResultData = (value) => {
     setDBREsultData(value);
+    const isNumeric = (value) => {
+      return !isNaN(Number(value));
+    };
+    console.log(isNumeric(value[0].match(/\d+/g)));
   };
   // eslint-disable-next-line no-unused-vars
   const getReportData = (value) => {
@@ -359,7 +363,7 @@ const Grid = ({ isEditOn, MarkData, Gridtype }) => {
             case "AccountStatus":
               return (
                 <S.GridElement key={item.i}>
-                  <AccountStatus GenDetailData={() => {}} />
+                  <AccountStatus GenDetailData={() => {}} Data={DBResultData} />
                 </S.GridElement>
               );
             case "DailyInsight":

@@ -6,10 +6,12 @@ const DonutChart = ({ data, setSubTitleValueProps, total }) => {
   const svgRef = useRef();
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   const [hoveredIndex, setHoveredIndex] = useState(null); // hover 상태를 관리하는 상태 추가
+  const [hoveredLabel, setHoveredLabel] = useState(""); // hover된 legend의 label 추가
   const [Account, setAccount] = useState(total);
 
   useEffect(() => {
     setAccount(total);
+    setHoveredLabel(""); // 초기 상태로 리셋
   }, [total]);
 
   useEffect(() => {
@@ -20,8 +22,10 @@ const DonutChart = ({ data, setSubTitleValueProps, total }) => {
   }, []);
 
   useEffect(() => {
-    setSubTitleValueProps(Account);
-  }, [setSubTitleValueProps, Account]);
+    setSubTitleValueProps(
+      `${hoveredLabel ? hoveredLabel : "Total"}: ${Account}`
+    );
+  }, [setSubTitleValueProps, Account, hoveredLabel]);
 
   useEffect(() => {
     if (dimensions.width === 0) return;
@@ -59,7 +63,7 @@ const DonutChart = ({ data, setSubTitleValueProps, total }) => {
       .attr("fill", (d) => d.data.color) // 데이터에서 색상 정보 가져옴
       .style("opacity", (d, i) => (i === hoveredIndex ? 1 : 0.7)) // hover된 부분은 밝게
       .style("transition", "opacity 0.5s ease"); // 트랜지션 효과 추가
-  }, [data, dimensions, hoveredIndex]); // hoveredIndex가 변경될 때도 그래프 업데이트
+  }, [data, dimensions, hoveredIndex]);
 
   return (
     <S.Wrapper>
@@ -74,11 +78,13 @@ const DonutChart = ({ data, setSubTitleValueProps, total }) => {
             onMouseEnter={() => {
               setHoveredIndex(i);
               setAccount(d.value);
-            }} // hover 시 해당 인덱스 설정
+              setHoveredLabel(d.label); // hover된 legend의 label 설정
+            }} // hover 시 해당 인덱스와 label 설정
             onMouseLeave={() => {
               setHoveredIndex(null);
               setAccount(total);
-            }} // hover 해제 시 null로 설정
+              setHoveredLabel(""); // hover 해제 시 초기화
+            }} // hover 해제 시 초기화
           >
             {d.label}
           </S.Legend>
