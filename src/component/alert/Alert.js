@@ -3,49 +3,57 @@ import * as S from "./Alert_style";
 import useAlertSSE from "../hook/Alert/AlertHook";
 
 const Alert = ({ setChatToggleOpen, getPromptSession, InAlert }) => {
-  const [AlertData, setAlertData] = useState([
-    {
-      is_attack: true,
-      technique: "string",
-      tactic: "string",
-      prompt_session_id: "673723b837274528bb2daf13",
-      id: Date.now(),
-    },
-  ]);
+  const [AlertData, setAlertData] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isHoverIndex, setIsHoverIndex] = useState(false);
+  const [isHoverIcon, setIsHoverIcon] = useState(false);
 
   const { connectSSE } = useAlertSSE();
+
   useEffect(() => {
-    connectSSE((newData) => {
-      setAlertData((prevData) => [...prevData, { ...newData, id: Date.now() }]);
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    connectSSE(
+      (newData) => {
+        const mappedData = {
+          technique: newData.mitreAttackTechnique || "Unknown Technique",
+          tactic: newData.mitreAttackTactic || "Unknown Tactic",
+          prompt_session_id: newData.prompt_session_id || "N/A",
+          id: Date.now(),
+        };
 
-  const handleAlertBubbleClick = (e) => {
-    if (e.prompt_session_id !== undefined) {
-      getPromptSession(e.prompt_session_id);
+        setAlertData((prevData) => {
+          if (prevData.some((alert) => alert.prompt_session_id === mappedData.prompt_session_id)) {
+            return prevData;
+          }
+          return [...prevData, mappedData].slice(-5);
+        });
+      },
+      () => {
+        console.error("SSE 연결 실패!");
+      }
+    );
+  }, [connectSSE]);
+
+  const handleAlertBubbleClick = (alert) => {
+    if (alert.prompt_session_id) {
+      getPromptSession(alert.prompt_session_id);
     }
-
     setIsOpen(false);
     setChatToggleOpen(true);
     InAlert();
   };
-  const handleCancleToggleClick = (e) => {
-    setAlertData((prevData) => prevData.filter((alert) => alert.id !== e.id));
+
+  const handleCancleToggleClick = (alert) => {
+    setAlertData((prevData) => prevData.filter((a) => a.id !== alert.id));
   };
-  const [isOpen, setIsOpen] = useState(false); // ToolBar 열림 상태
-  const [isHoverIndex, setIsHoverIndex] = useState(false); // Hover 상태
-  const [isHoverIcon, setIsHoverIcon] = useState(false);
 
   useEffect(() => {
     let timeoutId;
-
     if (isHoverIcon || isHoverIndex) {
       setIsOpen(true);
     } else {
       timeoutId = setTimeout(() => {
         setIsOpen(false);
-      }, 2000); // 1초 딜레이
+      }, 2000);
     }
     return () => {
       if (timeoutId) {
@@ -56,37 +64,37 @@ const Alert = ({ setChatToggleOpen, getPromptSession, InAlert }) => {
 
   return (
     <S.FixedWrapper ishovered={isOpen || undefined}>
-      {/* AlertData가 있을 때만 AlertIcon을 보여줌 */}
       {AlertData.length > 0 && (
         <S.AlertIconWrapper
-          onMouseEnter={() => setIsHoverIndex(true)} // Hover 상태 유지
-          onMouseLeave={() => setIsHoverIndex(false)} // 닫기 동작 실행
+          onMouseEnter={() => setIsHoverIndex(true)}
+          onMouseLeave={() => setIsHoverIndex(false)}
         >
           <S.AlertIcon
             onMouseEnter={() => setIsHoverIcon(true)}
             onMouseLeave={() => setIsHoverIcon(false)}
-            onClick={() => setIsOpen(false)}
+            onClick={() => setIsOpen((prev) => !prev)}
           />
         </S.AlertIconWrapper>
       )}
-      {AlertData.map((alert) => (
-        <S.AlertBubble
-          key={alert.id}
-          isRemoving={alert.isRemoving}
-          onClick={() => handleAlertBubbleClick(alert)}
-        >
-          <S.CancleToggle
-            onClick={(e) => {
-              setIsOpen(false);
-              e.stopPropagation(); // 부모 요소로의 클릭 이벤트 전파 방지
-              handleAlertBubbleClick(alert);
-              handleCancleToggleClick(alert);
-            }}
-          />
-          <h3>{alert.technique + alert.tactic}</h3>
-          <p>{"test"}</p>
+      {AlertData.length > 0 ? (
+        AlertData.map((alert) => (
+          <S.AlertBubble key={alert.id} onClick={() => handleAlertBubbleClick(alert)}>
+            <S.CancleToggle
+              onClick={(e) => {
+                e.stopPropagation();
+                handleCancleToggleClick(alert);
+              }}
+            />
+            <h3>{alert.technique + " / " + alert.tactic}</h3>
+            <p>{alert.prompt_session_id}</p>
+          </S.AlertBubble>
+        ))
+      ) : (
+        <S.AlertBubble>
+          <h3>공격 데이터 없음</h3>
+          <p>SSE 데이터를 기다리는 중입니다...</p>
         </S.AlertBubble>
-      ))}
+      )}
     </S.FixedWrapper>
   );
 };
