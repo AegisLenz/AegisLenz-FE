@@ -5,14 +5,7 @@ import { useState, useEffect } from "react";
 import Loading2Toggle from "../../../toggle/loading2/loading2";
 
 const Detection = () => {
-  const [data, setData] = useState([
-    { month: "Jan", traffic: 30, attack: 0 },
-    { month: "Feb", traffic: 25, attack: 1 },
-    { month: "Mar", traffic: 39, attack: 10 },
-    { month: "Apr", traffic: 60, attack: 35 },
-    { month: "May", traffic: 80, attack: 55 },
-    { month: "Jun", traffic: 90, attack: 50 },
-  ]);
+  const [data, setData] = useState([]);
 
   const [loading, setLoading] = useState(true);
   const [hoveredData, setHoveredData] = useState(null); // 마우스 오버 데이터 상태 추가

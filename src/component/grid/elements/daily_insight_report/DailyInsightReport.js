@@ -24,7 +24,7 @@ const Daily = () => {
 
   return (
     <S.Wrapper>
-      <S.Title>Daily Insight Report</S.Title>
+      <S.Title>Daily Suspicion Analysis</S.Title>
       <S.ContentArea>
         {NowLoading ? (
           <Loading2 />

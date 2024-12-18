@@ -19,7 +19,7 @@ const NeedCheck = () => {
 
   return (
     <S.Wrapper>
-      <S.Title>Report Summary</S.Title>
+      <S.Title>Attack Report Briefing</S.Title>
       <S.ContentArea>
         {nowloading || innerContents.length === 0 ? (
           <Loading2 />

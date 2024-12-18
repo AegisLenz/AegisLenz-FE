@@ -8,11 +8,7 @@ import Loading2 from "../../../toggle/loading2/loading2";
 const Risk = () => {
   const [NowLoading, setNowLoading] = useState(true);
 
-  const [Data, setData] = useState({
-    MFA_not_enabled_for_root_user: ["Information", "Debug"],
-    MFA_not_enabled_for_users: ["Notice", "Error"],
-    default_security_groups_allow_traffic: ["Warning"],
-  });
+  const [Data, setData] = useState({});
 
   useEffect(() => {
     const fetchfunc = async () => {
