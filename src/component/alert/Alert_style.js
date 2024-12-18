@@ -114,3 +114,23 @@ export const CancleToggle = styled.svg`
     transform: scale(1.3);
   }
 `;
+
+export const ErrorMessage = styled.div`
+  width: 87%;
+  margin-top: 1vh;
+  padding: 1vw;
+  border-radius: 1em;
+
+  color: #680000;
+  background-color: #ffe5e5;
+  box-shadow: 1px 1px 3px #aaa;
+  text-align: center;
+
+  font-size: 0.9em;
+  font-weight: bold;
+  animation: ${fadeIn} 0.3s ease forwards;
+
+  &:hover {
+    cursor: default;
+  }
+`;
