@@ -4,7 +4,7 @@ module.exports = function (app) {
   app.use(
     "/server",
     createProxyMiddleware({
-      target: "http://18.207.84.45:4040",
+      target: "http://203.252.213.209:4040",
       changeOrigin: true,
       onProxyRes: (proxyRes) => {
         // 응답 시간 로깅 (선택 사항)

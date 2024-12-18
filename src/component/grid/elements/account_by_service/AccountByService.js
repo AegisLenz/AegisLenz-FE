@@ -18,7 +18,6 @@ const Account = () => {
       setLoading(true);
       try {
         const data = await GetAccoundByService();
-        // 데이터를 변환
         setTotal(data["total_service_count"]);
         const transformedData = Object.keys(data)
           .filter((key) => key !== "total_service_count") // total_service_count 제외
@@ -55,7 +54,7 @@ const Account = () => {
               setSubTitleValueProps={setSubTitleValueProps}
               total={total}
             />
-            <S.SubTitle>Total : {SubTitleValue}</S.SubTitle>
+            <S.SubTitle>{SubTitleValue}</S.SubTitle>
           </S.Content>
         </S.ContentArea>
       )}

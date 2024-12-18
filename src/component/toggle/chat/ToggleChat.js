@@ -190,7 +190,6 @@ const ToggleChat = ({
   const handleESResult = (data) => {
     if (data.length !== 0) {
       setESResultData(data);
-      console.log(data);
     }
   };
   const handleDBQuery = (data, index) => {
@@ -204,7 +203,6 @@ const ToggleChat = ({
   const handleDBResult = (data) => {
     if (data.length !== 0) {
       setDBResultData(data);
-      console.log(data);
     }
   };
 

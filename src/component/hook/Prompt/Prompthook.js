@@ -26,6 +26,12 @@ const Prompthook = async (
       console.error("ReadableStream이 지원되지 않는 브라우저입니다.");
       return;
     }
+    function sanitizeJSON(data) {
+      return data
+        .replace(/([{,])(\s*)([a-zA-Z0-9_$]+)(\s*):/g, '$1"$3":') // 키를 큰따옴표로 감쌈
+        .replace(/'/g, '"') // 작은따옴표를 큰따옴표로 변환
+        .replace(/(\$[a-zA-Z]+):/g, '"$1":'); // 특수 포맷 키 처리
+    }
     const reader = response.body.getReader(); // 스트리밍 데이터를 읽기 위한 리더 생성
     const decoder = new TextDecoder("utf-8");
     let accumulatedText = ""; // 데이터를 누적할 변수
@@ -42,8 +48,9 @@ const Prompthook = async (
           // console.log(line);
           if (line.trim()) {
             try {
-              console.log(line);
-              const parsedLine = JSON.parse(line); // JSON 데이터로 파싱
+              // console.log(line);
+              const sanitize = sanitizeJSON(line);
+              const parsedLine = JSON.parse(sanitize); // JSON 데이터로 파싱
               switch (parsedLine.type) {
                 case "Dashboard":
                   handleMarkData(parsedLine.data);

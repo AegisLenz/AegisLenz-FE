@@ -18,8 +18,9 @@ const Risk = () => {
         setData(Fetchdata);
       } catch (e) {
         console.log(e);
+      } finally {
+        setNowLoading(false);
       }
-      setNowLoading(false);
     };
     fetchfunc();
   }, []);
@@ -27,7 +28,7 @@ const Risk = () => {
   return (
     <S.Wrapper>
       <S.Title>Risk</S.Title>
-      {NowLoading ? (
+      {NowLoading || Data.length > 0 ? (
         <Loading2 />
       ) : (
         <S.ContentWrapper>
