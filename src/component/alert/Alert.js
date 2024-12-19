@@ -3,16 +3,18 @@ import * as S from "./Alert_style";
 import useAlertSSE from "../hook/Alert/AlertHook";
 
 const Alert = ({ setChatToggleOpen, getPromptSession, InAlert }) => {
-  const [AlertData, setAlertData] = useState([]);
+  const [alertData, setAlertData] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [isHoverIndex, setIsHoverIndex] = useState(false);
   const [isHoverIcon, setIsHoverIcon] = useState(false);
+  const [isConnected, setIsConnected] = useState(false);
 
   const { connectSSE } = useAlertSSE();
 
   useEffect(() => {
     connectSSE(
       (newData) => {
+        setIsConnected(true);
         const mappedData = {
           technique: newData.mitreAttackTechnique || "Unknown Technique",
           tactic: newData.mitreAttackTactic || "Unknown Tactic",
@@ -29,6 +31,7 @@ const Alert = ({ setChatToggleOpen, getPromptSession, InAlert }) => {
       },
       () => {
         console.error("SSE 연결 실패!");
+        setIsConnected(false);
       }
     );
   }, [connectSSE]);
@@ -42,7 +45,7 @@ const Alert = ({ setChatToggleOpen, getPromptSession, InAlert }) => {
     InAlert();
   };
 
-  const handleCancleToggleClick = (alert) => {
+  const handleCancelToggleClick = (alert) => {
     setAlertData((prevData) => prevData.filter((a) => a.id !== alert.id));
   };
 
@@ -64,7 +67,7 @@ const Alert = ({ setChatToggleOpen, getPromptSession, InAlert }) => {
 
   return (
     <S.FixedWrapper ishovered={isOpen || undefined}>
-      {AlertData.length > 0 && (
+      {alertData.length > 0 && (
         <S.AlertIconWrapper
           onMouseEnter={() => setIsHoverIndex(true)}
           onMouseLeave={() => setIsHoverIndex(false)}
@@ -76,13 +79,13 @@ const Alert = ({ setChatToggleOpen, getPromptSession, InAlert }) => {
           />
         </S.AlertIconWrapper>
       )}
-      {AlertData.length > 0 ? (
-        AlertData.map((alert) => (
+      {alertData.length > 0 ? (
+        alertData.map((alert) => (
           <S.AlertBubble key={alert.id} onClick={() => handleAlertBubbleClick(alert)}>
             <S.CancleToggle
               onClick={(e) => {
                 e.stopPropagation();
-                handleCancleToggleClick(alert);
+                handleCancelToggleClick(alert);
               }}
             />
             <h3>{alert.technique + " / " + alert.tactic}</h3>
