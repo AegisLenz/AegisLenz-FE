@@ -15,6 +15,15 @@ export const Wrapper = styled.div`
   box-shadow: 1px 1px 5px #333;
 
   overflow-y: auto;
+  &::-webkit-scrollbar {
+    background-color: transparent;
+    width: 0.5vw;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 30em;
+    background-color: #104f55;
+    opacity: 0.8;
+  }
 `;
 
 export const Title = styled.h2`
@@ -91,7 +100,6 @@ export const CountWrapper = styled.div`
 export const Index = styled.div`
   width: 7vw;
   min-height: 100%;
-  overflow-y: auto;
 
   display: flex;
   justify-content: center;

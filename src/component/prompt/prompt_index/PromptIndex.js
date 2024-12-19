@@ -7,14 +7,11 @@ const Prompt = ({
   SideIndex,
   isSideIndex,
   getPromptSession,
-  setIndex,
   promptSession,
   MakeNewSession,
 }) => {
   const [prompts, setPrompts] = useState([]);
   const [loading, setLoading] = useState(true);
-  // eslint-disable-next-line no-unused-vars
-  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchPrompts = async () => {
@@ -22,9 +19,8 @@ const Prompt = ({
         const data = await GetAllPrompt();
         const prompt_ids = data.prompts.slice();
         setPrompts(prompt_ids);
-        setIndex(prompt_ids);
       } catch (e) {
-        setError(e.message);
+        console.log(e.message);
       } finally {
         setLoading(false);
       }
@@ -39,7 +35,7 @@ const Prompt = ({
       const prompt_ids = Refetchdata.prompts.slice();
       setPrompts(prompt_ids);
     } catch (e) {
-      setError(e.message);
+      console.log(e);
     }
   };
 

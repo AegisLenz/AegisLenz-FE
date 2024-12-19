@@ -15,6 +15,7 @@ const ToggleChat = ({
   getReportData,
   setESResultData,
   setDBResultData,
+  getGraphData,
   getPromptSession,
   type,
 }) => {
@@ -49,6 +50,9 @@ const ToggleChat = ({
             }
             if (data.report !== null) {
               getReportData(data.report);
+            }
+            if (data.attack_graph !== null) {
+              getGraphData(data.attack_graph);
             }
             if (
               data.init_recommend_questions !== null &&
@@ -96,7 +100,7 @@ const ToggleChat = ({
 
     //실행
     fetchData();
-  }, [getReportData, promptSession, type]);
+  }, [promptSession, type]);
 
   useEffect(() => {
     if (ChatData.length === 0) {

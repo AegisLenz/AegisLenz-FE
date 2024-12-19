@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import Loading2 from "../../../toggle/loading2/loading2";
 import Getdata from "../../../hook/dashboard/GetNeedCheck";
 
-const NeedCheck = () => {
+const NeedCheck = ({ setPromptSession }) => {
   const [innerContents, setInnerContents] = useState([]);
   const [nowloading, setNowloading] = useState(true);
 
@@ -12,6 +12,7 @@ const NeedCheck = () => {
       setNowloading(true);
       const data = await Getdata();
       setInnerContents(data.report_check);
+      console.log(data.report_check);
       setNowloading(false);
     };
     fetchData();
@@ -24,8 +25,15 @@ const NeedCheck = () => {
         {nowloading || innerContents.length === 0 ? (
           <Loading2 />
         ) : (
-          innerContents.map((index, content) => (
-            <S.Content key={index}>{content}</S.Content>
+          innerContents.map((index) => (
+            <S.Content
+              key={index}
+              onClick={() => {
+                setPromptSession(index.prompt_session_id);
+              }}
+            >
+              {index.summary}
+            </S.Content>
           ))
         )}
       </S.ContentArea>

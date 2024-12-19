@@ -44,6 +44,6 @@ export const LeftIndex = styled.div`
 
 export const ContentWrapper = styled.div`
   position: relative;
-  width: 90%;
+  width: 100%;
   height: 100%;
 `;

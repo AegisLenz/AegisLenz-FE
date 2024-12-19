@@ -1,9 +1,11 @@
 import * as S from "./DailyInsightReport_style";
 import Loading2 from "../../../toggle/loading2/loading2";
 import GetDailyInsight from "../../../hook/dashboard/GetdailyinsInsightReport";
-import { useEffect, useState } from "react";
+import ReactMarkdown from "react-markdown";
+import { useEffect, useState, useRef } from "react";
 
 const Daily = () => {
+  const contentRef = useRef();
   const [contents, setContents] = useState([]);
   const [NowLoading, setNowLoading] = useState(true);
 
@@ -12,7 +14,7 @@ const Daily = () => {
       setNowLoading(true);
       try {
         const Fetchdata = await GetDailyInsight();
-        setContents(Fetchdata.daily_insight);
+        setContents(Fetchdata.daily_insight[0]);
       } catch (e) {
         console.log(e);
       } finally {
@@ -22,6 +24,12 @@ const Daily = () => {
     FetchFunc();
   }, []);
 
+  // 스타일 변수
+  const contentAreaStyle = {
+    color: "white",
+    margin: "2%",
+  };
+
   return (
     <S.Wrapper>
       <S.Title>Daily Suspicion Analysis</S.Title>
@@ -30,10 +38,9 @@ const Daily = () => {
           <Loading2 />
         ) : (
           <S.SubContent>
-            {/* {contents.map((content) => (
-              <S.Content>{`${content}`}</S.Content>
-            ))} */}
-            <S.Content>{contents}</S.Content>
+            <div ref={contentRef} style={contentAreaStyle}>
+              <ReactMarkdown>{contents}</ReactMarkdown>
+            </div>
           </S.SubContent>
         )}
       </S.ContentArea>

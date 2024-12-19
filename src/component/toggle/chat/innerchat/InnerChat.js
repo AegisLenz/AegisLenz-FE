@@ -49,8 +49,15 @@ const InnerChat = ({ isOpen, isFull, chatData, addExample, SuggestData }) => {
       FetchBookmark();
     }
   };
+
   const DelBookmark = async (index) => {
     await DelBookmarkHook(index);
+    if (bookmarkedMessages[index]) {
+      setBookmarkedMessages((prev) => ({
+        ...prev,
+        [index]: false, // 현재 상태의 반대로 토글
+      }));
+    }
     FetchBookmark();
   };
 
