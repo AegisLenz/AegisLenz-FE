@@ -7,12 +7,14 @@ const Alert = ({ setChatToggleOpen, getPromptSession, InAlert }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isHoverIndex, setIsHoverIndex] = useState(false);
   const [isHoverIcon, setIsHoverIcon] = useState(false);
+  const [isConnected, setIsConnected] = useState(false);
 
   const { connectSSE } = useAlertSSE();
 
   useEffect(() => {
     connectSSE(
       (newData) => {
+        setIsConnected(true);
         const mappedData = {
           technique: newData.mitreAttackTechnique || "Unknown Technique",
           tactic: newData.mitreAttackTactic || "Unknown Tactic",
@@ -29,6 +31,7 @@ const Alert = ({ setChatToggleOpen, getPromptSession, InAlert }) => {
       },
       () => {
         console.error("SSE 연결 실패!");
+        setIsConnected(false);
       }
     );
   }, [connectSSE]);
