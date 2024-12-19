@@ -7,15 +7,10 @@ import { useState } from "react";
 const Dashboard = () => {
   const [isEditOn, setEditOn] = useState(false);
   const [MarkData, setMarkData] = useState([]);
-  // eslint-disable-next-line no-unused-vars
-  const [isSideContent, setSideContent] = useState(false);
-
   const setMarkDataFunc = (value) => {
     setMarkData(value);
   };
-  const SideContent = () => {
-    setSideContent(true);
-  };
+
   return (
     <div>
       <TopBar />
@@ -24,9 +19,6 @@ const Dashboard = () => {
         <Grid
           isEditOn={isEditOn}
           MarkData={MarkData}
-          isChatOFF={false}
-          isFillterOFF={false}
-          SideContent={SideContent}
           setMarkDataFunc={setMarkDataFunc}
         />
       </S.Wrapper>

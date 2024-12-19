@@ -12,6 +12,7 @@ const NeedCheck = () => {
       setNowloading(true);
       const data = await Getdata();
       setInnerContents(data.report_check);
+      console.log(data.report_check);
       setNowloading(false);
     };
     fetchData();

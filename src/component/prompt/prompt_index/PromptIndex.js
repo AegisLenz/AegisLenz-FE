@@ -13,8 +13,6 @@ const Prompt = ({
 }) => {
   const [prompts, setPrompts] = useState([]);
   const [loading, setLoading] = useState(true);
-  // eslint-disable-next-line no-unused-vars
-  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchPrompts = async () => {
@@ -24,7 +22,7 @@ const Prompt = ({
         setPrompts(prompt_ids);
         setIndex(prompt_ids);
       } catch (e) {
-        setError(e.message);
+        console(e.message);
       } finally {
         setLoading(false);
       }
@@ -39,7 +37,7 @@ const Prompt = ({
       const prompt_ids = Refetchdata.prompts.slice();
       setPrompts(prompt_ids);
     } catch (e) {
-      setError(e.message);
+      console.log(e);
     }
   };
 
