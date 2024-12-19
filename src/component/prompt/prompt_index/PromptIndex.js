@@ -7,7 +7,6 @@ const Prompt = ({
   SideIndex,
   isSideIndex,
   getPromptSession,
-  setIndex,
   promptSession,
   MakeNewSession,
 }) => {
@@ -20,9 +19,8 @@ const Prompt = ({
         const data = await GetAllPrompt();
         const prompt_ids = data.prompts.slice();
         setPrompts(prompt_ids);
-        setIndex(prompt_ids);
       } catch (e) {
-        console(e.message);
+        console.log(e.message);
       } finally {
         setLoading(false);
       }

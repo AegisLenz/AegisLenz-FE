@@ -26,13 +26,13 @@ import * as S from "./Grid_style";
 const Grid = ({ isEditOn, MarkData, Gridtype }) => {
   const [isChattoggleOpen, setChatToggle] = useState(false);
   const [markData, setMarkData] = useState(MarkData || []);
-  // eslint-disable-next-line no-unused-vars
   const [promptSession, setPromptSession] = useState("");
-  // eslint-disable-next-line no-unused-vars
-  const [ReportData, setReportData] = useState("");
 
+  const [ReportData, setReportData] = useState("");
   const [ESResultData, setESREsultData] = useState([]);
   const [DBResultData, setDBREsultData] = useState([]);
+  const [AttackGraphData, setAttackGraphData] = useState();
+
   const location = useLocation();
 
   useEffect(() => {
@@ -53,12 +53,18 @@ const Grid = ({ isEditOn, MarkData, Gridtype }) => {
     };
     console.log(isNumeric(value[0].match(/\d+/g)));
   };
-  // eslint-disable-next-line no-unused-vars
   const getReportData = (value) => {
     setReportData(value);
   };
+  const getGraphData = (value) => {
+    setAttackGraphData(value);
+  };
+
   const getPromptSession = (value) => {
     setPromptSession(value);
+    setChatToggle(true);
+    InAlert();
+    InAlert();
   };
 
   const ChatToggleButton = () => {
@@ -80,14 +86,15 @@ const Grid = ({ isEditOn, MarkData, Gridtype }) => {
   };
 
   const InAlert = () => {
-    setMarkData([
+    const AlertMarkdata = [
       "scroll",
       "chat",
       "Report",
       "ShowPolicy",
-      "ShowLog",
       "AttackVisualGraph",
-    ]);
+      "ShowLog",
+    ];
+    setGridLayout(InitLayout.filter((item) => AlertMarkdata.includes(item.i)));
   };
 
   const InitLayout = useMemo(
@@ -136,34 +143,34 @@ const Grid = ({ isEditOn, MarkData, Gridtype }) => {
         x: 30,
         y: 10,
         w: 20,
-        h: 45,
+        h: 50,
       },
       {
         i: "DailyInsight",
         x: 0,
         y: 35,
         w: 30,
-        h: 30,
+        h: 35,
       },
       {
         i: "AccountByService",
         x: 50,
         y: 0,
         w: 17,
-        h: 37,
+        h: 42,
       },
       {
         i: "NeedCheck",
-        x: 30,
+        x: 0,
         y: 50,
-        w: 37,
+        w: 30,
         h: 33,
       },
       {
         i: "Detection",
-        x: 0,
+        x: 30,
         y: 40,
-        w: 30,
+        w: 37,
         h: 33,
       },
       {
@@ -171,7 +178,7 @@ const Grid = ({ isEditOn, MarkData, Gridtype }) => {
         x: 67,
         y: 10,
         w: 33,
-        h: 70,
+        h: 75,
       },
       // {
       //   i: "EC2Status",
@@ -181,6 +188,34 @@ const Grid = ({ isEditOn, MarkData, Gridtype }) => {
       //   h: 33,
       //   content: <EC2Status GenDetailData={() => {}} />,
       // },
+      {
+        i: "Report",
+        x: 50,
+        y: 0,
+        w: 50,
+        h: 60,
+      },
+      {
+        i: "ShowPolicy",
+        x: 50,
+        y: 0,
+        w: 50,
+        h: 30,
+      },
+      {
+        i: "AttackVisualGraph",
+        x: 50,
+        y: 0,
+        w: 50,
+        h: 40,
+      },
+      {
+        i: "ShowLog",
+        x: 50,
+        y: 0,
+        w: 50,
+        h: 30,
+      },
     ],
     []
   );
@@ -287,10 +322,44 @@ const Grid = ({ isEditOn, MarkData, Gridtype }) => {
             return item;
           })
         );
+      } else {
+        setGridLayout((prevLayout) =>
+          prevLayout.map((item) => {
+            const initItem = InitLayout.find((init) => init.i === item.i);
+            if (initItem) {
+              return {
+                ...item,
+                x: item.i !== "chat" || item.i !== "scroll" ? 0 : 50,
+                w: 50,
+              };
+            }
+            return item;
+          })
+        );
       }
     } else {
       // 초기 레이아웃으로 복원
-      setGridLayout(InitLayout.map((item) => ({ ...item, h: item.h * ratio })));
+      setGridLayout(
+        InitLayout.filter((item) =>
+          [
+            "chat",
+            "scroll",
+            "AccountByService",
+            "AccountCount",
+            "AccountStatus",
+            "DailyInsight",
+            "Detection",
+            "EC2Status",
+            "NeedCheck",
+            "Score",
+            "Risks",
+          ].includes(item.i)
+        ) // 원하는 조건으로 필터링 (예: "chat" 제외)
+          .map((item) => ({
+            ...item,
+            h: item.h * 0.9, // 비율에 따라 높이 조정
+          }))
+      );
     }
   }, [markData, InitLayout, ratio, Gridtype]);
 
@@ -387,7 +456,7 @@ const Grid = ({ isEditOn, MarkData, Gridtype }) => {
             case "NeedCheck":
               return (
                 <S.GridElement key={item.i}>
-                  <NeedCheck />
+                  <NeedCheck setPromptSession={getPromptSession} />
                 </S.GridElement>
               );
             case "Report":
@@ -417,7 +486,7 @@ const Grid = ({ isEditOn, MarkData, Gridtype }) => {
             case "AttackVisualGraph":
               return (
                 <S.GridElement key={item.i}>
-                  <AttackVisualGraph />
+                  <AttackVisualGraph AttackGraphData={AttackGraphData} />
                 </S.GridElement>
               );
             case "Risks":
@@ -436,6 +505,9 @@ const Grid = ({ isEditOn, MarkData, Gridtype }) => {
                     setChatToggleOpen={setChatToggleOpen}
                     setESResultData={getESResultData}
                     setDBResultData={getDBResultData}
+                    promptSession={promptSession}
+                    getReportData={getReportData}
+                    getGraphData={getGraphData}
                     type={"grid"}
                   />
                 </S.GridElementNoBoxShadow>

@@ -54,5 +54,6 @@ export const SubContent = styled.div`
   &::-webkit-scrollbar-thumb {
     border-radius: 30em;
     background-color: #cbd1ff;
+    opacity: 0.8;
   }
 `;

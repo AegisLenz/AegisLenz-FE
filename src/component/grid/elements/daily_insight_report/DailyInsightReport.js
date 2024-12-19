@@ -14,7 +14,7 @@ const Daily = () => {
       setNowLoading(true);
       try {
         const Fetchdata = await GetDailyInsight();
-        setContents(Fetchdata.daily_insight);
+        setContents(Fetchdata.daily_insight[0]);
       } catch (e) {
         console.log(e);
       } finally {

@@ -27,7 +27,9 @@ const Score = () => {
       setNowLoading(true);
       try {
         const Fetchdata = await GetScore();
-        setScore(Fetchdata.score);
+        const numberValue = parseFloat(Fetchdata.score); // 문자열을 숫자로 변환
+        const roundedValue = Number(numberValue.toFixed(1)); // 소수점 첫 번째 자리까지 반올림
+        setScore(roundedValue);
       } catch (e) {
         console.log(e);
       } finally {
