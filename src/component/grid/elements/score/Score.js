@@ -28,7 +28,6 @@ const Score = () => {
       try {
         const Fetchdata = await GetScore();
         setScore(Fetchdata.score);
-        console.log(Fetchdata);
       } catch (e) {
         console.log(e);
       } finally {
