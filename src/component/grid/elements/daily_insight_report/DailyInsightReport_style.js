@@ -34,8 +34,6 @@ export const ContentArea = styled.div`
   width: 100%;
   height: calc(98% - 6vh);
 
-  overflow-y: auto;
-
   display: flex;
   justify-content: center;
   align-items: center;
@@ -43,36 +41,18 @@ export const ContentArea = styled.div`
 
 export const SubContent = styled.div`
   height: 100%;
-  width: 98%;
+  width: 96%;
   background: linear-gradient(to right, #2f878f, #2d3c7d);
   border-radius: 1em;
-  position: relative;
-  overflow-y: auto;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-`;
-
-export const Content = styled.div`
-  width: 89%;
-  align-content: left;
-  color: white;
   font-size: 0.9em;
-  font-weight: 400;
-  margin: 2%;
 
-  /* &::before {
-    content: "";
-    display: block;
-    position: absolute;
-    left: 1.1vw;
-    width: 1.5vw;
-    height: 1.5vw;
-    background-image: url("/icon/Daily_Arrow.svg");
-    background-size: contain;
-    background-repeat: no-repeat;
-    transform: translateX(-50%);
-  } */
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    background-color: transparent;
+    width: 0.5vw;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 30em;
+    background-color: #cbd1ff;
+  }
 `;
