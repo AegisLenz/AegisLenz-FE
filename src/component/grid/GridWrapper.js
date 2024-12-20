@@ -26,7 +26,7 @@ import * as S from "./Grid_style";
 const Grid = ({ isEditOn, MarkData, Gridtype, AlertSession }) => {
   const [isChattoggleOpen, setChatToggle] = useState(false);
   const [markData, setMarkData] = useState();
-  const [promptSession, setPromptSession] = useState(AlertSession || "");
+  const [promptSession, setPromptSession] = useState("");
 
   const [ReportData, setReportData] = useState("");
   const [ESResultData, setESREsultData] = useState([]);
@@ -43,7 +43,9 @@ const Grid = ({ isEditOn, MarkData, Gridtype, AlertSession }) => {
   }, [location.state]);
 
   useEffect(() => {
-    InAlert();
+    if (AlertSession !== "") {
+      InAlert();
+    }
     setPromptSession(AlertSession);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [AlertSession]);

@@ -4,10 +4,10 @@ import useAlertSSE from "../hook/Alert/AlertHook";
 
 const Alert = ({ getPromptSession }) => {
   const [alertData, setAlertData] = useState([]);
-  const [isOpen, setIsOpen] = useState(true);
-  const [isHoverIndex, setIsHoverIndex] = useState(true);
-  const [isHoverIcon, setIsHoverIcon] = useState(true);
-  const [isConnected, setIsConnected] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isHoverIndex, setIsHoverIndex] = useState(false);
+  const [isHoverIcon, setIsHoverIcon] = useState(false);
+  const [isConnected, setIsConnected] = useState(false);
 
   const { connectSSE } = useAlertSSE();
 
@@ -36,7 +36,7 @@ const Alert = ({ getPromptSession }) => {
       },
       () => {
         console.error("SSE 연결 실패!");
-        setIsConnected(true);
+        setIsConnected(false);
       }
     );
   }, [connectSSE]);
@@ -45,13 +45,11 @@ const Alert = ({ getPromptSession }) => {
     if (alert.prompt_session_id) {
       getPromptSession(alert.prompt_session_id);
     }
-    getPromptSession("6765434e67b2ae01a338c421");
-    setIsOpen(true);
+    setIsOpen(false);
   };
 
   const handleCancelToggleClick = (alert) => {
     setAlertData((prevData) => prevData.filter((a) => a.id !== alert.id));
-    console.log(alert.prompt_session_id);
   };
 
   useEffect(() => {
@@ -60,7 +58,7 @@ const Alert = ({ getPromptSession }) => {
       setIsOpen(true);
     } else {
       timeoutId = setTimeout(() => {
-        setIsOpen(true);
+        setIsOpen(false);
       }, 2000);
     }
     return () => {
@@ -75,11 +73,11 @@ const Alert = ({ getPromptSession }) => {
       {alertData.length > 0 && (
         <S.AlertIconWrapper
           onMouseEnter={() => setIsHoverIndex(true)}
-          onMouseLeave={() => setIsHoverIndex(true)}
+          onMouseLeave={() => setIsHoverIndex(false)}
         >
           <S.AlertIcon
             onMouseEnter={() => setIsHoverIcon(true)}
-            onMouseLeave={() => setIsHoverIcon(true)}
+            onMouseLeave={() => setIsHoverIcon(false)}
             onClick={() => setIsOpen((prev) => !prev)}
           />
         </S.AlertIconWrapper>
@@ -101,7 +99,7 @@ const Alert = ({ getPromptSession }) => {
           </S.AlertBubble>
         ))
       ) : (
-        <S.AlertBubble onClick={() => handleAlertBubbleClick(alert)}>
+        <S.AlertBubble>
           <h3>공격 데이터 없음</h3>
           <p>SSE 데이터를 기다리는 중입니다...</p>
         </S.AlertBubble>
