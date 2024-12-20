@@ -77,13 +77,13 @@ export const CountWrapper = styled.div`
   /* background-color: #104f55; */
 
   h1 {
-    width: 2vw;
+    width: 2.5vw;
     color: black;
     padding: 0;
     text-align: center;
   }
   p {
-    width: calc(6vw - 20%);
+    width: calc(5.5vw - 20%);
     color: black;
 
     padding: 0 10%;

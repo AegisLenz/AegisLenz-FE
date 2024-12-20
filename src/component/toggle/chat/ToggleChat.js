@@ -4,6 +4,7 @@ import InnerChat from "./innerchat/InnerChat";
 import GetPromptContents from "../../hook/Prompt/GetPromptContents";
 import Prompthook from "../../hook/Prompt/Prompthook";
 import CreateSession from "../../hook/Prompt/CreateNewPrompt";
+import { tree } from "d3";
 
 const ToggleChat = ({
   ChatToggleButton,
@@ -100,6 +101,7 @@ const ToggleChat = ({
 
     //실행
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [promptSession, type]);
 
   useEffect(() => {
@@ -119,7 +121,7 @@ const ToggleChat = ({
   const handleMarkData = (data) => {
     if (data && data.length > 0) {
       if (type === "grid") {
-        const Arraydata = [...new Set([...data, "scroll", "chat"])];
+        const Arraydata = [...new Set([...data, "scroll", "chat", "ShowLog"])];
         const transformedData = Arraydata.map((item) =>
           item.replace(/'/g, '"')
         );
@@ -187,27 +189,23 @@ const ToggleChat = ({
     setChatData((prev) => {
       const updatedChatData = [...prev];
       updatedChatData[index].isQuery = true;
-      updatedChatData[index].isESQuery = data;
+      updatedChatData[index].isESQuery = `${JSON.stringify(data, null, 2)}`;
       return updatedChatData;
     });
   };
   const handleESResult = (data) => {
-    if (data.length !== 0) {
-      setESResultData(data);
-    }
+    setESResultData(data);
   };
   const handleDBQuery = (data, index) => {
     setChatData((prev) => {
       const updatedChatData = [...prev];
       updatedChatData[index].isQuery = true;
-      updatedChatData[index].isDBQuery = data;
+      updatedChatData[index].isDBQuery = `${JSON.stringify(data, null, 2)}`;
       return updatedChatData;
     });
   };
   const handleDBResult = (data) => {
-    if (data.length !== 0) {
-      setDBResultData(data);
-    }
+    setDBResultData(data);
   };
 
   // API 호출 및 데이터 처리
@@ -224,7 +222,7 @@ const ToggleChat = ({
       ...prev,
       { text: "", isUser: false, isStreem: true },
     ]);
-    const messageIndex = ChatData.length; // 새로 추가할 요소의 인덱스
+    const messageIndex = ChatData.length;
     if (!session || session === "") {
       // session이 빈 문자열 또는 undefined일 경우
       try {

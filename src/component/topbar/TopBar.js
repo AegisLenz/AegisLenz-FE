@@ -29,10 +29,17 @@ const Top = () => {
       <S.Title onClick={handleClick}>AegisLenz</S.Title>
       <S.Icon></S.Icon>
       {isUser !== "" ? (
-        ""
+        <S.Login
+          onClick={() => {
+            localStorage.removeItem("user_id");
+            window.location.reload();
+            navigate("/", { state: { isChatOpen: false } });
+          }}
+        >
+          Log Out
+        </S.Login>
       ) : (
         <>
-          {" "}
           <S.Login onClick={LoginHandleClick}>Login</S.Login>
           <S.Login onClick={SignUpHandleClick}>Sign in</S.Login>
         </>

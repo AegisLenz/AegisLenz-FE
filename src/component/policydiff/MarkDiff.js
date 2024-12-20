@@ -8,6 +8,7 @@ import Loading2 from "../toggle/loading2/loading2";
 const MarkDiff = () => {
   const [data, setData] = useState(null); // State to store fetched data
   const [usernames, setUsernames] = useState([]); // Usernames list
+  // eslint-disable-next-line no-unused-vars
   const [selectedUser, setSelectedUser] = useState(""); // Selected username
   const [existingPolicies, setExistingPolicies] = useState([]); // Existing policies
   const [proposedPolicies, setProposedPolicies] = useState([]); // Proposed policies
@@ -93,6 +94,10 @@ const MarkDiff = () => {
                   <S.Policy_index
                     key={index}
                     onClick={() => handleUserSelection(username)}
+                    style={{
+                      backgroundColor:
+                        selectedUser === username ? "#689D8C" : "#104F55", // 선택된 username 배경색
+                    }}
                   >
                     {username}
                   </S.Policy_index>
@@ -115,6 +120,13 @@ const MarkDiff = () => {
                           JSON.stringify(policy.PolicyDocument, null, 2)
                         )
                       }
+                      style={{
+                        backgroundColor:
+                          JSON.stringify(policy.PolicyDocument, null, 2) ===
+                          newValue
+                            ? "#689D8C"
+                            : "#104F55",
+                      }}
                     >
                       {policy.PolicyName}
                     </S.Policy_index>
@@ -130,6 +142,13 @@ const MarkDiff = () => {
                           JSON.stringify(policy.PolicyDocument, null, 2)
                         )
                       }
+                      style={{
+                        backgroundColor:
+                          JSON.stringify(policy.PolicyDocument, null, 2) ===
+                          oldValue
+                            ? "#689D8C"
+                            : "#104f55",
+                      }}
                     >
                       {policy.PolicyName}
                     </S.Policy_index>
@@ -142,38 +161,21 @@ const MarkDiff = () => {
 
           {/* Policy Differences */}
           <S.ContentAreaWrapperWrapper>
-            <S.ContentAreaTitle>
-              <h1>Policy Differences</h1>
-              <p>Select a policy to compare differences</p>
-            </S.ContentAreaTitle>
             <S.ContentArea>
-              <DiffViewer
-                oldValue={newValue}
-                newValue={oldValue}
-                splitView={true}
-                hideLineNumbers={false}
-                showDiffOnly={true}
-                styles={{
-                  variables: {
-                    light: {
-                      diffViewerBackground: "#fafbfc",
-                      addedBackground: "#e6ffed",
-                      removedBackground: "#ffeef0",
-                      addedGutterBackground: "#cdffd8",
-                      removedGutterBackground: "#ffdce0",
-                    },
-                  },
-                  diffContainer: {
-                    display: "flex",
-                  },
-                  line: {
-                    minWidth: "50%",
-                  },
-                  lineGutter: {
-                    minWidth: "50%",
-                  },
-                }}
-              />
+              <S.ContentAreaTitle>
+                <h1>Existing Policy</h1>
+              </S.ContentAreaTitle>
+              <S.DataArea>
+                <pre>{newValue}</pre>
+              </S.DataArea>
+            </S.ContentArea>
+            <S.ContentArea>
+              <S.ContentAreaTitle>
+                <h1>Privilige Policy</h1>
+              </S.ContentAreaTitle>
+              <S.DataArea>
+                <pre>{oldValue}</pre>
+              </S.DataArea>
             </S.ContentArea>
           </S.ContentAreaWrapperWrapper>
         </S.Wrapper2>

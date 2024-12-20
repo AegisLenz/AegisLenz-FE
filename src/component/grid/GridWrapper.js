@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState, useRef } from "react";
 import GridLayout from "react-grid-layout";
 import "react-grid-layout/css/styles.css";
-import Alert from "../alert/Alert";
+
 import ChatToggle from "../toggle/chat/ToggleChat";
 // eslint-disable-next-line no-unused-vars
 import FilterToggle from "../toggle/filter/Filter";
@@ -23,10 +23,10 @@ import {
 } from "./elements";
 import * as S from "./Grid_style";
 
-const Grid = ({ isEditOn, MarkData, Gridtype }) => {
+const Grid = ({ isEditOn, MarkData, Gridtype, AlertSession }) => {
   const [isChattoggleOpen, setChatToggle] = useState(false);
-  const [markData, setMarkData] = useState(MarkData || []);
-  const [promptSession, setPromptSession] = useState("");
+  const [markData, setMarkData] = useState();
+  const [promptSession, setPromptSession] = useState(AlertSession || "");
 
   const [ReportData, setReportData] = useState("");
   const [ESResultData, setESREsultData] = useState([]);
@@ -42,28 +42,26 @@ const Grid = ({ isEditOn, MarkData, Gridtype }) => {
     }
   }, [location.state]);
 
+  useEffect(() => {
+    InAlert();
+    setPromptSession(AlertSession);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [AlertSession]);
+
   const getESResultData = (value) => {
     setESREsultData(value);
-    console.log(value);
-  };
-  const getDBResultData = (value) => {
-    setDBREsultData(value);
-    const isNumeric = (value) => {
-      return !isNaN(Number(value));
-    };
-    console.log(isNumeric(value[0].match(/\d+/g)));
   };
   const getReportData = (value) => {
     setReportData(value);
   };
-  const getGraphData = (value) => {
-    setAttackGraphData(value);
+  const getGraphData = async (value) => {
+    await setAttackGraphData(value);
+    console.log(value);
   };
 
   const getPromptSession = (value) => {
     setPromptSession(value);
     setChatToggle(true);
-    InAlert();
     InAlert();
   };
 
@@ -86,6 +84,8 @@ const Grid = ({ isEditOn, MarkData, Gridtype }) => {
   };
 
   const InAlert = () => {
+    // setPromptSession(value);
+    setChatToggle(true);
     const AlertMarkdata = [
       "scroll",
       "chat",
@@ -97,6 +97,7 @@ const Grid = ({ isEditOn, MarkData, Gridtype }) => {
     setGridLayout(InitLayout.filter((item) => AlertMarkdata.includes(item.i)));
   };
 
+  // 레이아웃 초기 설정
   const InitLayout = useMemo(
     () => [
       {
@@ -214,7 +215,7 @@ const Grid = ({ isEditOn, MarkData, Gridtype }) => {
         x: 50,
         y: 0,
         w: 50,
-        h: 30,
+        h: 50,
       },
     ],
     []
@@ -233,6 +234,7 @@ const Grid = ({ isEditOn, MarkData, Gridtype }) => {
   const [initHeight] = useState(window.innerHeight);
   const [ratio, setratio] = useState(0.9);
 
+  // 스크롤 이벤트
   useEffect(() => {
     const calculateRowHeight = () => {
       if (wrapperRef.current) {
@@ -273,68 +275,46 @@ const Grid = ({ isEditOn, MarkData, Gridtype }) => {
     };
   }, [initHeight, isChattoggleOpen]);
 
-  // markData 없데이트 시에
-  useEffect(() => {
-    // MarkData가 업데이트될 때 markData를 업데이트
-    if (MarkData && MarkData.length > 0) {
-      setMarkData(MarkData);
-    }
-  }, [MarkData]);
-
   // markData로 필터링
   useEffect(() => {
     if (markData && markData.length > 0) {
-      const additionalLayouts = [];
+      // `markData`를 기반으로 필터링하고, 없는 항목은 추가
+      setGridLayout((prev) => {
+        // 현재 `gridLayout`에 없는 `markData` 항목을 InitLayout에서 찾아 추가
+        const missingItems = markData
+          .filter((id) => !prev.some((item) => item.i === id))
+          .map((id) => {
+            const initItem = InitLayout.find((item) => item.i === id);
+            return initItem
+              ? { ...initItem, h: initItem.h * ratio } // 비율에 따라 높이 조정
+              : null;
+          })
+          .filter(Boolean); // null 제거
 
-      const layoutMap = [
-        { i: "ShowLog", x: 50, y: 55, w: 50, h: 40 },
-        { i: "Report", x: 50, y: 0, w: 50, h: 20 },
-        { i: "ShowPolicy", x: 50, y: 50, w: 50, h: 25 },
-        { i: "AttackVisualGraph", x: 50, y: 30, w: 50, h: 40 },
-      ];
+        // 기존 `prev`에서 `markData`에 없는 항목 제거 후 `missingItems` 추가
+        const updatedLayout = prev
+          .filter((item) => markData.includes(item.i))
+          .concat(missingItems);
 
-      markData.forEach((item) => {
-        if (layoutMap[item]) {
-          additionalLayouts.push(layoutMap[item]);
-        }
+        return updatedLayout;
       });
 
-      if (additionalLayouts.length > 0) {
-        setGridLayout((prev) => [...prev, ...additionalLayouts]);
-      }
-
-      if (markData.length > 0) {
-        setGridLayout((prev) =>
-          prev.filter((item) => markData.includes(item.i))
-        );
-      }
+      // `Gridtype`에 따라 위치 조정
       if (Gridtype === "prompt") {
         setGridLayout((prevLayout) =>
-          prevLayout.map((item) => {
-            const initItem = InitLayout.find((init) => init.i === item.i);
-            if (initItem) {
-              return {
-                ...item,
-                x: 0,
-                w: 50,
-              };
-            }
-            return item;
-          })
+          prevLayout.map((item) => ({
+            ...item,
+            x: 50, // `prompt` 타입에서는 모든 아이템을 오른쪽으로 이동
+            w: 50,
+          }))
         );
       } else {
         setGridLayout((prevLayout) =>
-          prevLayout.map((item) => {
-            const initItem = InitLayout.find((init) => init.i === item.i);
-            if (initItem) {
-              return {
-                ...item,
-                x: item.i !== "chat" || item.i !== "scroll" ? 0 : 50,
-                w: 50,
-              };
-            }
-            return item;
-          })
+          prevLayout.map((item) => ({
+            ...item,
+            x: item.i === "chat" || item.i === "scroll" ? 0 : 50, // `chat`과 `scroll`은 왼쪽
+            w: 50,
+          }))
         );
       }
     } else {
@@ -354,11 +334,10 @@ const Grid = ({ isEditOn, MarkData, Gridtype }) => {
             "Score",
             "Risks",
           ].includes(item.i)
-        ) // 원하는 조건으로 필터링 (예: "chat" 제외)
-          .map((item) => ({
-            ...item,
-            h: item.h * 0.9, // 비율에 따라 높이 조정
-          }))
+        ).map((item) => ({
+          ...item,
+          h: item.h * ratio, // 비율에 따라 높이 조정
+        }))
       );
     }
   }, [markData, InitLayout, ratio, Gridtype]);
@@ -393,11 +372,6 @@ const Grid = ({ isEditOn, MarkData, Gridtype }) => {
 
   return (
     <S.Wrapper ref={wrapperRef}>
-      <Alert
-        setChatToggleOpen={setChatToggleOpen}
-        getPromptSession={getPromptSession}
-        InAlert={InAlert}
-      />
       <GridLayout
         layout={gridLayout.map((item) => ({
           ...item,
@@ -432,7 +406,7 @@ const Grid = ({ isEditOn, MarkData, Gridtype }) => {
             case "AccountStatus":
               return (
                 <S.GridElement key={item.i}>
-                  <AccountStatus GenDetailData={() => {}} Data={DBResultData} />
+                  <AccountStatus GenDetailData={() => {}} />
                 </S.GridElement>
               );
             case "DailyInsight":
@@ -480,13 +454,19 @@ const Grid = ({ isEditOn, MarkData, Gridtype }) => {
             case "ShowLog":
               return (
                 <S.GridElement key={item.i}>
-                  <ShowLog Data={ESResultData} />
+                  <ShowLog
+                    ESResultData={ESResultData}
+                    DBResultData={DBResultData}
+                  />
                 </S.GridElement>
               );
             case "AttackVisualGraph":
               return (
                 <S.GridElement key={item.i}>
-                  <AttackVisualGraph AttackGraphData={AttackGraphData} />
+                  <AttackVisualGraph
+                    AlertSession={AlertSession}
+                    AttackGraphData={AttackGraphData}
+                  />
                 </S.GridElement>
               );
             case "Risks":
@@ -504,7 +484,7 @@ const Grid = ({ isEditOn, MarkData, Gridtype }) => {
                     ChatToggleButton={ChatToggleButton}
                     setChatToggleOpen={setChatToggleOpen}
                     setESResultData={getESResultData}
-                    setDBResultData={getDBResultData}
+                    setDBResultData={getESResultData}
                     promptSession={promptSession}
                     getReportData={getReportData}
                     getGraphData={getGraphData}

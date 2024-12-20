@@ -105,14 +105,11 @@ const InnerChat = ({ isOpen, isFull, chatData, addExample, SuggestData }) => {
                   SuggestData.map((item, idx) => (
                     <S.Example
                       key={idx}
-                      onClick={(e) => addExample(e.target.textContent)}
+                      onClick={(item) => addExample(item.target.textContent)}
                     >
                       {item}
                     </S.Example>
                   ))}
-              </S.ExampleArea>
-
-              <S.ExampleArea>
                 {message.isBookmark && <p>북마크된 질문</p>}
                 {message.isBookmark &&
                   // Array.isArray(bookmark) &&

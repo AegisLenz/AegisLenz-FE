@@ -16,7 +16,7 @@ const Login = ({ setSignIn }) => {
       if (data.user_id) {
         alert("Login successful!");
         localStorage.setItem("user_id", data.user_id);
-        navigate("/");
+        navigate("/", { state: { isChatOpen: false } });
       } else if (data.detail === "Failed 401: Invalid username or password") {
         alert("비밀번호가 일치하지 않습니다.");
       } else {

@@ -84,7 +84,7 @@ export const IndexArea3 = styled.div`
     padding: 0 0 3% 0;
     overflow: hidden;
 
-    font-size: 1.5em;
+    font-size: 1.2em;
     display: flex;
     justify-content: center;
     align-items: flex-end;
@@ -170,6 +170,11 @@ export const ContentAreaWrapperWrapper = styled.div`
 
   width: 75%;
   height: 97%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
 `;
 
 export const ContentAreaTitle = styled.div`
@@ -190,29 +195,18 @@ export const ContentAreaTitle = styled.div`
 `;
 export const ContentArea = styled.div`
   width: 98%;
-  height: 85.7%;
+  height: 98%;
 
   margin: 0 1%;
-  overflow: auto;
-
+`;
+export const DataArea = styled.div`
+  width: 98%;
+  height: 84%;
+  padding: 1%;
   background-color: white;
   border-radius: 0.5em;
 
-  box-shadow: 0px 0px 5px #999;
+  box-shadow: inset 0px 0px 5px #999;
 
-  table {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  &::-webkit-scrollbar {
-    background-color: transparent;
-    width: 0.5vw;
-  }
-  &::-webkit-scrollbar-thumb {
-    border-radius: 30em;
-    background-color: #104f55;
-  }
+  overflow: auto;
 `;

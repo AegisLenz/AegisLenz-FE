@@ -14,7 +14,7 @@ const Daily = () => {
       setNowLoading(true);
       try {
         const Fetchdata = await GetDailyInsight();
-        setContents(Fetchdata.daily_insight[0]);
+        setContents(Fetchdata.daily_insight);
       } catch (e) {
         console.log(e);
       } finally {
@@ -28,6 +28,9 @@ const Daily = () => {
   const contentAreaStyle = {
     color: "white",
     margin: "2%",
+    wordWrap: "break-word", // 텍스트 줄바꿈 처리
+    wordBreak: "break-word", // 긴 단어 강제 줄바꿈 처리
+    overflowWrap: "break-word", // 텍스트 자동 줄바꿈
   };
 
   return (
@@ -38,9 +41,11 @@ const Daily = () => {
           <Loading2 />
         ) : (
           <S.SubContent>
-            <div ref={contentRef} style={contentAreaStyle}>
-              <ReactMarkdown>{contents}</ReactMarkdown>
-            </div>
+            {contents.map((content, index) => (
+              <div key={index} ref={contentRef} style={contentAreaStyle}>
+                <ReactMarkdown>{content}</ReactMarkdown>
+              </div>
+            ))}
           </S.SubContent>
         )}
       </S.ContentArea>

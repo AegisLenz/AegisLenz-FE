@@ -2,12 +2,12 @@ import { useState, useEffect } from "react";
 import * as S from "./Alert_style";
 import useAlertSSE from "../hook/Alert/AlertHook";
 
-const Alert = ({ setChatToggleOpen, getPromptSession, InAlert }) => {
+const Alert = ({ getPromptSession }) => {
   const [alertData, setAlertData] = useState([]);
-  const [isOpen, setIsOpen] = useState(false);
-  const [isHoverIndex, setIsHoverIndex] = useState(false);
-  const [isHoverIcon, setIsHoverIcon] = useState(false);
-  const [isConnected, setIsConnected] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
+  const [isHoverIndex, setIsHoverIndex] = useState(true);
+  const [isHoverIcon, setIsHoverIcon] = useState(true);
+  const [isConnected, setIsConnected] = useState(true);
 
   const { connectSSE } = useAlertSSE();
 
@@ -23,7 +23,12 @@ const Alert = ({ setChatToggleOpen, getPromptSession, InAlert }) => {
         };
 
         setAlertData((prevData) => {
-          if (prevData.some((alert) => alert.prompt_session_id === mappedData.prompt_session_id)) {
+          if (
+            prevData.some(
+              (alert) =>
+                alert.prompt_session_id === mappedData.prompt_session_id
+            )
+          ) {
             return prevData;
           }
           return [...prevData, mappedData].slice(-5);
@@ -31,7 +36,7 @@ const Alert = ({ setChatToggleOpen, getPromptSession, InAlert }) => {
       },
       () => {
         console.error("SSE 연결 실패!");
-        setIsConnected(false);
+        setIsConnected(true);
       }
     );
   }, [connectSSE]);
@@ -40,13 +45,13 @@ const Alert = ({ setChatToggleOpen, getPromptSession, InAlert }) => {
     if (alert.prompt_session_id) {
       getPromptSession(alert.prompt_session_id);
     }
-    setIsOpen(false);
-    setChatToggleOpen(true);
-    InAlert();
+    getPromptSession("6765434e67b2ae01a338c421");
+    setIsOpen(true);
   };
 
   const handleCancelToggleClick = (alert) => {
     setAlertData((prevData) => prevData.filter((a) => a.id !== alert.id));
+    console.log(alert.prompt_session_id);
   };
 
   useEffect(() => {
@@ -55,7 +60,7 @@ const Alert = ({ setChatToggleOpen, getPromptSession, InAlert }) => {
       setIsOpen(true);
     } else {
       timeoutId = setTimeout(() => {
-        setIsOpen(false);
+        setIsOpen(true);
       }, 2000);
     }
     return () => {
@@ -70,18 +75,21 @@ const Alert = ({ setChatToggleOpen, getPromptSession, InAlert }) => {
       {alertData.length > 0 && (
         <S.AlertIconWrapper
           onMouseEnter={() => setIsHoverIndex(true)}
-          onMouseLeave={() => setIsHoverIndex(false)}
+          onMouseLeave={() => setIsHoverIndex(true)}
         >
           <S.AlertIcon
             onMouseEnter={() => setIsHoverIcon(true)}
-            onMouseLeave={() => setIsHoverIcon(false)}
+            onMouseLeave={() => setIsHoverIcon(true)}
             onClick={() => setIsOpen((prev) => !prev)}
           />
         </S.AlertIconWrapper>
       )}
       {alertData.length > 0 ? (
         alertData.map((alert) => (
-          <S.AlertBubble key={alert.id} onClick={() => handleAlertBubbleClick(alert)}>
+          <S.AlertBubble
+            key={alert.id}
+            onClick={() => handleAlertBubbleClick(alert)}
+          >
             <S.CancleToggle
               onClick={(e) => {
                 e.stopPropagation();
@@ -93,7 +101,7 @@ const Alert = ({ setChatToggleOpen, getPromptSession, InAlert }) => {
           </S.AlertBubble>
         ))
       ) : (
-        <S.AlertBubble>
+        <S.AlertBubble onClick={() => handleAlertBubbleClick(alert)}>
           <h3>공격 데이터 없음</h3>
           <p>SSE 데이터를 기다리는 중입니다...</p>
         </S.AlertBubble>

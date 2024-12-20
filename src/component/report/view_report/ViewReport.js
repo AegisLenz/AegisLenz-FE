@@ -8,7 +8,12 @@ import GetReportIndex from "../../hook/report/GetAllReport";
 import GetFormIndex from "../../hook/report/GeForm";
 import GetReport from "../../hook/report/GetReport";
 
+import { useLocation } from "react-router-dom";
+
 const ViewReport = () => {
+  const location = useLocation();
+  const { sessionId } = location.state || "";
+
   const [isOpen, setIsOpen] = useState(false); // ToolBar 열림 상태
   const [isHoverIndex, setIsHoverIndex] = useState(false); // Hover 상태
   const [isHoverIcon, setIsHoverIcon] = useState(false);
@@ -63,7 +68,8 @@ const ViewReport = () => {
   \`\`\`
   `;
   const [content, setContent] = useState(Excontent);
-  const [reportID, setReportID] = useState("");
+  const [reportID, setReportID] = useState(sessionId);
+
   useEffect(() => {
     const FetchReport = async () => {
       seReportNowLoading(true);
@@ -71,7 +77,8 @@ const ViewReport = () => {
       setContent(FetchData.report_content);
       seReportNowLoading(false);
     };
-    FetchReport();
+
+    if (reportID !== undefined) FetchReport(reportID);
   }, [reportID]);
 
   const [Index, setIndex] = useState([]);
@@ -213,7 +220,7 @@ const ViewReport = () => {
             color: "black",
           }}
         >
-          {reportNowLoading || content === "" || content === undefined ? (
+          {reportNowLoading ? (
             <Loading2 />
           ) : (
             pages.map((page, index) => (

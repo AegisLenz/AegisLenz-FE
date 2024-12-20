@@ -56,7 +56,7 @@ export const Bookmark = styled.svg`
   right: 100%;
 
   width: 2vw;
-  height: 100%;
+  height: 2vw;
   position: absolute;
 
   transition: all ease 0.3s;
@@ -78,7 +78,7 @@ export const CancleBookMark = styled.svg`
   right: 0;
 
   width: 2vw;
-  height: 2vh;
+  height: 2vw;
 
   opacity: 0.5;
 
