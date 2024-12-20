@@ -3,7 +3,13 @@ import * as S from "./Alert_style";
 import useAlertSSE from "../hook/Alert/AlertHook";
 
 const Alert = ({ getPromptSession }) => {
-  const [alertData, setAlertData] = useState([]);
+  const [alertData, setAlertData] = useState([
+    {
+      Tactic: "TA0007 - Discovery",
+      Technique: "T1087 - Account Discovery",
+      prompt_session_id: "6765a9a0ea528a5d71b9ec50",
+    },
+  ]);
   const [isOpen, setIsOpen] = useState(false);
   const [isHoverIndex, setIsHoverIndex] = useState(false);
   const [isHoverIcon, setIsHoverIcon] = useState(false);
@@ -94,7 +100,7 @@ const Alert = ({ getPromptSession }) => {
                 handleCancelToggleClick(alert);
               }}
             />
-            <h3>{alert.technique + " / " + alert.tactic}</h3>
+            <h3>{alert.Technique + " / " + alert.Tactic}</h3>
             <p>{alert.prompt_session_id}</p>
           </S.AlertBubble>
         ))

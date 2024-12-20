@@ -29,6 +29,7 @@ const Dashboard = () => {
           MarkData={MarkData}
           setMarkDataFunc={setMarkDataFunc}
           AlertSession={promptSession}
+          Gridtype="grid"
         />
       </S.Wrapper>
     </div>

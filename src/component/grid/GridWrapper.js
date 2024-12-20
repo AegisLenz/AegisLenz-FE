@@ -3,8 +3,6 @@ import GridLayout from "react-grid-layout";
 import "react-grid-layout/css/styles.css";
 
 import ChatToggle from "../toggle/chat/ToggleChat";
-// eslint-disable-next-line no-unused-vars
-import FilterToggle from "../toggle/filter/Filter";
 import { useLocation } from "react-router-dom";
 import {
   AccountByService,
@@ -12,7 +10,6 @@ import {
   AccountStatus,
   DailyInsight,
   Detection,
-  EC2Status,
   NeedCheck,
   Report,
   Score,
@@ -23,24 +20,30 @@ import {
 } from "./elements";
 import * as S from "./Grid_style";
 
-const Grid = ({ isEditOn, MarkData, Gridtype, AlertSession }) => {
+const Grid = ({ isEditOn, Gridtype, AlertSession }) => {
   const [isChattoggleOpen, setChatToggle] = useState(false);
-  const [markData, setMarkData] = useState();
+  const [markData, setMarkData] = useState([]);
   const [promptSession, setPromptSession] = useState("");
+  const [GridTypeState, setGridTypeState] = useState(Gridtype);
 
   const [ReportData, setReportData] = useState("");
   const [ESResultData, setESREsultData] = useState([]);
+  // eslint-disable-next-line no-unused-vars
   const [DBResultData, setDBREsultData] = useState([]);
   const [AttackGraphData, setAttackGraphData] = useState();
 
   const location = useLocation();
 
   useEffect(() => {
-    if (location.state && location.state.isChatOpen !== undefined) {
+    if (
+      location.state &&
+      location.state.isChatOpen !== undefined &&
+      Gridtype !== "prompt"
+    ) {
       setMarkData([]);
       setChatToggle(location.state.isChatOpen);
     }
-  }, [location.state]);
+  }, [Gridtype, location.state]);
 
   useEffect(() => {
     if (AlertSession !== "") {
@@ -49,18 +52,20 @@ const Grid = ({ isEditOn, MarkData, Gridtype, AlertSession }) => {
     setPromptSession(AlertSession);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [AlertSession]);
-
   const getESResultData = (value) => {
     setESREsultData(value);
   };
   const getReportData = (value) => {
     setReportData(value);
   };
-  const getGraphData = async (value) => {
-    await setAttackGraphData(value);
+  const getGraphData = (value) => {
+    setAttackGraphData(value);
     console.log(value);
   };
-
+  const setChatToggleFromTggogle = (value) => {
+    setMarkData(value);
+    console.log(value);
+  };
   const getPromptSession = (value) => {
     setPromptSession(value);
     setChatToggle(true);
@@ -68,11 +73,11 @@ const Grid = ({ isEditOn, MarkData, Gridtype, AlertSession }) => {
   };
 
   const ChatToggleButton = () => {
-    if (isChattoggleOpen) {
+    if (isChattoggleOpen && Gridtype !== "prompt") {
       setMarkData([]);
     } else {
-      if (MarkData && MarkData.length > 0) {
-        setMarkData(MarkData);
+      if (markData && markData.length > 0) {
+        setMarkData(markData);
       }
     }
     setChatToggle((prev) => !prev);
@@ -80,13 +85,11 @@ const Grid = ({ isEditOn, MarkData, Gridtype, AlertSession }) => {
 
   const setChatToggleOpen = () => {
     setChatToggle(true);
-    if (MarkData && MarkData.length > 0) {
-      setMarkData(MarkData);
+    if (markData && markData.length > 0) {
+      setMarkData(markData);
     }
   };
-
   const InAlert = () => {
-    // setPromptSession(value);
     setChatToggle(true);
     const AlertMarkdata = [
       "scroll",
@@ -94,9 +97,12 @@ const Grid = ({ isEditOn, MarkData, Gridtype, AlertSession }) => {
       "Report",
       "ShowPolicy",
       "AttackVisualGraph",
-      "ShowLog",
     ];
-    setGridLayout(InitLayout.filter((item) => AlertMarkdata.includes(item.i)));
+    if (Gridtype === "grid") {
+      setGridLayout(
+        InitLayout.filter((item) => AlertMarkdata.includes(item.i))
+      );
+    }
   };
 
   // 레이아웃 초기 설정
@@ -243,7 +249,7 @@ const Grid = ({ isEditOn, MarkData, Gridtype, AlertSession }) => {
         const wrapperHeight = wrapperRef.current.offsetHeight; // Wrapper의 높이를 가져옴
         const rows = 100; // 원하는 행 개수 (임의 설정)
         const chagedHeight = wrapperHeight / rows;
-        const ratio = (chagedHeight / initHeight / 9) * 950;
+        const ratio = (chagedHeight / initHeight / 9.2) * 1000;
         setratio(ratio);
         setGridLayout((prev) =>
           prev.map((item) => ({
@@ -302,11 +308,11 @@ const Grid = ({ isEditOn, MarkData, Gridtype, AlertSession }) => {
       });
 
       // `Gridtype`에 따라 위치 조정
-      if (Gridtype === "prompt") {
+      if (GridTypeState === "prompt") {
         setGridLayout((prevLayout) =>
           prevLayout.map((item) => ({
             ...item,
-            x: 50, // `prompt` 타입에서는 모든 아이템을 오른쪽으로 이동
+            x: 0, // `prompt` 타입에서는 모든 아이템을 오른쪽으로 이동
             w: 50,
           }))
         );
@@ -321,32 +327,55 @@ const Grid = ({ isEditOn, MarkData, Gridtype, AlertSession }) => {
       }
     } else {
       // 초기 레이아웃으로 복원
-      setGridLayout(
-        InitLayout.filter((item) =>
-          [
-            "chat",
-            "scroll",
-            "AccountByService",
-            "AccountCount",
-            "AccountStatus",
-            "DailyInsight",
-            "Detection",
-            "EC2Status",
-            "NeedCheck",
-            "Score",
-            "Risks",
-          ].includes(item.i)
-        ).map((item) => ({
-          ...item,
-          h: item.h * ratio, // 비율에 따라 높이 조정
-        }))
-      );
+      if (Gridtype !== "prompt") {
+        setGridLayout(
+          InitLayout.filter((item) =>
+            [
+              "chat",
+              "scroll",
+              "AccountByService",
+              "AccountCount",
+              "AccountStatus",
+              "DailyInsight",
+              "Detection",
+              "EC2Status",
+              "NeedCheck",
+              "Score",
+              "Risks",
+            ].includes(item.i)
+          ).map((item) => ({
+            ...item,
+            h: item.h * ratio, // 비율에 따라 높이 조정
+          }))
+        );
+      } else {
+        setGridLayout(
+          InitLayout.filter((item) =>
+            [
+              "AccountByService",
+              "AccountCount",
+              "AccountStatus",
+              "DailyInsight",
+              "Detection",
+              "EC2Status",
+              "NeedCheck",
+              "Score",
+              "Risks",
+            ].includes(item.i)
+          ).map((item) => ({
+            ...item,
+            h: item.h * ratio, // 비율에 따라 높이 조정
+            x: 0,
+            w: 50,
+          }))
+        );
+      }
     }
-  }, [markData, InitLayout, ratio, Gridtype]);
+  }, [markData, InitLayout, ratio, Gridtype, GridTypeState]);
 
   // 토글 오픈
   useEffect(() => {
-    if (isChattoggleOpen) {
+    if (isChattoggleOpen && Gridtype !== "prompt") {
       setGridLayout((prevLayout) =>
         prevLayout.map((item) => {
           const initItem = InitLayout.find((init) => init.i === item.i);
@@ -370,7 +399,7 @@ const Grid = ({ isEditOn, MarkData, Gridtype, AlertSession }) => {
         })
       );
     }
-  }, [InitLayout, isChattoggleOpen, ratio]);
+  }, [Gridtype, InitLayout, isChattoggleOpen, ratio]);
 
   return (
     <S.Wrapper ref={wrapperRef}>
@@ -423,12 +452,12 @@ const Grid = ({ isEditOn, MarkData, Gridtype, AlertSession }) => {
                   <Detection />
                 </S.GridElement>
               );
-            case "EC2Status":
-              return (
-                <S.GridElement key={item.i}>
-                  <EC2Status />
-                </S.GridElement>
-              );
+            // case "EC2Status":
+            //   return (
+            //     <S.GridElement key={item.i}>
+            //       <EC2Status />
+            //     </S.GridElement>
+            //   );
             case "NeedCheck":
               return (
                 <S.GridElement key={item.i}>
@@ -481,7 +510,7 @@ const Grid = ({ isEditOn, MarkData, Gridtype, AlertSession }) => {
               return (
                 <S.GridElementNoBoxShadow key={item.i}>
                   <ChatToggle
-                    markData={setMarkData}
+                    markData={setChatToggleFromTggogle}
                     isChattoggleOpen={isChattoggleOpen}
                     ChatToggleButton={ChatToggleButton}
                     setChatToggleOpen={setChatToggleOpen}
@@ -490,7 +519,7 @@ const Grid = ({ isEditOn, MarkData, Gridtype, AlertSession }) => {
                     promptSession={promptSession}
                     getReportData={getReportData}
                     getGraphData={getGraphData}
-                    type={"grid"}
+                    type={Gridtype}
                   />
                 </S.GridElementNoBoxShadow>
               );

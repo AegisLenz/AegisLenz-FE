@@ -4,7 +4,6 @@ import InnerChat from "./innerchat/InnerChat";
 import GetPromptContents from "../../hook/Prompt/GetPromptContents";
 import Prompthook from "../../hook/Prompt/Prompthook";
 import CreateSession from "../../hook/Prompt/CreateNewPrompt";
-import { tree } from "d3";
 
 const ToggleChat = ({
   ChatToggleButton,
@@ -18,6 +17,7 @@ const ToggleChat = ({
   setDBResultData,
   getGraphData,
   getPromptSession,
+  getGraphDataPrompt,
   type,
 }) => {
   const [inputValue, setInputValue] = useState("");
@@ -25,7 +25,11 @@ const ToggleChat = ({
   const [session, setSession] = useState("");
 
   const [ChatData, setChatData] = useState([]);
-  const [SuggestData, setSuggestData] = useState([]);
+  const [SuggestData, setSuggestData] = useState([
+    "EC2 인스턴스 i-01c646c4b28fcf780의 IAM 역할과 정책을 확인하여, 현재 할당된 권한과 최근 90일간 사용자의 권한 변화를 비교해 주세요.",
+    "MongoDB에서 IAM 사용자 'Victim'의 현재 권한과 90일간 사용된 권한을 비교하여 불필요한 권한 또는 의심스러운 액세스를 확인할 수 있도록 해 주세요.",
+    "공격자가 성공적으로 탐색하고자 했던 IAM 역할 목록('testrole', 'AWSServiceRoleForTrustedAdvisor', 'AWSServiceRoleForSupport')에 대해 각 역할의 현재 정책 및 연관된 사용자 정보를 제공해 주세요.",
+  ]);
 
   const [isDataLoaded, setIsDataLoaded] = useState(false); // useEffect 완료 상태 관리
 
@@ -59,7 +63,7 @@ const ToggleChat = ({
               data.init_recommend_questions !== null &&
               data.init_recommend_questions.length !== 0
             ) {
-              setSuggestData(data.init_recommend_questions);
+              setSuggestData([]);
               setChatData((prev) => [
                 ...prev,
                 {
@@ -120,21 +124,8 @@ const ToggleChat = ({
 
   const handleMarkData = (data) => {
     if (data && data.length > 0) {
-      if (type === "grid") {
-        const Arraydata = [...new Set([...data, "scroll", "chat", "ShowLog"])];
-        const transformedData = Arraydata.map((item) =>
-          item.replace(/'/g, '"')
-        );
-        console.log(transformedData);
-        markData(transformedData);
-      } else {
-        const Arraydata = data;
-        const transformedData = Arraydata.map((item) =>
-          item.replace(/'/g, '"')
-        );
-        console.log(transformedData);
-        markData(transformedData);
-      }
+      const Arraydata = [...new Set([...data, "scroll", "chat", "ShowLog"])];
+      markData(Arraydata);
     }
   };
 
@@ -302,20 +293,7 @@ const ToggleChat = ({
 
   const addExample = (value) => {
     if (value.trim() === "") return; // 빈 입력 방지
-
-    // 현재 입력값 추가
-    setChatData((prevChatData) => [
-      ...prevChatData,
-      {
-        text: value,
-        isUser: true,
-      },
-    ]);
-
-    SendMessage(value, session);
-
-    // 입력 초기화
-    setInputValue("");
+    setInputValue(value);
   };
 
   return (

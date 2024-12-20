@@ -516,6 +516,7 @@
         }
       }
     ],
+    "xmrgg": [],
     "Yeji_Shin": [
       {
         "PolicyName": "AmazonEC2FullAccess",
@@ -693,11 +694,11 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "jRQGVjVM6q",
+              "Sid": "nOjoXEIMJq",
               "Effect": "Allow",
               "Action": [
-                "ce:GetCostForecast",
-                "ce:GetCostAndUsage"
+                "ce:GetCostAndUsage",
+                "ce:GetCostForecast"
               ],
               "Resource": "*"
             }
@@ -710,7 +711,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "wDb7oe5o2v",
+              "Sid": "QsiunqXmDz",
               "Effect": "Allow",
               "Action": [
                 "cost-optimization-hub:ListEnrollmentStatuses"
@@ -726,7 +727,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "9Y3QkWSVU8",
+              "Sid": "ZcAVWUlp3r",
               "Effect": "Allow",
               "Action": [
                 "health:DescribeEventAggregates",
@@ -743,7 +744,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "acSTO5TC2I",
+              "Sid": "NAsfhAG6Vh",
               "Effect": "Allow",
               "Action": [
                 "notifications:ListNotificationHubs"
@@ -759,64 +760,64 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "ODGMOY09Wd",
+              "Sid": "EpfBk1W1c2",
               "Effect": "Allow",
               "Action": [
-                "ec2:DescribeAddressTransfers",
-                "ec2:DescribeManagedPrefixLists",
-                "ec2:GetSecurityGroupsForVpc",
-                "ec2:DescribeAddresses",
-                "ec2:GetAllowedImagesSettings",
                 "ec2:DescribeSecurityGroupRules",
-                "ec2:DescribeSubnets",
-                "ec2:DescribeIpamPools",
-                "ec2:DescribeAvailabilityZones",
-                "ec2:DescribePublicIpv4Pools",
+                "ec2:GetAllowedImagesSettings",
                 "ec2:GetEbsEncryptionByDefault",
-                "ec2:CreateTags",
-                "ec2:AllocateAddress",
-                "ec2:DescribeImages",
-                "ec2:GetEbsDefaultKmsKeyId",
-                "ec2:DescribeNatGateways",
-                "ec2:DescribeKeyPairs",
-                "ec2:DescribeInstanceStatus",
-                "ec2:AuthorizeSecurityGroupEgress",
-                "ec2:DescribeInstanceAttribute",
-                "ec2:GetDefaultCreditSpecification",
                 "ec2:DescribeRegions",
-                "ec2:DescribeAccountAttributes",
-                "ec2:DescribeVolumeStatus",
-                "ec2:DescribeInstanceTypeOfferings",
+                "ec2:GetEbsDefaultKmsKeyId",
+                "ec2:AllocateAddress",
+                "ec2:DescribeNetworkInterfaces",
+                "ec2:DescribeInstanceCreditSpecifications",
+                "ec2:DescribeManagedPrefixLists",
+                "ec2:DescribeSubnets",
+                "ec2:DescribeVolumeAttribute",
+                "ec2:DescribeReplaceRootVolumeTasks",
+                "ec2:DescribeLaunchTemplates",
+                "ec2:DescribeInstanceTypes",
+                "ec2:DescribeAddresses",
+                "ec2:DescribeIpamPools",
+                "ec2:DescribeInstanceConnectEndpoints",
+                "ec2:AuthorizeSecurityGroupIngress",
+                "ec2:DescribeInstances",
+                "ec2:DescribeCapacityReservations",
+                "ec2:DescribeVpcs",
                 "ec2:DescribeSnapshots",
                 "ec2:RunInstances",
-                "ec2:DescribeCapacityReservations",
+                "ec2:DescribeHosts",
+                "ec2:DescribeAccountAttributes",
+                "ec2:DescribeInstanceStatus",
+                "ec2:DescribePublicIpv4Pools",
+                "ec2:DescribeTags",
+                "ec2:DescribeInstanceAttribute",
+                "ec2:GetInstanceMetadataDefaults",
+                "ec2:DescribeRouteTables",
+                "ec2:DescribeCoipPools",
+                "ec2:StartInstances",
+                "ec2:DescribeVolumes",
+                "ec2:DescribeNatGateways",
+                "ec2:DescribeAvailabilityZones",
+                "ec2:DescribeVolumeStatus",
+                "ec2:DescribeKeyPairs",
+                "ec2:DescribeImages",
+                "ec2:GetSecurityGroupsForVpc",
+                "ec2:CreateKeyPair",
+                "ec2:DescribeAddressesAttribute",
+                "ec2:DescribeInstanceTypeOfferings",
+                "ec2:DescribeInstanceImageMetadata",
+                "ec2:AuthorizeSecurityGroupEgress",
                 "ec2:DescribeSecurityGroups",
-                "ec2:DescribeInstanceCreditSpecifications",
-                "ec2:DescribeVpcs",
+                "ec2:DescribePlacementGroups",
+                "ec2:StopInstances",
+                "ec2:GetDefaultCreditSpecification",
+                "ec2:CreateTags",
                 "ec2:ModifyVolume",
                 "ec2:AssociateAddress",
-                "ec2:StartInstances",
-                "ec2:DescribeInstances",
-                "ec2:DescribeTags",
-                "ec2:UpdateSecurityGroupRuleDescriptionsEgress",
-                "ec2:AuthorizeSecurityGroupIngress",
-                "ec2:DescribeInstanceImageMetadata",
-                "ec2:CreateKeyPair",
-                "ec2:DescribeVolumeAttribute",
-                "ec2:DescribeLaunchTemplates",
-                "ec2:DescribeVolumes",
-                "ec2:DescribePlacementGroups",
+                "ec2:DescribeAddressTransfers",
                 "ec2:DescribeVolumesModifications",
-                "ec2:StopInstances",
-                "ec2:DescribeRouteTables",
-                "ec2:DescribeInstanceTypes",
-                "ec2:DescribeNetworkInterfaces",
-                "ec2:DescribeReplaceRootVolumeTasks",
-                "ec2:DescribeAddressesAttribute",
-                "ec2:DescribeCoipPools",
-                "ec2:DescribeInstanceConnectEndpoints",
-                "ec2:DescribeHosts",
-                "ec2:GetInstanceMetadataDefaults"
+                "ec2:UpdateSecurityGroupRuleDescriptionsEgress"
               ],
               "Resource": "*"
             }
@@ -829,7 +830,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "lz6HvXK1u8",
+              "Sid": "bzDTxmXAPf",
               "Effect": "Allow",
               "Action": [
                 "elasticloadbalancing:DescribeLoadBalancers"
@@ -845,7 +846,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "V2MtEwnaHW",
+              "Sid": "82gmPLk7w4",
               "Effect": "Allow",
               "Action": [
                 "autoscaling:DescribeAutoScalingGroups"
@@ -861,7 +862,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "YaHhFcwjYM",
+              "Sid": "jY5KwJ0KTh",
               "Effect": "Allow",
               "Action": [
                 "freetier:GetFreeTierUsage"
@@ -877,11 +878,11 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "PArZMk4TeY",
+              "Sid": "vztOiOJS2p",
               "Effect": "Allow",
               "Action": [
-                "compute-optimizer:GetEBSVolumeRecommendations",
-                "compute-optimizer:GetEnrollmentStatus"
+                "compute-optimizer:GetEnrollmentStatus",
+                "compute-optimizer:GetEBSVolumeRecommendations"
               ],
               "Resource": "*"
             }
@@ -894,38 +895,38 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "ibwaIIVzNC",
+              "Sid": "tS2xFigVsi",
               "Effect": "Allow",
               "Action": [
-                "iam:GetAccessKeyLastUsed",
-                "iam:ListSSHPublicKeys",
-                "iam:ListAttachedRolePolicies",
-                "iam:ListRolePolicies",
-                "iam:ListServiceSpecificCredentials",
-                "iam:ListAccessKeys",
                 "iam:ListGroups",
                 "iam:GetAccountSummary",
-                "iam:GetUser",
-                "iam:ListPolicies",
-                "iam:ListUserPolicies",
-                "iam:ListAttachedUserPolicies",
-                "iam:GetAccountPasswordPolicy",
-                "iam:ListMFADevices",
-                "iam:GetRole",
-                "iam:GetPolicy",
-                "iam:ListUserTags",
-                "iam:GetPolicyVersion",
-                "iam:CreateRole",
-                "iam:ListAccountAliases",
-                "iam:AttachRolePolicy",
-                "iam:ListSigningCertificates",
-                "iam:UpdateLoginProfile",
-                "iam:GetLoginProfile",
-                "iam:UpdateAssumeRolePolicy",
-                "iam:ListUsers",
                 "iam:GetInstanceProfile",
+                "iam:GetLoginProfile",
+                "iam:CreateRole",
+                "iam:AttachRolePolicy",
                 "iam:ListGroupsForUser",
-                "iam:ListPolicyVersions"
+                "iam:GetAccessKeyLastUsed",
+                "iam:ListAccessKeys",
+                "iam:GetPolicy",
+                "iam:ListAttachedUserPolicies",
+                "iam:ListPolicies",
+                "iam:GetPolicyVersion",
+                "iam:UpdateLoginProfile",
+                "iam:GetUser",
+                "iam:ListAccountAliases",
+                "iam:ListSSHPublicKeys",
+                "iam:ListUserPolicies",
+                "iam:ListSigningCertificates",
+                "iam:ListServiceSpecificCredentials",
+                "iam:ListMFADevices",
+                "iam:UpdateAssumeRolePolicy",
+                "iam:ListUserTags",
+                "iam:ListAttachedRolePolicies",
+                "iam:GetRole",
+                "iam:ListUsers",
+                "iam:GetAccountPasswordPolicy",
+                "iam:ListPolicyVersions",
+                "iam:ListRolePolicies"
               ],
               "Resource": "arn:aws:iam::713881791527:user/None"
             }
@@ -938,7 +939,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "AsBT8Rb7TB",
+              "Sid": "8t4H41SHnn",
               "Effect": "Allow",
               "Action": [
                 "ssm:DescribeInstanceInformation"
@@ -954,7 +955,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "bAAQ8JItY5",
+              "Sid": "QrLZBirKYj",
               "Effect": "Allow",
               "Action": [
                 "logs:DescribeMetricFilters"
@@ -970,15 +971,15 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "CBUVD3EfT0",
+              "Sid": "IfhjWoa5Ig",
               "Effect": "Allow",
               "Action": [
-                "s3:ListStorageLensConfigurations",
-                "s3:ListJobs",
-                "s3:GetBucketObjectLockConfiguration",
                 "s3:GetBucketLocation",
+                "s3:ListStorageLensConfigurations",
                 "s3:GetBucketVersioning",
-                "s3:GetBucketOwnershipControls"
+                "s3:GetBucketOwnershipControls",
+                "s3:ListJobs",
+                "s3:GetBucketObjectLockConfiguration"
               ],
               "Resource": "*"
             }
@@ -991,7 +992,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "4X1qaXS6jZ",
+              "Sid": "jtSlXZRt62",
               "Effect": "Allow",
               "Action": [
                 "resource-explorer-2:ListIndexes"
@@ -1007,7 +1008,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "i36yCNRaZ3",
+              "Sid": "Vz22De7G5F",
               "Effect": "Allow",
               "Action": [
                 "securityhub:DescribeHub"
@@ -1023,14 +1024,14 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "Wcm5zKlrsn",
+              "Sid": "ivxVPRzTKp",
               "Effect": "Allow",
               "Action": [
+                "cloudtrail:ListTrails",
+                "cloudtrail:LookupEvents",
                 "cloudtrail:DescribeTrails",
                 "cloudtrail:GetTrailStatus",
-                "cloudtrail:ListTrails",
-                "cloudtrail:ListEventDataStores",
-                "cloudtrail:LookupEvents"
+                "cloudtrail:ListEventDataStores"
               ],
               "Resource": "*"
             }
@@ -1043,7 +1044,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "mOmYQldLUw",
+              "Sid": "sjoGxMHP5N",
               "Effect": "Allow",
               "Action": [
                 "organizations:DescribeOrganization"
@@ -1059,11 +1060,11 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "IENN5CgD9V",
+              "Sid": "jbAsnw5oXv",
               "Effect": "Allow",
               "Action": [
-                "config:ListDiscoveredResources",
                 "config:DescribeConfigurationRecorders",
+                "config:ListDiscoveredResources",
                 "config:DescribeConfigurationRecorderStatus"
               ],
               "Resource": "*"
@@ -1077,12 +1078,12 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "7yVihUi9tb",
+              "Sid": "30ykt3R1zR",
               "Effect": "Allow",
               "Action": [
+                "access-analyzer:ListPolicyGenerations",
                 "access-analyzer:ValidatePolicy",
-                "access-analyzer:ListAnalyzers",
-                "access-analyzer:ListPolicyGenerations"
+                "access-analyzer:ListAnalyzers"
               ],
               "Resource": "*"
             }
@@ -1095,7 +1096,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "mZ91qK67H0",
+              "Sid": "a0vauTuP6h",
               "Effect": "Allow",
               "Action": [
                 "sso:DescribeRegisteredRegions"
@@ -1111,7 +1112,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "8KGJv4pDpx",
+              "Sid": "gnXqJHZb5v",
               "Effect": "Allow",
               "Action": [
                 "ec2-instance-connect:SendSSHPublicKey"
@@ -1127,7 +1128,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "9yncjz6tQ3",
+              "Sid": "azLGL1Ys5D",
               "Effect": "Allow",
               "Action": [
                 "dlm:GetLifecyclePolicies"
@@ -1143,7 +1144,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "hd5tXZiRuG",
+              "Sid": "msrEcF0NdQ",
               "Effect": "Allow",
               "Action": [
                 "kms:ListAliases"
@@ -1161,18 +1162,18 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "9Ld7OCLWsC",
+              "Sid": "BujktH68J3",
               "Effect": "Allow",
               "Action": [
-                "ce:GetSavingsPlansUtilizationDetails",
-                "ce:GetCostCategories",
-                "ce:GetTags",
-                "ce:GetAnomalyMonitors",
-                "ce:GetCostForecast",
                 "ce:GetAnomalies",
-                "ce:GetReservationUtilization",
+                "ce:GetCostForecast",
+                "ce:GetConsoleActionSetEnforced",
+                "ce:GetTags",
                 "ce:GetCostAndUsage",
-                "ce:GetConsoleActionSetEnforced"
+                "ce:GetAnomalyMonitors",
+                "ce:GetCostCategories",
+                "ce:GetReservationUtilization",
+                "ce:GetSavingsPlansUtilizationDetails"
               ],
               "Resource": "*"
             }
@@ -1185,7 +1186,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "1vUxHRUx7D",
+              "Sid": "ILQxUuqV89",
               "Effect": "Allow",
               "Action": [
                 "cost-optimization-hub:ListEnrollmentStatuses"
@@ -1201,7 +1202,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "7QbjbFeIlQ",
+              "Sid": "8ZMPj8VaY5",
               "Effect": "Allow",
               "Action": [
                 "health:DescribeEventAggregates",
@@ -1218,7 +1219,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "nDqirgd4L1",
+              "Sid": "PjvVeTjsHn",
               "Effect": "Allow",
               "Action": [
                 "notifications:ListNotificationHubs"
@@ -1234,44 +1235,45 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "A22OwwuiqP",
+              "Sid": "DiDM3Yio7J",
               "Effect": "Allow",
               "Action": [
-                "ec2:GetSecurityGroupsForVpc",
-                "ec2:DescribeAddresses",
                 "ec2:GetAllowedImagesSettings",
-                "ec2:DescribeSubnets",
-                "ec2:DescribeAvailabilityZones",
                 "ec2:GetEbsEncryptionByDefault",
-                "ec2:DescribeImages",
-                "ec2:GetEbsDefaultKmsKeyId",
-                "ec2:DescribeKeyPairs",
-                "ec2:DescribeInstanceStatus",
-                "ec2:DescribeInstanceAttribute",
-                "ec2:GetDefaultCreditSpecification",
                 "ec2:DescribeRegions",
-                "ec2:DescribeAccountAttributes",
-                "ec2:DescribeVolumeStatus",
-                "ec2:DescribeInstanceTypeOfferings",
-                "ec2:DescribeSnapshots",
-                "ec2:DescribeCapacityReservations",
-                "ec2:DescribeSecurityGroups",
-                "ec2:DescribeVpcs",
-                "ec2:DescribeInstanceCreditSpecifications",
-                "ec2:StartInstances",
-                "ec2:DescribeInstances",
-                "ec2:DescribeTags",
-                "ec2:DescribeInstanceImageMetadata",
+                "ec2:GetEbsDefaultKmsKeyId",
                 "ec2:RebootInstances",
-                "ec2:DescribeLaunchTemplates",
-                "ec2:DescribeVolumes",
-                "ec2:DescribePlacementGroups",
-                "ec2:DescribeVolumesModifications",
-                "ec2:DescribeInstanceTypes",
                 "ec2:DescribeNetworkInterfaces",
+                "ec2:DescribeInstanceCreditSpecifications",
+                "ec2:DescribeSubnets",
                 "ec2:DescribeReplaceRootVolumeTasks",
+                "ec2:DescribeLaunchTemplates",
+                "ec2:DescribeInstanceTypes",
+                "ec2:DescribeAddresses",
+                "ec2:DescribeInstances",
+                "ec2:DescribeCapacityReservations",
+                "ec2:DescribeVpcs",
+                "ec2:DescribeSnapshots",
                 "ec2:DescribeHosts",
-                "ec2:GetInstanceMetadataDefaults"
+                "ec2:DescribeInstanceStatus",
+                "ec2:DescribeAccountAttributes",
+                "ec2:DescribeTags",
+                "ec2:DescribeInstanceAttribute",
+                "ec2:GetInstanceMetadataDefaults",
+                "ec2:StartInstances",
+                "ec2:DescribeVolumes",
+                "ec2:DescribeAvailabilityZones",
+                "ec2:DescribeVolumeStatus",
+                "ec2:DescribeKeyPairs",
+                "ec2:DescribeImages",
+                "ec2:GetSecurityGroupsForVpc",
+                "ec2:DescribeInstanceTypeOfferings",
+                "ec2:DescribeInstanceImageMetadata",
+                "ec2:DescribeSecurityGroups",
+                "ec2:DescribePlacementGroups",
+                "ec2:GetDefaultCreditSpecification",
+                "ec2:StopInstances",
+                "ec2:DescribeVolumesModifications"
               ],
               "Resource": "*"
             }
@@ -1284,7 +1286,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "kRArae4zFE",
+              "Sid": "Vuywv68IU4",
               "Effect": "Allow",
               "Action": [
                 "elasticloadbalancing:DescribeLoadBalancers"
@@ -1300,7 +1302,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "KQG3A5ieME",
+              "Sid": "QGQtba2nhb",
               "Effect": "Allow",
               "Action": [
                 "autoscaling:DescribeAutoScalingGroups"
@@ -1316,7 +1318,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "FaCPDvoUry",
+              "Sid": "x7T8fRfPQO",
               "Effect": "Allow",
               "Action": [
                 "freetier:GetFreeTierUsage"
@@ -1332,11 +1334,11 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "HclxzQsQzh",
+              "Sid": "zrKEdTJpYa",
               "Effect": "Allow",
               "Action": [
-                "compute-optimizer:GetEBSVolumeRecommendations",
-                "compute-optimizer:GetEnrollmentStatus"
+                "compute-optimizer:GetEnrollmentStatus",
+                "compute-optimizer:GetEBSVolumeRecommendations"
               ],
               "Resource": "*"
             }
@@ -1349,26 +1351,26 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "Y4DpuipHee",
+              "Sid": "IVML8lb3kI",
               "Effect": "Allow",
               "Action": [
-                "iam:GetAccessKeyLastUsed",
-                "iam:ListAccessKeys",
                 "iam:GetAccountSummary",
-                "iam:GetUser",
-                "iam:ListUserPolicies",
-                "iam:ListPolicies",
-                "iam:ListAttachedUserPolicies",
-                "iam:ListRoles",
-                "iam:ListMFADevices",
-                "iam:GetRole",
-                "iam:GetPolicy",
-                "iam:ListUserTags",
-                "iam:ListAccountAliases",
-                "iam:ListSigningCertificates",
                 "iam:GetLoginProfile",
-                "iam:ListUsers",
-                "iam:ListGroupsForUser"
+                "iam:ListRoles",
+                "iam:ListGroupsForUser",
+                "iam:ListAccessKeys",
+                "iam:GetAccessKeyLastUsed",
+                "iam:ListAttachedUserPolicies",
+                "iam:GetPolicy",
+                "iam:ListPolicies",
+                "iam:GetUser",
+                "iam:ListAccountAliases",
+                "iam:ListUserPolicies",
+                "iam:ListSigningCertificates",
+                "iam:ListMFADevices",
+                "iam:ListUserTags",
+                "iam:GetRole",
+                "iam:ListUsers"
               ],
               "Resource": "arn:aws:iam::713881791527:user/Jiyun_Kim"
             }
@@ -1381,7 +1383,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "y2NUdVfXj2",
+              "Sid": "vsQDUfOy0I",
               "Effect": "Allow",
               "Action": [
                 "ssm:DescribeInstanceInformation"
@@ -1397,7 +1399,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "2nLCOgjCCV",
+              "Sid": "QTNFLL0WQM",
               "Effect": "Allow",
               "Action": [
                 "logs:DescribeMetricFilters"
@@ -1413,7 +1415,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "WUrcQ7IvfQ",
+              "Sid": "wj3Um1mpxS",
               "Effect": "Allow",
               "Action": [
                 "resource-explorer-2:ListIndexes"
@@ -1429,14 +1431,14 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "gD3taBweAA",
+              "Sid": "8arzCEtDcq",
               "Effect": "Allow",
               "Action": [
+                "cloudtrail:ListTrails",
+                "cloudtrail:LookupEvents",
                 "cloudtrail:DescribeTrails",
                 "cloudtrail:GetTrailStatus",
-                "cloudtrail:ListTrails",
-                "cloudtrail:ListEventDataStores",
-                "cloudtrail:LookupEvents"
+                "cloudtrail:ListEventDataStores"
               ],
               "Resource": "*"
             }
@@ -1449,7 +1451,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "pFl1CH3aCa",
+              "Sid": "7iLjXWXs9A",
               "Effect": "Allow",
               "Action": [
                 "organizations:DescribeOrganization"
@@ -1465,7 +1467,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "L9rnsBaSvR",
+              "Sid": "irvLYdhMYN",
               "Effect": "Allow",
               "Action": [
                 "config:DescribeConfigurationRecorders",
@@ -1482,7 +1484,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "sshe3Dzw1Y",
+              "Sid": "kn63zVPGlH",
               "Effect": "Allow",
               "Action": [
                 "access-analyzer:ListPolicyGenerations"
@@ -1498,7 +1500,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "zscUmsrbV0",
+              "Sid": "VMaIKcmiFQ",
               "Effect": "Allow",
               "Action": [
                 "sso:DescribeRegisteredRegions"
@@ -1514,11 +1516,11 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "Z8414VW2ry",
+              "Sid": "3TpBETpm4B",
               "Effect": "Allow",
               "Action": [
-                "account:GetAlternateContact",
-                "account:ListRegions"
+                "account:ListRegions",
+                "account:GetAlternateContact"
               ],
               "Resource": "*"
             }
@@ -1531,7 +1533,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "QNyYOlS9we",
+              "Sid": "NLbLP6uZj2",
               "Effect": "Allow",
               "Action": [
                 "dlm:GetLifecyclePolicies"
@@ -1547,7 +1549,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "ZcIWGh5xcZ",
+              "Sid": "0g14ajL5T2",
               "Effect": "Allow",
               "Action": [
                 "kms:ListAliases"
@@ -1565,11 +1567,11 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "GDNVXfMLnv",
+              "Sid": "l71lssEIly",
               "Effect": "Allow",
               "Action": [
-                "ce:GetCostForecast",
-                "ce:GetCostAndUsage"
+                "ce:GetCostAndUsage",
+                "ce:GetCostForecast"
               ],
               "Resource": "*"
             }
@@ -1582,7 +1584,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "R1V9tTritP",
+              "Sid": "xukYTjR4zS",
               "Effect": "Allow",
               "Action": [
                 "cost-optimization-hub:ListEnrollmentStatuses"
@@ -1598,7 +1600,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "UpkLSiLVnK",
+              "Sid": "bh5wMRJqwi",
               "Effect": "Allow",
               "Action": [
                 "health:DescribeEventAggregates",
@@ -1615,7 +1617,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "5hQM21hCvt",
+              "Sid": "RDx8g7oj0U",
               "Effect": "Allow",
               "Action": [
                 "notifications:ListNotificationHubs"
@@ -1631,46 +1633,46 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "wkWbUPjMzD",
+              "Sid": "jvbWgdtw5Q",
               "Effect": "Allow",
               "Action": [
-                "ec2:GetSecurityGroupsForVpc",
-                "ec2:DescribeAddresses",
-                "ec2:GetAllowedImagesSettings",
                 "ec2:DescribeSecurityGroupRules",
-                "ec2:DescribeSubnets",
-                "ec2:DescribeAvailabilityZones",
+                "ec2:GetAllowedImagesSettings",
                 "ec2:GetEbsEncryptionByDefault",
-                "ec2:DescribeImages",
-                "ec2:GetEbsDefaultKmsKeyId",
-                "ec2:DescribeKeyPairs",
-                "ec2:DescribeInstanceStatus",
-                "ec2:DescribeInstanceAttribute",
-                "ec2:GetDefaultCreditSpecification",
                 "ec2:DescribeRegions",
-                "ec2:DescribeAccountAttributes",
-                "ec2:DescribeVolumeStatus",
-                "ec2:DescribeInstanceTypeOfferings",
-                "ec2:DescribeSnapshots",
-                "ec2:DescribeCapacityReservations",
-                "ec2:DescribeSecurityGroups",
-                "ec2:DescribeInstanceCreditSpecifications",
-                "ec2:DescribeVpcs",
-                "ec2:StartInstances",
-                "ec2:DescribeInstances",
-                "ec2:DescribeTags",
-                "ec2:GetSerialConsoleAccessStatus",
-                "ec2:DescribeLaunchTemplates",
-                "ec2:DescribeVolumes",
-                "ec2:DescribePlacementGroups",
-                "ec2:StopInstances",
-                "ec2:DescribeRouteTables",
-                "ec2:DescribeInstanceTypes",
+                "ec2:GetEbsDefaultKmsKeyId",
                 "ec2:DescribeNetworkInterfaces",
+                "ec2:DescribeInstanceCreditSpecifications",
+                "ec2:DescribeSubnets",
                 "ec2:DescribeReplaceRootVolumeTasks",
+                "ec2:DescribeLaunchTemplates",
+                "ec2:DescribeInstanceTypes",
+                "ec2:DescribeAddresses",
                 "ec2:DescribeInstanceConnectEndpoints",
+                "ec2:DescribeInstances",
+                "ec2:DescribeCapacityReservations",
+                "ec2:DescribeVpcs",
+                "ec2:DescribeSnapshots",
                 "ec2:DescribeHosts",
-                "ec2:GetInstanceMetadataDefaults"
+                "ec2:DescribeAccountAttributes",
+                "ec2:DescribeInstanceStatus",
+                "ec2:DescribeTags",
+                "ec2:DescribeInstanceAttribute",
+                "ec2:GetInstanceMetadataDefaults",
+                "ec2:DescribeRouteTables",
+                "ec2:StartInstances",
+                "ec2:DescribeVolumes",
+                "ec2:DescribeAvailabilityZones",
+                "ec2:GetSerialConsoleAccessStatus",
+                "ec2:DescribeVolumeStatus",
+                "ec2:DescribeKeyPairs",
+                "ec2:DescribeImages",
+                "ec2:GetSecurityGroupsForVpc",
+                "ec2:DescribeInstanceTypeOfferings",
+                "ec2:DescribeSecurityGroups",
+                "ec2:DescribePlacementGroups",
+                "ec2:GetDefaultCreditSpecification",
+                "ec2:StopInstances"
               ],
               "Resource": "*"
             }
@@ -1683,7 +1685,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "ljQNowksAU",
+              "Sid": "rsXQ8lJKSW",
               "Effect": "Allow",
               "Action": [
                 "elasticloadbalancing:DescribeLoadBalancers"
@@ -1699,7 +1701,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "EcjSAPlDh2",
+              "Sid": "AUsVyjPn63",
               "Effect": "Allow",
               "Action": [
                 "autoscaling:DescribeAutoScalingGroups"
@@ -1715,7 +1717,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "ZSThUpRsgJ",
+              "Sid": "WoaME58T7f",
               "Effect": "Allow",
               "Action": [
                 "freetier:GetFreeTierUsage"
@@ -1731,7 +1733,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "sN5L5KsDGM",
+              "Sid": "iTRfPVqae5",
               "Effect": "Allow",
               "Action": [
                 "compute-optimizer:GetEnrollmentStatus"
@@ -1747,43 +1749,43 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "bo7YVPkhzq",
+              "Sid": "hOunEdufFs",
               "Effect": "Allow",
               "Action": [
-                "iam:GetUserPolicy",
-                "iam:CreatePolicy",
-                "iam:ListSSHPublicKeys",
-                "iam:ListVirtualMFADevices",
-                "iam:EnableMFADevice",
                 "iam:PutUserPolicy",
-                "iam:GetAccountPasswordPolicy",
+                "iam:GetAccountSummary",
+                "iam:GetInstanceProfile",
+                "iam:GetLoginProfile",
                 "iam:ListRoles",
-                "iam:ListMFADevices",
+                "iam:ListVirtualMFADevices",
+                "iam:ListGroupsForUser",
+                "iam:GetAccessKeyLastUsed",
+                "iam:GetMFADevice",
                 "iam:CreateVirtualMFADevice",
                 "iam:GetPolicy",
+                "iam:ListPolicies",
                 "iam:GetPolicyVersion",
+                "iam:ListAccountAliases",
+                "iam:ListSSHPublicKeys",
+                "iam:ListSAMLProviders",
                 "iam:ListSigningCertificates",
-                "iam:GetLoginProfile",
+                "iam:ListMFADevices",
+                "iam:ListUserTags",
+                "iam:ListOpenIDConnectProviders",
                 "iam:ListUsers",
                 "iam:ListPolicyVersions",
-                "iam:GetInstanceProfile",
-                "iam:GetAccessKeyLastUsed",
-                "iam:GetAccountName",
-                "iam:GetMFADevice",
-                "iam:ListServiceSpecificCredentials",
-                "iam:ListAccessKeys",
+                "iam:GetUserPolicy",
                 "iam:ListGroups",
-                "iam:GetAccountSummary",
-                "iam:GetUser",
-                "iam:ListUserPolicies",
-                "iam:ListPolicies",
+                "iam:CreatePolicy",
+                "iam:ListAccessKeys",
                 "iam:ListAttachedUserPolicies",
+                "iam:EnableMFADevice",
+                "iam:GetUser",
                 "iam:GetAccountEmailAddress",
-                "iam:ListUserTags",
-                "iam:ListAccountAliases",
-                "iam:ListOpenIDConnectProviders",
-                "iam:ListSAMLProviders",
-                "iam:ListGroupsForUser"
+                "iam:ListUserPolicies",
+                "iam:ListServiceSpecificCredentials",
+                "iam:GetAccountName",
+                "iam:GetAccountPasswordPolicy"
               ],
               "Resource": "arn:aws:iam::713881791527:user/Yujeong_Choi"
             }
@@ -1796,7 +1798,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "GEPU83E5Ci",
+              "Sid": "mZQrEhfXC4",
               "Effect": "Allow",
               "Action": [
                 "ssm:DescribeInstanceInformation"
@@ -1812,7 +1814,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "YkmvAM4Zzm",
+              "Sid": "6XY65YqAfU",
               "Effect": "Allow",
               "Action": [
                 "sts:GetCallerIdentity"
@@ -1828,7 +1830,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "KSq39jhjOk",
+              "Sid": "8aIH9kx9Kf",
               "Effect": "Allow",
               "Action": [
                 "logs:DescribeMetricFilters"
@@ -1844,12 +1846,12 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "rjpVpUv725",
+              "Sid": "f2g5ZSbsKE",
               "Effect": "Allow",
               "Action": [
                 "s3:GetBucketObjectLockConfiguration",
-                "s3:GetBucketOwnershipControls",
-                "s3:GetBucketVersioning"
+                "s3:GetBucketVersioning",
+                "s3:GetBucketOwnershipControls"
               ],
               "Resource": "*"
             }
@@ -1862,7 +1864,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "yG6cTWjDIb",
+              "Sid": "gm8VbWL27Z",
               "Effect": "Allow",
               "Action": [
                 "resource-explorer-2:ListIndexes"
@@ -1878,7 +1880,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "BW32j9Hil1",
+              "Sid": "BshKypA0wM",
               "Effect": "Allow",
               "Action": [
                 "securityhub:DescribeHub"
@@ -1894,14 +1896,14 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "I4f9ROIRke",
+              "Sid": "yP3PsFjuQ5",
               "Effect": "Allow",
               "Action": [
+                "cloudtrail:ListTrails",
+                "cloudtrail:LookupEvents",
                 "cloudtrail:DescribeTrails",
                 "cloudtrail:GetTrailStatus",
-                "cloudtrail:ListTrails",
-                "cloudtrail:ListEventDataStores",
-                "cloudtrail:LookupEvents"
+                "cloudtrail:ListEventDataStores"
               ],
               "Resource": "*"
             }
@@ -1914,7 +1916,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "IFtpx3hkha",
+              "Sid": "txhHANu9Zz",
               "Effect": "Allow",
               "Action": [
                 "organizations:ListHandshakesForAccount",
@@ -1931,11 +1933,11 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "THFWVRn3bM",
+              "Sid": "hqHs1Q5I9J",
               "Effect": "Allow",
               "Action": [
-                "config:ListDiscoveredResources",
                 "config:DescribeConfigurationRecorders",
+                "config:ListDiscoveredResources",
                 "config:DescribeConfigurationRecorderStatus"
               ],
               "Resource": "*"
@@ -1949,7 +1951,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "sjVfTDLCWD",
+              "Sid": "o3Q0t9cFNM",
               "Effect": "Allow",
               "Action": [
                 "access-analyzer:ValidatePolicy",
@@ -1966,7 +1968,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "iWv4cbjbMr",
+              "Sid": "3IMJo9KM3j",
               "Effect": "Allow",
               "Action": [
                 "sso:DescribeRegisteredRegions"
@@ -1982,7 +1984,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "VlgWMlXTK1",
+              "Sid": "3zsc7DNbgP",
               "Effect": "Allow",
               "Action": [
                 "account:ListRegions"
@@ -1998,15 +2000,15 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "1Uv17FnfBt",
+              "Sid": "WKoIl7uXBz",
               "Effect": "Allow",
               "Action": [
                 "cloudshell:CreateEnvironment",
-                "cloudshell:PutCredentials",
                 "cloudshell:CreateSession",
+                "cloudshell:PutCredentials",
                 "cloudshell:GetEnvironmentStatus",
-                "cloudshell:StartEnvironment",
-                "cloudshell:DescribeEnvironments"
+                "cloudshell:DescribeEnvironments",
+                "cloudshell:StartEnvironment"
               ],
               "Resource": "*"
             }
@@ -2019,7 +2021,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "4g6DiiwmJy",
+              "Sid": "yO38DtpLwI",
               "Effect": "Allow",
               "Action": [
                 "ec2-instance-connect:SendSerialConsoleSSHPublicKey",
@@ -2038,11 +2040,11 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "PUDSbzRcL2",
+              "Sid": "D1VYQFo3vY",
               "Effect": "Allow",
               "Action": [
-                "ce:GetCostForecast",
-                "ce:GetCostAndUsage"
+                "ce:GetCostAndUsage",
+                "ce:GetCostForecast"
               ],
               "Resource": "*"
             }
@@ -2055,7 +2057,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "ujI86SXVqL",
+              "Sid": "TO5BWEzyY1",
               "Effect": "Allow",
               "Action": [
                 "cost-optimization-hub:ListEnrollmentStatuses"
@@ -2071,7 +2073,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "J75YTyXuNW",
+              "Sid": "tcUwZQvZkN",
               "Effect": "Allow",
               "Action": [
                 "health:DescribeEventAggregates",
@@ -2088,7 +2090,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "f2ILXwoAB2",
+              "Sid": "vmxwZ9IL3A",
               "Effect": "Allow",
               "Action": [
                 "notifications:ListNotificationHubs"
@@ -2104,36 +2106,36 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "nHwGxtFf3W",
+              "Sid": "mjEIr4kpow",
               "Effect": "Allow",
               "Action": [
-                "ec2:DescribeCapacityReservations",
-                "ec2:DescribeInstanceCreditSpecifications",
-                "ec2:DescribeVpcs",
-                "ec2:DescribeSecurityGroups",
-                "ec2:DescribeAddresses",
-                "ec2:DescribeSubnets",
-                "ec2:DescribeInstances",
-                "ec2:DescribeTags",
-                "ec2:DescribeAvailabilityZones",
-                "ec2:DescribeHosts",
-                "ec2:DescribeInstanceImageMetadata",
-                "ec2:DescribeNetworkInterfaces",
-                "ec2:DescribeLaunchTemplates",
-                "ec2:DescribeVolumes",
-                "ec2:DescribePlacementGroups",
-                "ec2:DescribeImages",
-                "ec2:DescribeKeyPairs",
-                "ec2:DescribeInstanceStatus",
-                "ec2:DescribeInstanceAttribute",
-                "ec2:DescribeRouteTables",
-                "ec2:DescribeInstanceTypes",
-                "ec2:DescribeAccountAttributes",
                 "ec2:DescribeRegions",
-                "ec2:DescribeVolumeStatus",
+                "ec2:DescribeRouteTables",
+                "ec2:DescribeNetworkInterfaces",
+                "ec2:DescribeInstanceCreditSpecifications",
+                "ec2:DescribeSubnets",
+                "ec2:DescribeVolumes",
+                "ec2:DescribeAvailabilityZones",
                 "ec2:DescribeReplaceRootVolumeTasks",
+                "ec2:DescribeVolumeStatus",
+                "ec2:DescribeInstanceTypes",
+                "ec2:DescribeLaunchTemplates",
+                "ec2:DescribeKeyPairs",
+                "ec2:DescribeImages",
+                "ec2:DescribeAddresses",
                 "ec2:DescribeInstanceConnectEndpoints",
-                "ec2:DescribeSnapshots"
+                "ec2:DescribeAccountAttributes",
+                "ec2:DescribeInstanceImageMetadata",
+                "ec2:DescribeSecurityGroups",
+                "ec2:DescribeInstances",
+                "ec2:DescribePlacementGroups",
+                "ec2:DescribeCapacityReservations",
+                "ec2:DescribeTags",
+                "ec2:DescribeVpcs",
+                "ec2:DescribeSnapshots",
+                "ec2:DescribeHosts",
+                "ec2:DescribeInstanceStatus",
+                "ec2:DescribeInstanceAttribute"
               ],
               "Resource": "*"
             }
@@ -2146,7 +2148,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "0PpNVJwLea",
+              "Sid": "lVYgZGvzzB",
               "Effect": "Allow",
               "Action": [
                 "elasticloadbalancing:DescribeLoadBalancers"
@@ -2162,7 +2164,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "PYxvfCNiSX",
+              "Sid": "aWXZthhnRm",
               "Effect": "Allow",
               "Action": [
                 "autoscaling:DescribeAutoScalingGroups"
@@ -2178,7 +2180,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "dkbwUygLnk",
+              "Sid": "cnjjmmM23c",
               "Effect": "Allow",
               "Action": [
                 "freetier:GetFreeTierUsage"
@@ -2194,7 +2196,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "cCIGUTJyIv",
+              "Sid": "x17TNdKYEL",
               "Effect": "Allow",
               "Action": [
                 "compute-optimizer:GetEnrollmentStatus"
@@ -2210,7 +2212,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "UqEkr55Afa",
+              "Sid": "ppY069M8Lj",
               "Effect": "Allow",
               "Action": [
                 "iam:GetInstanceProfile"
@@ -2226,11 +2228,11 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "4Wduf7Glav",
+              "Sid": "lNohBVgcqU",
               "Effect": "Allow",
               "Action": [
-                "ssm:DescribeInstanceInformation",
-                "ssm:ListCommands"
+                "ssm:ListCommands",
+                "ssm:DescribeInstanceInformation"
               ],
               "Resource": "*"
             }
@@ -2243,7 +2245,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "mOTDhSGxZ3",
+              "Sid": "q4J1fHjzf5",
               "Effect": "Allow",
               "Action": [
                 "logs:DescribeMetricFilters"
@@ -2259,7 +2261,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "hvOVgOsZyR",
+              "Sid": "GDsmFTwq4y",
               "Effect": "Allow",
               "Action": [
                 "resource-explorer-2:ListIndexes"
@@ -2275,7 +2277,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "CLPYjPpkf2",
+              "Sid": "eI5gT6ds7U",
               "Effect": "Allow",
               "Action": [
                 "securityhub:DescribeHub"
@@ -2291,7 +2293,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "hl4jreIlQO",
+              "Sid": "tBgCDFGqbJ",
               "Effect": "Allow",
               "Action": [
                 "ec2-instance-connect:SendSSHPublicKey"
@@ -2309,11 +2311,11 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "GJa0MfBmpP",
+              "Sid": "PWl2s1lcgi",
               "Effect": "Allow",
               "Action": [
-                "ce:GetCostForecast",
-                "ce:GetCostAndUsage"
+                "ce:GetCostAndUsage",
+                "ce:GetCostForecast"
               ],
               "Resource": "*"
             }
@@ -2326,7 +2328,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "mrageezNQq",
+              "Sid": "ByDyh5nPTM",
               "Effect": "Allow",
               "Action": [
                 "cost-optimization-hub:ListEnrollmentStatuses"
@@ -2342,7 +2344,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "2a39FVr4bN",
+              "Sid": "1AtfNhQgwo",
               "Effect": "Allow",
               "Action": [
                 "health:DescribeEventAggregates",
@@ -2359,7 +2361,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "QxD6pBF34r",
+              "Sid": "C2vSgOBrHo",
               "Effect": "Allow",
               "Action": [
                 "notifications:ListNotificationHubs"
@@ -2375,37 +2377,40 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "kriNfnMeOE",
+              "Sid": "N69I7y8y2u",
               "Effect": "Allow",
               "Action": [
-                "ec2:DescribeCapacityReservations",
-                "ec2:DescribeSecurityGroups",
-                "ec2:DescribeInstanceCreditSpecifications",
-                "ec2:DescribeVpcs",
-                "ec2:DescribeAddresses",
-                "ec2:DescribeSubnets",
-                "ec2:DescribeInstances",
-                "ec2:DescribeTags",
-                "ec2:DescribeAvailabilityZones",
-                "ec2:DescribeHosts",
-                "ec2:DescribeInstanceImageMetadata",
-                "ec2:DescribeNetworkInterfaces",
-                "ec2:DescribeLaunchTemplates",
-                "ec2:DescribeVolumes",
-                "ec2:DescribePlacementGroups",
-                "ec2:DescribeImages",
-                "ec2:DescribeKeyPairs",
-                "ec2:DescribeInstanceStatus",
-                "ec2:ModifyInstanceAttribute",
-                "ec2:DescribeInstanceAttribute",
-                "ec2:DescribeRouteTables",
-                "ec2:DescribeInstanceTypes",
                 "ec2:DescribeRegions",
-                "ec2:DescribeAccountAttributes",
-                "ec2:DescribeVolumeStatus",
+                "ec2:DescribeRouteTables",
+                "ec2:DescribeNetworkInterfaces",
+                "ec2:DescribeInstanceCreditSpecifications",
+                "ec2:DescribeSubnets",
+                "ec2:StartInstances",
+                "ec2:DescribeVolumes",
+                "ec2:DescribeAvailabilityZones",
                 "ec2:DescribeReplaceRootVolumeTasks",
+                "ec2:DescribeVolumeStatus",
+                "ec2:DescribeLaunchTemplates",
+                "ec2:DescribeInstanceTypes",
+                "ec2:ModifyInstanceAttribute",
+                "ec2:DescribeKeyPairs",
+                "ec2:DescribeAddresses",
+                "ec2:DescribeImages",
+                "ec2:DescribeInstanceTypeOfferings",
                 "ec2:DescribeInstanceConnectEndpoints",
-                "ec2:DescribeSnapshots"
+                "ec2:DescribeInstanceAttribute",
+                "ec2:DescribeInstanceImageMetadata",
+                "ec2:DescribeInstanceStatus",
+                "ec2:DescribeSecurityGroups",
+                "ec2:DescribeInstances",
+                "ec2:DescribePlacementGroups",
+                "ec2:StopInstances",
+                "ec2:DescribeCapacityReservations",
+                "ec2:DescribeVpcs",
+                "ec2:DescribeSnapshots",
+                "ec2:DescribeHosts",
+                "ec2:DescribeAccountAttributes",
+                "ec2:DescribeTags"
               ],
               "Resource": "*"
             }
@@ -2418,7 +2423,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "9gpuvnwZZs",
+              "Sid": "R6unTvz1EL",
               "Effect": "Allow",
               "Action": [
                 "elasticloadbalancing:DescribeLoadBalancers"
@@ -2434,7 +2439,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "nY9OCILeAj",
+              "Sid": "ZnDDf6KDGX",
               "Effect": "Allow",
               "Action": [
                 "autoscaling:DescribeAutoScalingGroups"
@@ -2450,7 +2455,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "nDDfHvkWh2",
+              "Sid": "BBIAOCt4MW",
               "Effect": "Allow",
               "Action": [
                 "freetier:GetFreeTierUsage"
@@ -2466,7 +2471,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "lj1zkgbJHo",
+              "Sid": "I2fQgkdxfH",
               "Effect": "Allow",
               "Action": [
                 "compute-optimizer:GetEnrollmentStatus"
@@ -2482,24 +2487,39 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "VSr9EIirhe",
+              "Sid": "qvR9cEwr80",
               "Effect": "Allow",
               "Action": [
                 "iam:GetUserPolicy",
-                "iam:GetAccessKeyLastUsed",
-                "iam:ListAttachedRolePolicies",
-                "iam:ListAccessKeys",
-                "iam:GetUser",
+                "iam:PutUserPolicy",
+                "iam:ListInstanceProfilesForRole",
                 "iam:GetAccountSummary",
-                "iam:ListUserPolicies",
-                "iam:ListAttachedUserPolicies",
+                "iam:ListGroups",
                 "iam:ListRoles",
-                "iam:ListMFADevices",
-                "iam:GetPolicy",
-                "iam:GetPolicyVersion",
-                "iam:ListAccountAliases",
-                "iam:ListUsers",
+                "iam:GetLoginProfile",
+                "iam:CreateRole",
+                "iam:AttachRolePolicy",
                 "iam:ListGroupsForUser",
+                "iam:GetAccessKeyLastUsed",
+                "iam:ListAccessKeys",
+                "iam:GetPolicy",
+                "iam:ListAttachedUserPolicies",
+                "iam:ListPolicies",
+                "iam:GetPolicyVersion",
+                "iam:GetUser",
+                "iam:CreateUser",
+                "iam:ListAccountAliases",
+                "iam:CreateAccessKey",
+                "iam:ListUserPolicies",
+                "iam:ListSigningCertificates",
+                "iam:DetachRolePolicy",
+                "iam:UpdateAssumeRolePolicy",
+                "iam:ListMFADevices",
+                "iam:DeleteRole",
+                "iam:ListUserTags",
+                "iam:ListAttachedRolePolicies",
+                "iam:GetRole",
+                "iam:ListUsers",
                 "iam:ListRolePolicies"
               ],
               "Resource": "arn:aws:iam::713881791527:user/Wonje_Cha"
@@ -2513,7 +2533,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "y78yQjlYzi",
+              "Sid": "vdxZJDFWgB",
               "Effect": "Allow",
               "Action": [
                 "ssm:DescribeInstanceInformation"
@@ -2529,7 +2549,23 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "3Ib0ZZZPYU",
+              "Sid": "LcsS9f1smp",
+              "Effect": "Allow",
+              "Action": [
+                "sts:GetCallerIdentity"
+              ],
+              "Resource": "*"
+            }
+          ]
+        }
+      },
+      {
+        "PolicyName": "Aegislenz-Least-Privilege-Policy",
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Sid": "1SKIbsn0xv",
               "Effect": "Allow",
               "Action": [
                 "logs:DescribeMetricFilters"
@@ -2545,15 +2581,15 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "w0XDP7jkUS",
+              "Sid": "QC81JF1Sre",
               "Effect": "Allow",
               "Action": [
-                "s3:GetBucketTagging",
-                "s3:GetBucketPolicy",
                 "s3:GetBucketLocation",
-                "s3:GetBucketLogging",
+                "s3:GetBucketVersioning",
+                "s3:GetBucketPolicy",
                 "s3:GetBucketAcl",
-                "s3:GetBucketVersioning"
+                "s3:GetBucketTagging",
+                "s3:GetBucketLogging"
               ],
               "Resource": "*"
             }
@@ -2566,10 +2602,10 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "iv2h4pRLYK",
+              "Sid": "Cmda9ifFmU",
               "Effect": "Allow",
               "Action": [
-                "cloudtrail:LookupEvents"
+                "resource-explorer-2:ListIndexes"
               ],
               "Resource": "*"
             }
@@ -2582,7 +2618,27 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "r76mT2f8nM",
+              "Sid": "7Jt46NR0sY",
+              "Effect": "Allow",
+              "Action": [
+                "cloudtrail:ListTrails",
+                "cloudtrail:LookupEvents",
+                "cloudtrail:DescribeTrails",
+                "cloudtrail:GetTrailStatus",
+                "cloudtrail:ListEventDataStores"
+              ],
+              "Resource": "*"
+            }
+          ]
+        }
+      },
+      {
+        "PolicyName": "Aegislenz-Least-Privilege-Policy",
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Sid": "54xvwpxbEK",
               "Effect": "Allow",
               "Action": [
                 "organizations:DescribeOrganization"
@@ -2598,7 +2654,41 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "RCohMudzSU",
+              "Sid": "rqCuQaprIF",
+              "Effect": "Allow",
+              "Action": [
+                "config:DescribeConfigurationRecorders",
+                "config:ListDiscoveredResources",
+                "config:DescribeConfigurationRecorderStatus"
+              ],
+              "Resource": "*"
+            }
+          ]
+        }
+      },
+      {
+        "PolicyName": "Aegislenz-Least-Privilege-Policy",
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Sid": "2mSC95QHrz",
+              "Effect": "Allow",
+              "Action": [
+                "access-analyzer:ListPolicyGenerations"
+              ],
+              "Resource": "*"
+            }
+          ]
+        }
+      },
+      {
+        "PolicyName": "Aegislenz-Least-Privilege-Policy",
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Sid": "x3I5GQ2eSE",
               "Effect": "Allow",
               "Action": [
                 "sso:DescribeRegisteredRegions"
@@ -2614,7 +2704,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "Eyjg3eZMRp",
+              "Sid": "l60AKmXQYB",
               "Effect": "Allow",
               "Action": [
                 "ec2-instance-connect:SendSSHPublicKey"
@@ -2632,7 +2722,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "3fe7jn21oY",
+              "Sid": "NFr1fmiPx7",
               "Effect": "Allow",
               "Action": [
                 "ssm:RegisterManagedInstance"
@@ -2648,7 +2738,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "jnNJI52vMz",
+              "Sid": "jYff7ms8kk",
               "Effect": "Allow",
               "Action": [
                 "sts:AssumeRole"
@@ -2664,7 +2754,7 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Sid": "aEv1Ufw3fr",
+              "Sid": "fO27EVXsDZ",
               "Effect": "Allow",
               "Action": [
                 "s3:GetBucketAcl"
@@ -2682,63 +2772,63 @@
     ],
     "Jiyun_Kim": [
       [
-        "s3:PutBucketPolicy",
-        "sqs:GetQueueAttributes",
-        "cloudwatch:*",
-        "iam:GetAccountPasswordPolicy",
         "sqs:ReceiveMessage",
+        "s3:GetObject",
+        "sqs:DeleteMessage",
+        "sqs:ListQueues",
+        "s3:PutBucketPolicy",
+        "s3:PutObject",
+        "s3:*",
+        "elasticloadbalancing:*",
+        "iam:ChangePassword",
+        "*",
+        "ec2:*",
         "iam:CreateServiceLinkedRole",
         "logs:FilterLogEvents",
-        "logs:GetLogEvents",
-        "sqs:ListQueues",
-        "s3:GetObject",
-        "sqs:ChangeMessageVisibility",
-        "*",
-        "s3-object-lambda:*",
-        "iam:ChangePassword",
-        "ec2:*",
-        "elasticloadbalancing:*",
-        "s3:PutObject",
         "logs:DescribeLogGroups",
-        "sqs:DeleteMessage",
         "s3:PutObjectAcl",
-        "s3:*",
+        "s3-object-lambda:*",
         "autoscaling:*",
+        "cloudwatch:*",
+        "sqs:ChangeMessageVisibility",
+        "logs:GetLogEvents",
+        "s3:ListBucket",
         "s3:GetBucketLocation",
-        "s3:ListBucket"
+        "sqs:GetQueueAttributes",
+        "iam:GetAccountPasswordPolicy"
       ]
     ],
     "Yujeong_Choi": [
       [
-        "ec2:*",
-        "elasticloadbalancing:*",
-        "cloudwatch:*",
         "*",
-        "iam:ChangePassword",
         "autoscaling:*",
-        "iam:CreateServiceLinkedRole"
+        "cloudwatch:*",
+        "ec2:*",
+        "iam:CreateServiceLinkedRole",
+        "elasticloadbalancing:*",
+        "iam:ChangePassword"
       ]
     ],
     "Yeji_Shin": [
       [
-        "ec2:*",
-        "elasticloadbalancing:*",
-        "cloudwatch:*",
         "*",
-        "iam:ChangePassword",
         "autoscaling:*",
+        "cloudwatch:*",
+        "ec2:*",
+        "iam:CreateServiceLinkedRole",
+        "elasticloadbalancing:*",
         "iam:GetAccountPasswordPolicy",
-        "iam:CreateServiceLinkedRole"
+        "iam:ChangePassword"
       ]
     ],
     "Wonje_Cha": [
       [
-        "ec2:*",
-        "elasticloadbalancing:*",
-        "cloudwatch:*",
         "*",
         "autoscaling:*",
-        "iam:CreateServiceLinkedRole"
+        "cloudwatch:*",
+        "ec2:*",
+        "iam:CreateServiceLinkedRole",
+        "elasticloadbalancing:*"
       ]
     ],
     "AWS": [
