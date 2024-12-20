@@ -9,37 +9,37 @@ const Alert = ({ getPromptSession }) => {
   const [isHoverIcon, setIsHoverIcon] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
 
-  const { connectSSE } = useAlertSSE();
+  // const { connectSSE } = useAlertSSE();
 
-  useEffect(() => {
-    connectSSE(
-      (newData) => {
-        setIsConnected(true);
-        const mappedData = {
-          technique: newData.mitreAttackTechnique || "Unknown Technique",
-          tactic: newData.mitreAttackTactic || "Unknown Tactic",
-          prompt_session_id: newData.prompt_session_id || "N/A",
-          id: Date.now(),
-        };
+  // useEffect(() => {
+  //   connectSSE(
+  //     (newData) => {
+  //       setIsConnected(true);
+  //       const mappedData = {
+  //         technique: newData.mitreAttackTechnique || "Unknown Technique",
+  //         tactic: newData.mitreAttackTactic || "Unknown Tactic",
+  //         prompt_session_id: newData.prompt_session_id || "N/A",
+  //         id: Date.now(),
+  //       };
 
-        setAlertData((prevData) => {
-          if (
-            prevData.some(
-              (alert) =>
-                alert.prompt_session_id === mappedData.prompt_session_id
-            )
-          ) {
-            return prevData;
-          }
-          return [...prevData, mappedData].slice(-5);
-        });
-      },
-      () => {
-        console.error("SSE 연결 실패!");
-        setIsConnected(false);
-      }
-    );
-  }, [connectSSE]);
+  //       setAlertData((prevData) => {
+  //         if (
+  //           prevData.some(
+  //             (alert) =>
+  //               alert.prompt_session_id === mappedData.prompt_session_id
+  //           )
+  //         ) {
+  //           return prevData;
+  //         }
+  //         return [...prevData, mappedData].slice(-5);
+  //       });
+  //     },
+  //     () => {
+  //       console.error("SSE 연결 실패!");
+  //       setIsConnected(false);
+  //     }
+  //   );
+  // }, [connectSSE]);
 
   const handleAlertBubbleClick = (alert) => {
     if (alert.prompt_session_id) {
