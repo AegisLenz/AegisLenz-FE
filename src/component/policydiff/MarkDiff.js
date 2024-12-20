@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import DiffViewer from "react-diff-viewer-continued";
 import * as S from "./MarkDiff_style";
-import dataFromJson from "./data.json"; // Assume data is stored in data.json
+// import dataFromJson from "./data.json"; // Assume data is stored in data.json
 import GetPolicyData from "../hook/policy/policy";
 import Loading2 from "../toggle/loading2/loading2";
 

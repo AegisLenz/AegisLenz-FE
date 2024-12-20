@@ -7,7 +7,7 @@ const Alert = ({ getPromptSession }) => {
     {
       Tactic: "TA0007 - Discovery",
       Technique: "T1087 - Account Discovery",
-      prompt_session_id: "6765a9a0ea528a5d71b9ec50",
+      prompt_session_id: "6765f6870caafe1f4e9f7e59",
     },
   ]);
   const [isOpen, setIsOpen] = useState(false);

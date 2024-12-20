@@ -25,11 +25,7 @@ const ToggleChat = ({
   const [session, setSession] = useState("");
 
   const [ChatData, setChatData] = useState([]);
-  const [SuggestData, setSuggestData] = useState([
-    "EC2 인스턴스 i-01c646c4b28fcf780의 IAM 역할과 정책을 확인하여, 현재 할당된 권한과 최근 90일간 사용자의 권한 변화를 비교해 주세요.",
-    "MongoDB에서 IAM 사용자 'Victim'의 현재 권한과 90일간 사용된 권한을 비교하여 불필요한 권한 또는 의심스러운 액세스를 확인할 수 있도록 해 주세요.",
-    "공격자가 성공적으로 탐색하고자 했던 IAM 역할 목록('testrole', 'AWSServiceRoleForTrustedAdvisor', 'AWSServiceRoleForSupport')에 대해 각 역할의 현재 정책 및 연관된 사용자 정보를 제공해 주세요.",
-  ]);
+  const [SuggestData, setSuggestData] = useState([]);
 
   const [isDataLoaded, setIsDataLoaded] = useState(false); // useEffect 완료 상태 관리
 
@@ -63,7 +59,7 @@ const ToggleChat = ({
               data.init_recommend_questions !== null &&
               data.init_recommend_questions.length !== 0
             ) {
-              setSuggestData([]);
+              setSuggestData(data.init_recommend_questions);
               setChatData((prev) => [
                 ...prev,
                 {
@@ -201,7 +197,7 @@ const ToggleChat = ({
 
   // API 호출 및 데이터 처리
   const SendMessage = async (inputValue, session) => {
-    setChatData((prev) => prev.filter((msg) => !msg.isBookmark));
+    // setChatData((prev) => prev.filter((msg) => !msg.isBookmark));
     if (!isDataLoaded) {
       console.error(
         "데이터가 아직 로드되지 않았습니다. 잠시 후 다시 시도하세요."
@@ -213,7 +209,8 @@ const ToggleChat = ({
       ...prev,
       { text: "", isUser: false, isStreem: true },
     ]);
-    const messageIndex = ChatData.length;
+    const messageIndex = ChatData.length + 1;
+
     if (!session || session === "") {
       // session이 빈 문자열 또는 undefined일 경우
       try {
