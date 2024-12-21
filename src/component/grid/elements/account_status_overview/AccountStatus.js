@@ -9,11 +9,9 @@ const type = ["#6A4FA3", "#216261", "#CD62B0"];
 const filterOptions = [
   { label: "== none ==", value: "none" },
   { label: "User Name", value: "UserName" },
-  { label: "Status", value: "Status" },
   { label: "Last Active", value: "LastUsedDate" },
   { label: "Attached Policies", value: "AttachedPolicies" },
   { label: "User ID", value: "UserId" },
-  { label: "Type", value: "Type" },
 ];
 
 // 가장 최근 날짜를 반환하는 함수
@@ -62,10 +60,6 @@ const AccountStatus = ({ GenDetailData, Data }) => {
           return user;
         case "UserName":
           return user.UserName.toLowerCase().includes(value);
-        case "Status":
-          return user.AccessKeysLastUsed[0]?.Status?.toLowerCase().includes(
-            value
-          );
         case "LastUsedDate":
           return (
             user.AccessKeysLastUsed[0]?.LastUsedDate &&
@@ -114,12 +108,12 @@ const AccountStatus = ({ GenDetailData, Data }) => {
       <S.TableWrapper>
         <S.Table>
           <S.Thead>
-            <S.Td>Status</S.Td>
+            {/* <S.Td>Status</S.Td> */}
             <S.Td>User Name</S.Td>
             <S.Td>Last Active</S.Td>
             <S.Td>Attached Policies</S.Td>
             <S.Td>User ID</S.Td>
-            <S.Td>Type</S.Td>
+            {/* <S.Td>Type</S.Td> */}
           </S.Thead>
           <S.Tbody>
             {nowloading ? (
@@ -131,9 +125,9 @@ const AccountStatus = ({ GenDetailData, Data }) => {
                   type={true}
                   onClick={() => GenDetailData(row, "iam")}
                 >
-                  <S.Td>
+                  {/* <S.Td>
                     <S.StatusIcon type={true} />
-                  </S.Td>
+                  </S.Td> */}
                   <S.Td>{row.UserName}</S.Td>
                   <S.Td>
                     {getMostRecentDate(
@@ -147,13 +141,13 @@ const AccountStatus = ({ GenDetailData, Data }) => {
                     ))}
                   </S.Td>
                   <S.Td>{row.UserId}</S.Td>
-                  <S.Td>
+                  {/* <S.Td>
                     <S.TypeIconWrapper>
                       <S.TypeIcon color={type[index % 3][1]}>
                         {type[index % 3][0]}
                       </S.TypeIcon>
                     </S.TypeIconWrapper>
-                  </S.Td>
+                  </S.Td> */}
                 </S.Tr>
               ))
             ) : (
@@ -163,9 +157,9 @@ const AccountStatus = ({ GenDetailData, Data }) => {
                   type={true}
                   onClick={() => GenDetailData(row, "iam")}
                 >
-                  <S.Td>
+                  {/* <S.Td>
                     <S.StatusIcon type={true} />
-                  </S.Td>
+                  </S.Td> */}
                   <S.Td>{row.UserName}</S.Td>
                   <S.Td>
                     {getMostRecentDate(
@@ -179,13 +173,13 @@ const AccountStatus = ({ GenDetailData, Data }) => {
                     ))}
                   </S.Td>
                   <S.Td>{row.UserId}</S.Td>
-                  <S.Td>
+                  {/* <S.Td>
                     <S.TypeIconWrapper>
                       <S.TypeIcon color={type[index % 3][1]}>
                         {type[index % 3][0]}
                       </S.TypeIcon>
                     </S.TypeIconWrapper>
-                  </S.Td>
+                  </S.Td> */}
                 </S.Tr>
               ))
             )}

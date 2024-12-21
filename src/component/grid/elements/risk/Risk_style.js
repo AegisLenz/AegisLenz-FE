@@ -53,7 +53,7 @@ export const ContentWrapper = styled.div`
 
 export const IndexWrapper = styled.div`
   width: 95%;
-  height: 13vh;
+  min-height: 13vh;
 
   border-top: 1px solid #333;
   margin-left: 3%;

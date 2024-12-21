@@ -129,7 +129,7 @@ const EC2Status = ({ GenDetailData }) => {
                       </S.Td>
                       <S.Td>{item.Tags[0]?.Value || "N/A"}</S.Td>
                       <S.Td>{item.IamInstanceProfile?.Arn || "N/A"}</S.Td>
-                      <S.Td>{item.IamInstanceProfile?.Id || "N/A"}</S.Td>
+                      <S.Td>{item.InstanceId || "N/A"}</S.Td>
                       <S.Td>
                         {item.SecurityGroups.map((group) => (
                           <li key={group.GroupId}>{group.GroupId}</li>
@@ -149,7 +149,7 @@ const EC2Status = ({ GenDetailData }) => {
                       </S.Td>
                       <S.Td>{item.Tags[0]?.Value || "N/A"}</S.Td>
                       <S.Td>{item.IamInstanceProfile?.Arn || "N/A"}</S.Td>
-                      <S.Td>{item.IamInstanceProfile?.Id || "N/A"}</S.Td>
+                      <S.Td>{item.InstanceId || "N/A"}</S.Td>
                       <S.Td>
                         {item.SecurityGroups.map((group) => (
                           <li key={group.GroupId}>{group.GroupId}</li>
